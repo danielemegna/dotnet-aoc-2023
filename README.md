@@ -8,5 +8,5 @@ Use temporary node container with current directory volume:
 
 ```
 $ docker run --rm -it -v $PWD:/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 bash
-# dotnet test
+# dotnet test app.csproj
 ```
