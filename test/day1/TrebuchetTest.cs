@@ -9,10 +9,12 @@ public class TrebuchetTest
   [Fact]
   public void SolveTheProvidedExample()
   {
-    var input = "1abc2\n" +
-      "pqr3stu8vwx\n" +
-      "a1b2c3d4e5f\n" +
-      "treb7uchet\n";
+    var input = new string[] {
+      "1abc2",
+      "pqr3stu8vwx",
+      "a1b2c3d4e5f",
+      "treb7uchet"
+    };
 
     var actual = solver.SumOfCalibrationValuesFor(input);
 
@@ -22,7 +24,7 @@ public class TrebuchetTest
   [Fact]
   public void SolveWithFile()
   {
-    var input = File.ReadAllText( "day1/input.txt");
+    var input = File.ReadAllLines("day1/input.txt");
     var actual = solver.SumOfCalibrationValuesFor(input);
     Assert.Equal(54388, actual);
   }

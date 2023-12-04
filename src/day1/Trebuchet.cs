@@ -2,10 +2,9 @@ namespace aoc2023;
 
 public class Trebuchet
 {
-  public int SumOfCalibrationValuesFor(string input)
+  public int SumOfCalibrationValuesFor(string[] inputLines)
   {
-    string[] lines = input.Split("\n", StringSplitOptions.RemoveEmptyEntries);
-    return lines.Select(CalibrationValueFromRow).Sum();
+    return inputLines.Select(CalibrationValueFromRow).Sum();
   }
 
   private int CalibrationValueFromRow(string row)
