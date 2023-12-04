@@ -7,13 +7,11 @@ public class Trebuchet
     return inputLines.Select(CalibrationValueFromRow).Sum();
   }
 
-  private int CalibrationValueFromRow(string row)
+  private int CalibrationValueFromRow(string inputLine)
   {
-    var onlyNumbersArray = row
-      .ToCharArray()
-      .Select((c) => c.ToString())
-      .Where((c) => int.TryParse(c, out _))
-      .ToArray();
-    return int.Parse(onlyNumbersArray.First() + onlyNumbersArray.Last());
+    var arrayOfCharacters = inputLine.ToCharArray().Select((c) => c.ToString());
+    var onlyNumbersCharacters = arrayOfCharacters.Where((c) => int.TryParse(c, out _)).ToArray();
+    var valueAsString = onlyNumbersCharacters.First() + onlyNumbersCharacters.Last();
+    return int.Parse(valueAsString);
   }
 }
