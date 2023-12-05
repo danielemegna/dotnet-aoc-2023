@@ -79,6 +79,14 @@ public class TrebuchetTest
       Assert.Equal(29 + 83 + 13 + 24 + 42 + 14 + 76, actual);
     }
 
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day1/input.txt");
+      var actual = solver.SumOfCalibrationValuesFor(input, true);
+      Assert.Equal(53515, actual);
+    }
+
     public class CalibrationValueFromRowTest : TrebuchetTest
     {
 
