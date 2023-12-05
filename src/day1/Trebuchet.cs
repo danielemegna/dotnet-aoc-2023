@@ -7,7 +7,7 @@ public class Trebuchet
     return inputLines.Select(CalibrationValueFromRow).Sum();
   }
 
-  private int CalibrationValueFromRow(string inputLine)
+  public int CalibrationValueFromRow(string inputLine)
   {
     var arrayOfCharacters = inputLine.ToCharArray().Select((c) => c.ToString());
     var onlyNumbersCharacters = arrayOfCharacters.Where((c) => int.TryParse(c, out _)).ToArray();

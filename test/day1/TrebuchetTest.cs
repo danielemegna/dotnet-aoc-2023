@@ -6,6 +6,8 @@ public class TrebuchetTest
 {
   private Trebuchet solver = new Trebuchet();
 
+  #region -- First part --
+
   [Fact]
   public void SolveTheProvidedExample()
   {
@@ -29,6 +31,34 @@ public class TrebuchetTest
     Assert.Equal(54388, actual);
   }
 
+
+  #region -- CalibrationValueFromRow --
+
+  [Fact]
+  public void CalibrationValueFromRow_withTwoNumbers()
+  {
+    Assert.Equal(12, solver.CalibrationValueFromRow("1abc2"));
+    Assert.Equal(38, solver.CalibrationValueFromRow("pqr3stu8vwx"));
+  }
+
+  [Fact]
+  public void CalibrationValueFromRow_withMoreThanTwoNumbers_shouldTakeFirstAndLast()
+  {
+    Assert.Equal(15, solver.CalibrationValueFromRow("a1b2c3d4e5f"));
+  }
+
+  [Fact]
+  public void CalibrationValueFromRow_withOneNumber_shouldTakeItTwice()
+  {
+    Assert.Equal(77, solver.CalibrationValueFromRow("treb7uchet"));
+  }
+
+  #endregion
+
+  #endregion
+
+  #region -- Second part --
+
   [Fact(Skip = "WIP")]
   public void SolveProvidedExampleWithSpelledNumbers()
   {
@@ -46,5 +76,7 @@ public class TrebuchetTest
 
     Assert.Equal(29 + 83 + 13 + 24 + 42 + 14 + 76, actual);
   }
+
+  #endregion
 
 }
