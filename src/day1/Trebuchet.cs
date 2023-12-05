@@ -35,11 +35,11 @@ public class Trebuchet
       if (mode == Mode.ONLY_NUMBERS)
         continue;
 
-      var substring = input.Substring(inputCursor);
+      var substring = input.Substring(0, inputCursor + 1);
       for (int wordsCursor = 0; wordsCursor < wordsDictionary.Length; wordsCursor++)
       {
         var currentWord = wordsDictionary[wordsCursor];
-        if (substring.StartsWith(currentWord))
+        if (substring.Contains(currentWord))
           return (wordsCursor + 1).ToString();
       }
 
