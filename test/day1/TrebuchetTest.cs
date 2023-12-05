@@ -6,103 +6,106 @@ public class TrebuchetTest
 {
   private Trebuchet solver = new Trebuchet();
 
-  #region -- First part --
-
-  [Fact]
-  public void SolveTheProvidedExample()
+  public class FirstPartTest : TrebuchetTest
   {
-    var input = new string[] {
-      "1abc2",
-      "pqr3stu8vwx",
-      "a1b2c3d4e5f",
-      "treb7uchet"
-    };
 
-    var actual = solver.SumOfCalibrationValuesFor(input);
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var input = new string[] {
+        "1abc2",
+        "pqr3stu8vwx",
+        "a1b2c3d4e5f",
+        "treb7uchet"
+      };
 
-    Assert.Equal(12 + 38 + 15 + 77, actual);
+      var actual = solver.SumOfCalibrationValuesFor(input);
+
+      Assert.Equal(12 + 38 + 15 + 77, actual);
+    }
+
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day1/input.txt");
+      var actual = solver.SumOfCalibrationValuesFor(input);
+      Assert.Equal(54388, actual);
+    }
+
+    public class CalibrationValueFromRowTest : TrebuchetTest
+    {
+
+      [Fact]
+      public void CalibrationValueFromRow_withTwoNumbers()
+      {
+        Assert.Equal(12, solver.CalibrationValueFromRow("1abc2"));
+        Assert.Equal(38, solver.CalibrationValueFromRow("pqr3stu8vwx"));
+      }
+
+      [Fact]
+      public void CalibrationValueFromRow_withMoreThanTwoNumbers_shouldTakeFirstAndLast()
+      {
+        Assert.Equal(15, solver.CalibrationValueFromRow("a1b2c3d4e5f"));
+      }
+
+      [Fact]
+      public void CalibrationValueFromRow_withOneNumber_shouldTakeItTwice()
+      {
+        Assert.Equal(77, solver.CalibrationValueFromRow("treb7uchet"));
+      }
+
+    }
+
   }
 
-  [Fact]
-  public void SolveWithFile()
+  public class SecondPartTest : TrebuchetTest
   {
-    var input = File.ReadAllLines("day1/input.txt");
-    var actual = solver.SumOfCalibrationValuesFor(input);
-    Assert.Equal(54388, actual);
+
+    [Fact(Skip = "WIP")]
+    public void SolveProvidedExample_withSpelledNumbers()
+    {
+      var input = new string[] {
+        "two1nine",
+        "eightwothree",
+        "abcone2threexyz",
+        "xtwone3four",
+        "4nineeightseven2",
+        "zoneight234",
+        "7pqrstsixteen"
+      };
+
+      var actual = solver.SumOfCalibrationValuesFor(input, true);
+
+      Assert.Equal(29 + 83 + 13 + 24 + 42 + 14 + 76, actual);
+    }
+
+    public class CalibrationValueFromRowTest : TrebuchetTest
+    {
+
+      [Fact]
+      public void CalibrationValueFromRow_withSpelledNumbers()
+      {
+        Assert.Equal(29, solver.CalibrationValueFromRow("two1nine", true));
+        Assert.Equal(13, solver.CalibrationValueFromRow("abcone2threexyz", true));
+        Assert.Equal(42, solver.CalibrationValueFromRow("4nineeightseven2", true));
+      }
+
+      [Fact]
+      public void CalibrationValueFromRow_withSpelledNumbers_mixingSpelledWithNormal()
+      {
+        Assert.Equal(14, solver.CalibrationValueFromRow("zoneight234", true));
+        Assert.Equal(76, solver.CalibrationValueFromRow("7pqrstsixteen", true));
+      }
+
+      [Fact(Skip = "WIP")]
+      public void CalibrationValueFromRow_withSpelledNumbers_shouldValuateFirstBefore()
+      {
+        Assert.Equal(83, solver.CalibrationValueFromRow("eightwothree", true));
+        Assert.Equal(24, solver.CalibrationValueFromRow("xtwone3four", true));
+      }
+
+    }
+
   }
-
-
-  #region -- CalibrationValueFromRow --
-
-  [Fact]
-  public void CalibrationValueFromRow_withTwoNumbers()
-  {
-    Assert.Equal(12, solver.CalibrationValueFromRow("1abc2"));
-    Assert.Equal(38, solver.CalibrationValueFromRow("pqr3stu8vwx"));
-  }
-
-  [Fact]
-  public void CalibrationValueFromRow_withMoreThanTwoNumbers_shouldTakeFirstAndLast()
-  {
-    Assert.Equal(15, solver.CalibrationValueFromRow("a1b2c3d4e5f"));
-  }
-
-  [Fact]
-  public void CalibrationValueFromRow_withOneNumber_shouldTakeItTwice()
-  {
-    Assert.Equal(77, solver.CalibrationValueFromRow("treb7uchet"));
-  }
-
-  #endregion
-
-  #endregion
-
-  #region -- Second part --
-
-  [Fact(Skip = "WIP")]
-  public void SolveProvidedExample_withSpelledNumbers()
-  {
-    var input = new string[] {
-      "two1nine",
-      "eightwothree",
-      "abcone2threexyz",
-      "xtwone3four",
-      "4nineeightseven2",
-      "zoneight234",
-      "7pqrstsixteen"
-    };
-
-    var actual = solver.SumOfCalibrationValuesFor(input, true);
-
-    Assert.Equal(29 + 83 + 13 + 24 + 42 + 14 + 76, actual);
-  }
-
-  #region -- CalibrationValueFromRow --
-
-  [Fact]
-  public void CalibrationValueFromRow_withSpelledNumbers()
-  {
-    Assert.Equal(29, solver.CalibrationValueFromRow("two1nine", true));
-    Assert.Equal(13, solver.CalibrationValueFromRow("abcone2threexyz", true));
-    Assert.Equal(42, solver.CalibrationValueFromRow("4nineeightseven2", true));
-  }
-
-  [Fact]
-  public void CalibrationValueFromRow_withSpelledNumbers_mixingSpelledWithNormal()
-  {
-    Assert.Equal(14, solver.CalibrationValueFromRow("zoneight234", true));
-    Assert.Equal(76, solver.CalibrationValueFromRow("7pqrstsixteen", true));
-  }
-
-  [Fact(Skip = "WIP")]
-  public void CalibrationValueFromRow_withSpelledNumbers_shouldValuateFirstBefore()
-  {
-    Assert.Equal(83, solver.CalibrationValueFromRow("eightwothree", true));
-    Assert.Equal(24, solver.CalibrationValueFromRow("xtwone3four", true));
-  }
-
-  #endregion
-
-  #endregion
 
 }
