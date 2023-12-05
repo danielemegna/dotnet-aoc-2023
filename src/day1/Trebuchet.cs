@@ -9,19 +9,44 @@ public class Trebuchet
 
   public int CalibrationValueFromRow(string inputLine, bool useSpelledNumbers = false)
   {
-    if (useSpelledNumbers)
-    {
-      var dictionary = new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-      for (int i = 0; i < dictionary.Length; i++)
-      {
-        inputLine = inputLine.Replace(dictionary[i], (i + 1).ToString());
-      }
+    string firstNumber = firstNumberIn(inputLine, useSpelledNumbers, false);
+    string lastNumber = firstNumberIn(inputLine, useSpelledNumbers, true);
+    return int.Parse(firstNumber + lastNumber);
+  }
+
+  public string firstNumberIn(string input, bool useSpelledNumbers, bool reversed)
+  {
+    var wordsDictionary = new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
+    if (reversed) {
+      input = reverse(input);
+      wordsDictionary = wordsDictionary.Select(reverse).ToArray();
     }
 
+    for (int inputCursor = 0; inputCursor < input.Length; inputCursor++)
+    {
+      char c = input[inputCursor];
+      if (int.TryParse(c.ToString(), out _))
+        return c.ToString();
 
-    var arrayOfCharacters = inputLine.ToCharArray().Select((c) => c.ToString());
-    var onlyNumbersCharacters = arrayOfCharacters.Where((c) => int.TryParse(c, out _)).ToArray();
-    var valueAsString = onlyNumbersCharacters.First() + onlyNumbersCharacters.Last();
-    return int.Parse(valueAsString);
+      if (!useSpelledNumbers)
+        continue;
+
+      var substring = input.Substring(inputCursor);
+      for (int wordsCursor = 0; wordsCursor < wordsDictionary.Length; wordsCursor++)
+      {
+        var currentWord = wordsDictionary[wordsCursor];
+        if (substring.StartsWith(currentWord))
+          return (wordsCursor + 1).ToString();
+      }
+
+    }
+
+    throw new Exception("Cannot find number in: " + input);
   }
+
+  private string reverse(string value)
+  {
+    return new string(value.ToCharArray().Reverse().ToArray());
+  }
+
 }

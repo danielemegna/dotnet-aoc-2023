@@ -61,7 +61,7 @@ public class TrebuchetTest
   public class SecondPartTest : TrebuchetTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveProvidedExample_withSpelledNumbers()
     {
       var input = new string[] {
@@ -97,7 +97,7 @@ public class TrebuchetTest
         Assert.Equal(76, solver.CalibrationValueFromRow("7pqrstsixteen", true));
       }
 
-      [Fact(Skip = "WIP")]
+      [Fact]
       public void CalibrationValueFromRow_withSpelledNumbers_shouldValuateFirstBefore()
       {
         Assert.Equal(83, solver.CalibrationValueFromRow("eightwothree", true));
