@@ -1,23 +1,27 @@
 namespace aoc2023;
 
+
 public class Trebuchet
 {
-  public int SumOfCalibrationValuesFor(string[] inputLines, bool useSpelledNumbers = false)
+  public enum Mode { ONLY_NUMBERS, NUMBERS_AND_SPELLED }
+
+  public int SumOfCalibrationValuesFor(string[] inputLines, Mode mode)
   {
-    return inputLines.Select((line) => CalibrationValueFromRow(line, useSpelledNumbers)).Sum();
+    return inputLines.Select((line) => CalibrationValueFromRow(line, mode)).Sum();
   }
 
-  public int CalibrationValueFromRow(string inputLine, bool useSpelledNumbers = false)
+  public int CalibrationValueFromRow(string inputLine, Mode mode)
   {
-    string firstNumber = FirstNumberIn(inputLine, useSpelledNumbers, false);
-    string lastNumber = FirstNumberIn(inputLine, useSpelledNumbers, true);
+    string firstNumber = FirstNumberIn(inputLine, mode, false);
+    string lastNumber = FirstNumberIn(inputLine, mode, true);
     return int.Parse(firstNumber + lastNumber);
   }
 
-  public string FirstNumberIn(string input, bool useSpelledNumbers, bool reversed)
+  private string FirstNumberIn(string input, Mode mode, bool reversed)
   {
     var wordsDictionary = new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
-    if (reversed) {
+    if (reversed)
+    {
       input = Reverse(input);
       wordsDictionary = wordsDictionary.Select(Reverse).ToArray();
     }
@@ -28,7 +32,7 @@ public class Trebuchet
       if (int.TryParse(c.ToString(), out _))
         return c.ToString();
 
-      if (!useSpelledNumbers)
+      if (mode == Mode.ONLY_NUMBERS)
         continue;
 
       var substring = input.Substring(inputCursor);
