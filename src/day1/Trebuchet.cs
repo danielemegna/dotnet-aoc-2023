@@ -9,17 +9,17 @@ public class Trebuchet
 
   public int CalibrationValueFromRow(string inputLine, bool useSpelledNumbers = false)
   {
-    string firstNumber = firstNumberIn(inputLine, useSpelledNumbers, false);
-    string lastNumber = firstNumberIn(inputLine, useSpelledNumbers, true);
+    string firstNumber = FirstNumberIn(inputLine, useSpelledNumbers, false);
+    string lastNumber = FirstNumberIn(inputLine, useSpelledNumbers, true);
     return int.Parse(firstNumber + lastNumber);
   }
 
-  public string firstNumberIn(string input, bool useSpelledNumbers, bool reversed)
+  public string FirstNumberIn(string input, bool useSpelledNumbers, bool reversed)
   {
     var wordsDictionary = new string[] { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
     if (reversed) {
-      input = reverse(input);
-      wordsDictionary = wordsDictionary.Select(reverse).ToArray();
+      input = Reverse(input);
+      wordsDictionary = wordsDictionary.Select(Reverse).ToArray();
     }
 
     for (int inputCursor = 0; inputCursor < input.Length; inputCursor++)
@@ -44,7 +44,7 @@ public class Trebuchet
     throw new Exception("Cannot find number in: " + input);
   }
 
-  private string reverse(string value)
+  private string Reverse(string value)
   {
     return new string(value.ToCharArray().Reverse().ToArray());
   }
