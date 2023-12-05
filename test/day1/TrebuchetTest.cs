@@ -60,7 +60,7 @@ public class TrebuchetTest
   #region -- Second part --
 
   [Fact(Skip = "WIP")]
-  public void SolveProvidedExampleWithSpelledNumbers()
+  public void SolveProvidedExample_withSpelledNumbers()
   {
     var input = new string[] {
       "two1nine",
@@ -72,10 +72,36 @@ public class TrebuchetTest
       "7pqrstsixteen"
     };
 
-    var actual = solver.SumOfCalibrationValuesFor(input);
+    var actual = solver.SumOfCalibrationValuesFor(input, true);
 
     Assert.Equal(29 + 83 + 13 + 24 + 42 + 14 + 76, actual);
   }
+
+  #region -- CalibrationValueFromRow --
+
+  [Fact]
+  public void CalibrationValueFromRow_withSpelledNumbers()
+  {
+    Assert.Equal(29, solver.CalibrationValueFromRow("two1nine", true));
+    Assert.Equal(13, solver.CalibrationValueFromRow("abcone2threexyz", true));
+    Assert.Equal(42, solver.CalibrationValueFromRow("4nineeightseven2", true));
+  }
+
+  [Fact]
+  public void CalibrationValueFromRow_withSpelledNumbers_mixingSpelledWithNormal()
+  {
+    Assert.Equal(14, solver.CalibrationValueFromRow("zoneight234", true));
+    Assert.Equal(76, solver.CalibrationValueFromRow("7pqrstsixteen", true));
+  }
+
+  [Fact(Skip = "WIP")]
+  public void CalibrationValueFromRow_withSpelledNumbers_shouldValuateFirstBefore()
+  {
+    Assert.Equal(83, solver.CalibrationValueFromRow("eightwothree", true));
+    Assert.Equal(24, solver.CalibrationValueFromRow("xtwone3four", true));
+  }
+
+  #endregion
 
   #endregion
 
