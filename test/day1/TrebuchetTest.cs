@@ -1,10 +1,10 @@
-﻿namespace aoc2023;
+namespace aoc2023.day1;
 
 using Xunit;
 
 public class TrebuchetTest
 {
-  private Trebuchet solver = new Trebuchet();
+  private readonly Trebuchet solver = new();
 
   public class FirstPartTest : TrebuchetTest
   {
