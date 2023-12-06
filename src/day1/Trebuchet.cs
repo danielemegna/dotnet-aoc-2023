@@ -1,5 +1,4 @@
-namespace aoc2023;
-
+namespace aoc2023.day1;
 
 public class Trebuchet
 {
