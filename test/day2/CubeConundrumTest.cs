@@ -34,7 +34,20 @@ public class CubeConundrumTest
 
   public class SecondPartTest : CubeConundrumTest
   {
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.SumOfPowerOfMinimumNeededCubes(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(48 + 12 + 1560 + 630 + 36, actual);
+    }
 
+    [Fact]
+    public void SolveWithFile()
+    {
+      var inputFromFile = File.ReadAllLines("day2/input.txt");
+      var actual = solver.SumOfPowerOfMinimumNeededCubes(inputFromFile);
+      Assert.Equal(66016, actual);
+    }
 
   }
 

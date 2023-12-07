@@ -19,6 +19,12 @@ public class CubeConundrum
     .Sum(game => game.Id);
   }
 
+  public long SumOfPowerOfMinimumNeededCubes(string[] inputLines)
+  {
+    var games = ParseGames(inputLines);
+    return games.Sum(game => game.PowerOfMinimumNeededCubes());
+  }
+
   internal Game[] ParseGames(string[] inputLines)
   {
     return inputLines.Select(GameParser.ParseGame).ToArray();
