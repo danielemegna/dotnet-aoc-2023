@@ -23,12 +23,12 @@ public class CubeConundrumTest
       Assert.Equal(1 + 2 + 5, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var inputFromFile = File.ReadAllLines("day2/input.txt");
       var actual = solver.SumOfPossibileGame(inputFromFile);
-      Assert.Equal(999, actual);
+      Assert.Equal(2541, actual);
     }
   }
 
