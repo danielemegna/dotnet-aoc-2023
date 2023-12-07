@@ -9,6 +9,7 @@ Use temporary node container with current directory volume:
 ```
 $ docker run --rm -it -v $PWD:/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 bash
 # dotnet test --logger "console;verbosity=normal" aoc2023.csproj
+# dotnet test --logger "console;verbosity=normal" aoc2023.csproj --filter aoc2023.day2
 ```
 
 ### VSCode Dev Container setup
