@@ -2,7 +2,7 @@ namespace aoc2023.day2;
 
 public class CubeConundrum
 {
-  public int SumOfPossibileGame(string[] inputLines)
+  public int SumIdsOfPossibileGame(string[] inputLines)
   {
     var MaxPossibleRedCubesCount = 12;
     var MaxPossibleGreenCubesCount = 13;
@@ -19,7 +19,7 @@ public class CubeConundrum
     .Sum(game => game.Id);
   }
 
-  public long SumOfPowerOfMinimumNeededCubes(string[] inputLines)
+  public long SumPowerOfMinimumNeededCubes(string[] inputLines)
   {
     var games = ParseGames(inputLines);
     return games.Sum(game => game.PowerOfMinimumNeededCubes());

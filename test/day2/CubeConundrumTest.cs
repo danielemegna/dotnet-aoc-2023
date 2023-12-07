@@ -19,7 +19,7 @@ public class CubeConundrumTest
     [Fact]
     public void SolveTheProvidedExample()
     {
-      var actual = solver.SumOfPossibileGame(PROVIDED_EXAMPLE_INPUT_LINES);
+      var actual = solver.SumIdsOfPossibileGame(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(1 + 2 + 5, actual);
     }
 
@@ -27,7 +27,7 @@ public class CubeConundrumTest
     public void SolveWithFile()
     {
       var inputFromFile = File.ReadAllLines("day2/input.txt");
-      var actual = solver.SumOfPossibileGame(inputFromFile);
+      var actual = solver.SumIdsOfPossibileGame(inputFromFile);
       Assert.Equal(2541, actual);
     }
   }
@@ -37,7 +37,7 @@ public class CubeConundrumTest
     [Fact]
     public void SolveTheProvidedExample()
     {
-      var actual = solver.SumOfPowerOfMinimumNeededCubes(PROVIDED_EXAMPLE_INPUT_LINES);
+      var actual = solver.SumPowerOfMinimumNeededCubes(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(48 + 12 + 1560 + 630 + 36, actual);
     }
 
@@ -45,7 +45,7 @@ public class CubeConundrumTest
     public void SolveWithFile()
     {
       var inputFromFile = File.ReadAllLines("day2/input.txt");
-      var actual = solver.SumOfPowerOfMinimumNeededCubes(inputFromFile);
+      var actual = solver.SumPowerOfMinimumNeededCubes(inputFromFile);
       Assert.Equal(66016, actual);
     }
 
