@@ -6,7 +6,7 @@ class GameParser()
 {
   public static Game ParseGame(string gameInputLine)
   {
-    Regex regex = new Regex(@"^Game (\d): (.+$)");
+    Regex regex = new Regex(@"^Game (\d+): (.+$)");
     MatchCollection matchCollection = regex.Matches(gameInputLine);
 
     if (matchCollection.Count < 1 || matchCollection[0].Groups.Count < (1 + 2))

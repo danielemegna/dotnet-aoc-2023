@@ -16,6 +16,13 @@ public class GameParserTest
   }
 
   [Fact]
+  public void ProperlyParseGameIdWithMoreThanTwoDigits()
+  {
+    var actual = GameParser.ParseGame("Game 15: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green");
+    Assert.Equal(15, actual.Id);
+  }
+
+  [Fact]
   public void ProperlyGetMaxCountForColorCube()
   {
     var actual = GameParser.ParseGame(CubeConundrumTest.PROVIDED_EXAMPLE_INPUT_LINES[0]);
