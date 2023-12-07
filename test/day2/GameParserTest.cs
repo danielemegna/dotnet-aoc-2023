@@ -35,4 +35,15 @@ public class GameParserTest
     Assert.Equal(15, actual.MaxCountInSet(CubeColor.BLUE));
     Assert.Equal(14, actual.MaxCountInSet(CubeColor.RED));
   }
+
+  [Fact]
+  public void GetPowerOfMinimalCubeNeeded()
+  {
+    var actual = GameParser.ParseGame(CubeConundrumTest.PROVIDED_EXAMPLE_INPUT_LINES[0]);
+    Assert.Equal(4 * 2 * 6, actual.PowerOfMinimumNeededCubes());
+    actual = GameParser.ParseGame(CubeConundrumTest.PROVIDED_EXAMPLE_INPUT_LINES[2]);
+    Assert.Equal(20 * 13 * 6, actual.PowerOfMinimumNeededCubes());
+    actual = GameParser.ParseGame(CubeConundrumTest.PROVIDED_EXAMPLE_INPUT_LINES[4]);
+    Assert.Equal(6 * 3 * 2, actual.PowerOfMinimumNeededCubes());
+  }
 }

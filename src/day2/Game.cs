@@ -29,6 +29,11 @@ public class Game(int id)
     };
   }
 
+  public long PowerOfMinimumNeededCubes()
+  {
+    return MaxBlueCubesCount * MaxRedCubesCount * MaxGreenCubesCount;
+  }
+
   public class Set()
   {
     public int BlueCubesCount { get; private set; } = 0;
