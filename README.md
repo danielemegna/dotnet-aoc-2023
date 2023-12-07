@@ -23,6 +23,6 @@ Do do it, install the [related extension](https://marketplace.visualstudio.com/i
 If you want to open an additional bash session in the vscode container:
 
 ```
-$ docker exec -it -w /workspaces/$(basename $PWD) mystifying_mendel bash
+$ docker exec -it -w /workspaces/<directory-name> <container-name> bash
 # dotnet test --logger .........
 ```
