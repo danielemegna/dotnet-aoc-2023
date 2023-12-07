@@ -26,6 +26,7 @@ public class Game(int id)
       CubeColor.BLUE => MaxBlueCubesCount,
       CubeColor.RED => MaxRedCubesCount,
       CubeColor.GREEN => MaxGreenCubesCount,
+      _ => throw new NotImplementedException("Cannot get MaxCountInSet for " + cubeColor)
     };
   }
 
