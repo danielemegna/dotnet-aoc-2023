@@ -11,6 +11,8 @@ public class EngineSchematicParser
   public static EngineSchematic Parse(string[] inputLines)
   {
     List<int> engineParts = [];
+    List<int> gearRatios = [];
+
     for (int y = 0; y < inputLines.Length; y++)
     {
       string line = inputLines[y];
@@ -41,7 +43,7 @@ public class EngineSchematicParser
       }
     }
 
-    return new EngineSchematic(engineParts.ToArray());
+    return new EngineSchematic(engineParts.ToArray(), gearRatios.ToArray());
   }
 
   private static bool HasAdjacentSymbol(string[] sourceMatrix, int x, int y)
