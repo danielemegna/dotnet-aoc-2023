@@ -64,6 +64,27 @@ public class GearRatiosTest
   public class SecondPartTest : GearRatiosTest
   {
 
+    [Fact(Skip = "WIP")]
+    public void SolveTheProvidedExample()
+    {
+      var input = new string[] {
+        "467..114..",
+        "...*......",
+        "..35..633.",
+        "......#...",
+        "617*......",
+        ".....+.58.",
+        "..592.....",
+        "......755.",
+        "...$.*....",
+        ".664.598..",
+      };
+
+      var actual = solver.SumGearRatios(input);
+
+      Assert.Equal((467 * 35) + (755 * 598), actual);
+    }
+
   }
 
 }
