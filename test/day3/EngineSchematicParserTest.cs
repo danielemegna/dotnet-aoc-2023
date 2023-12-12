@@ -10,21 +10,7 @@ public class EngineSchematicParserTest
     [Fact]
     public void GetEngineParts()
     {
-      var input = new string[] {
-          "467..114..",
-          "...*......",
-          "..35..633.",
-          "......#...",
-          "617*......",
-          ".....+.58.",
-          "..592.....",
-          "......755.",
-          "...$.*....",
-          ".664.598..",
-        };
-
-      var actual = EngineSchematicParser.Parse(input);
-
+      var actual = EngineSchematicParser.Parse(GearRatiosTest.PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal<int[]>([467, 35, 633, 617, 592, 755, 664, 598], actual.EngineParts);
     }
   }
@@ -34,18 +20,18 @@ public class EngineSchematicParserTest
     [Fact]
     public void GetEngineParts()
     {
-      var input = new string[] {
+      string[] input = [
         ".....739.....",
-        "......@......",
+        "11....@..92..",
         ".............",
-        ".............",
+        "......83.....",
         "44...........",
         ".#.........32",
-        "..........*..",
+        "...133....*..",
         ".............",
         "....&........",
         ".....82......",
-      };
+      ];
 
       var actual = EngineSchematicParser.Parse(input);
 
