@@ -1,8 +1,9 @@
+
 namespace aoc2023.day3;
 
 public class GearRatios
 {
-
+  private const int STAR_CHAR_CODE = 42;
   private const int DOT_CHAR_CODE = 46;
   private const int ZERO_CHAR_CODE = 48;
   private const int NINE_CHAR_CODE = 57;
@@ -44,6 +45,11 @@ public class GearRatios
     return sum;
   }
 
+  public int SumGearRatios(string[] input)
+  {
+    throw new NotImplementedException();
+  }
+
   private bool HasAdjacentSymbol(string[] sourceMatrix, int x, int y)
   {
     List<(int, int)> adjacentCoordinates = [
@@ -76,4 +82,5 @@ public class GearRatios
   {
     return c >= ZERO_CHAR_CODE && c <= NINE_CHAR_CODE;
   }
+
 }
