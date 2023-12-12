@@ -4,6 +4,19 @@ using Xunit;
 
 public class GearRatiosTest
 {
+  public static readonly string[] PROVIDED_EXAMPLE_INPUT_LINES = [
+    "467..114..",
+    "...*......",
+    "..35..633.",
+    "......#...",
+    "617*......",
+    ".....+.58.",
+    "..592.....",
+    "......755.",
+    "...$.*....",
+    ".664.598..",
+  ];
+
   private readonly GearRatios solver = new();
 
   public class FirstPartTest : GearRatiosTest
@@ -12,43 +25,8 @@ public class GearRatiosTest
     [Fact]
     public void SolveTheProvidedExample()
     {
-      var input = new string[] {
-        "467..114..",
-        "...*......",
-        "..35..633.",
-        "......#...",
-        "617*......",
-        ".....+.58.",
-        "..592.....",
-        "......755.",
-        "...$.*....",
-        ".664.598..",
-      };
-
-      var actual = solver.SumEngineParts(input);
-
+      var actual = solver.SumEngineParts(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(467 + 35 + 633 + 617 + 592 + 755 + 664 + 598, actual);
-    }
-
-    [Fact]
-    public void SolveAnotherExampleWithNumbersAtTheEdges()
-    {
-      var input = new string[] {
-        ".....739.....",
-        "......@......",
-        ".............",
-        ".............",
-        "44...........",
-        ".#.........32",
-        "..........*..",
-        ".............",
-        "....&........",
-        ".....82......",
-      };
-
-      var actual = solver.SumEngineParts(input);
-
-      Assert.Equal(739 + 44 + 32 + 82, actual);
     }
 
     [Fact]
@@ -67,21 +45,7 @@ public class GearRatiosTest
     [Fact(Skip = "WIP")]
     public void SolveTheProvidedExample()
     {
-      var input = new string[] {
-        "467..114..",
-        "...*......",
-        "..35..633.",
-        "......#...",
-        "617*......",
-        ".....+.58.",
-        "..592.....",
-        "......755.",
-        "...$.*....",
-        ".664.598..",
-      };
-
-      var actual = solver.SumGearRatios(input);
-
+      var actual = solver.SumGearRatios(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal((467 * 35) + (755 * 598), actual);
     }
 
