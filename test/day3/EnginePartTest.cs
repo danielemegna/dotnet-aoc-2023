@@ -5,15 +5,15 @@ using Xunit;
 public class EnginePartTest {
 
     [Fact]
-    public void EnginePartWithoutAdjacentNumber()
+    public void EnginePartWithoutAdjacentNumbers()
     {
       string[] inputMatrix = [
-        ".....",
-        "..*..",
-        ".....",
+        ".....12",
+        "93.*...",
+        ".......",
       ];
 
-      var actual = EnginePart.From(inputMatrix, new(2, 1));
+      var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
       Assert.Equal([], actual.AdjacentNumbers);
