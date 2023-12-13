@@ -63,4 +63,34 @@ public class EnginePartTest {
       Assert.Equal('*', actual.Symbol);
       Assert.Equal<int[]>([62], actual.AdjacentNumbers);
     }
+
+    [Fact]
+    public void EnginePartWithOneAdjacentNumberToTheLeft()
+    {
+      string[] inputMatrix = [
+        "......",
+        ".59*..",
+        "......",
+      ];
+
+      var actual = EnginePart.From(inputMatrix, new(3, 1));
+
+      Assert.Equal('*', actual.Symbol);
+      Assert.Equal<int[]>([59], actual.AdjacentNumbers);
+    }
+
+    [Fact]
+    public void EnginePartWithOneAdjacentNumberToTheLeftAtTheEdge()
+    {
+      string[] inputMatrix = [
+        ".....",
+        "6*...",
+        ".....",
+      ];
+
+      var actual = EnginePart.From(inputMatrix, new(1, 1));
+
+      Assert.Equal('*', actual.Symbol);
+      Assert.Equal<int[]>([6], actual.AdjacentNumbers);
+    }
 }

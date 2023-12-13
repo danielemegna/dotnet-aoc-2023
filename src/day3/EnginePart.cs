@@ -19,14 +19,15 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     char symbol = inputMatrix[y][x];
 
     int[] numbersOnTheRight = NumbersOnTheRight(inputMatrix, coordinate);
+    int[] numbersOnTheLeft = NumbersOnTheLeft(inputMatrix, coordinate);
 
-    return new EnginePart(symbol, numbersOnTheRight);
+    return new EnginePart(symbol, numbersOnTheRight.Concat(numbersOnTheLeft).ToArray());
   }
 
-  private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate c)
+  private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate coordinate)
   {
-    int startingX = c.Item1 + 1;
-    int y = c.Item2;
+    int startingX = coordinate.Item1 + 1;
+    int y = coordinate.Item2;
     int rowTotalLenght = inputMatrix[y].Length;
 
     string number = "";
@@ -44,6 +45,28 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
 
     return [int.Parse(number)];
   }
+
+  private static int[] NumbersOnTheLeft(string[] inputMatrix, Coordinate coordinate)
+  {
+    int startingX = coordinate.Item1 - 1;
+    int y = coordinate.Item2;
+
+    string number = "";
+    for (int x = startingX; x >= 0; x--)
+    {
+      char currentChar = inputMatrix[y][x];
+      if (!IsAnInteger(currentChar))
+        break;
+
+      number = currentChar + number;
+    }
+
+    if (number == "")
+      return [];
+
+    return [int.Parse(number)];
+  }
+
 
   private static bool IsAnInteger(char c)
   {
