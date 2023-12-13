@@ -13,25 +13,26 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
   public char Symbol { get; } = symbol;
   public int[] AdjacentNumbers { get; } = adjacentNumbers;
 
-  public static EnginePart From(string[] inputMatrix, Coordinate c)
+  public static EnginePart From(string[] inputMatrix, Coordinate coordinate)
   {
-    (int cx, int cy) = c;
-    char symbol = inputMatrix[cy][cx];
+    (int x, int y) = coordinate;
+    char symbol = inputMatrix[y][x];
 
-    int[] numbersOnTheRight = NumbersOnTheRight(inputMatrix, new(cx + 1, cy));
+    int[] numbersOnTheRight = NumbersOnTheRight(inputMatrix, coordinate);
 
     return new EnginePart(symbol, numbersOnTheRight);
   }
 
   private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate c)
   {
-    (int startingX, int cy) = c;
-    int rowTotalLenght = inputMatrix[cy].Length;
+    int startingX = c.Item1 + 1;
+    int y = c.Item2;
+    int rowTotalLenght = inputMatrix[y].Length;
 
     string number = "";
     for (int x = startingX; x < rowTotalLenght; x++)
     {
-      char currentChar = inputMatrix[cy][x];
+      char currentChar = inputMatrix[y][x];
       if (!IsAnInteger(currentChar))
         break;
 
