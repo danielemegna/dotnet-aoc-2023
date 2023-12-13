@@ -23,14 +23,17 @@ public class EnginePartTest {
     public void EnginePartWithoutAdjacentNumberAtTheEdge()
     {
       string[] inputMatrix = [
-        ".....",
         "....*",
         ".....",
+        "#....",
       ];
 
-      var actual = EnginePart.From(inputMatrix, new(4, 1));
-
+      var actual = EnginePart.From(inputMatrix, new(4, 0));
       Assert.Equal('*', actual.Symbol);
+      Assert.Equal([], actual.AdjacentNumbers);
+
+      actual = EnginePart.From(inputMatrix, new(0, 2));
+      Assert.Equal('#', actual.Symbol);
       Assert.Equal([], actual.AdjacentNumbers);
     }
 
