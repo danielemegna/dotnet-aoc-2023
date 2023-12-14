@@ -38,6 +38,21 @@ public class EnginePartTest
     Assert.Equal([], actual.AdjacentNumbers);
   }
 
+  [Fact]
+  public void WithSomeAdjacentNumbers()
+  {
+    string[] inputMatrix = [
+      "....312",
+      "93.*27.",
+      "..189..",
+    ];
+
+    var actual = EnginePart.From(inputMatrix, new(3, 1));
+
+    Assert.Equal('*', actual.Symbol);
+    Assert.Equal<int[]>([27, 312, 189], actual.AdjacentNumbers);
+  }
+
   public class RightAndLeftAdjacentNumbers
   {
 
