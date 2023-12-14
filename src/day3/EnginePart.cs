@@ -23,47 +23,19 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     return new EnginePart(symbol, [.. numbersOnTheRight, .. numbersOnTheLeft, .. numbersAbove, .. numbersBelow]);
   }
 
-  private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate coordinate)
+  private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate partCoordinate)
   {
-    int startingX = coordinate.Item1 + 1;
-    int y = coordinate.Item2;
-    int rowTotalLenght = inputMatrix[y].Length;
-
-    string number = "";
-    for (int x = startingX; x < rowTotalLenght; x++)
-    {
-      char currentChar = inputMatrix[y][x];
-      if (!IsAnInteger(currentChar))
-        break;
-
-      number += currentChar;
-    }
-
-    if (number == "")
-      return [];
-
-    return [int.Parse(number)];
+    (int partX, int partY) = partCoordinate;
+    int maxPossibileXValue = inputMatrix[partY].Length - 1;
+    int rightX = Math.Min(partX + 1, maxPossibileXValue);
+    return FindNumbersWith(inputMatrix, partY, rightX, rightX, maxPossibileXValue);
   }
 
-  private static int[] NumbersOnTheLeft(string[] inputMatrix, Coordinate coordinate)
+  private static int[] NumbersOnTheLeft(string[] inputMatrix, Coordinate partCoordinate)
   {
-    int startingX = coordinate.Item1 - 1;
-    int y = coordinate.Item2;
-
-    string number = "";
-    for (int x = startingX; x >= 0; x--)
-    {
-      char currentChar = inputMatrix[y][x];
-      if (!IsAnInteger(currentChar))
-        break;
-
-      number = currentChar + number;
-    }
-
-    if (number == "")
-      return [];
-
-    return [int.Parse(number)];
+    (int partX, int partY) = partCoordinate;
+    int leftX = Math.Max(0, partX - 1);
+    return FindNumbersWith(inputMatrix, partY, leftX, leftX, partX);
   }
 
   private static int[] NumbersAbove(string[] inputMatrix, Coordinate partCoordinate)
