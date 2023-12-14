@@ -4,8 +4,6 @@ using Coordinate = Tuple<int, int>;
 
 public class EnginePart(char symbol, int[] adjacentNumbers)
 {
-  private const int STAR_CHAR_CODE = 42;
-  private const int DOT_CHAR_CODE = 46;
   private const int ZERO_CHAR_CODE = 48;
   private const int NINE_CHAR_CODE = 57;
 
@@ -20,8 +18,9 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     int[] numbersOnTheRight = NumbersOnTheRight(inputMatrix, coordinate);
     int[] numbersOnTheLeft = NumbersOnTheLeft(inputMatrix, coordinate);
     int[] numbersAbove = NumbersAbove(inputMatrix, coordinate);
+    int[] numbersBelow = NumbersBelow(inputMatrix, coordinate);
 
-    return new EnginePart(symbol, [.. numbersOnTheRight, .. numbersOnTheLeft, .. numbersAbove]);
+    return new EnginePart(symbol, [.. numbersOnTheRight, .. numbersOnTheLeft, .. numbersAbove, ..numbersBelow]);
   }
 
   private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate coordinate)
@@ -72,9 +71,20 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     if (coordinate.Item2 == 0)
       return [];
 
+    return NumbersInRow(inputMatrix, coordinate, coordinate.Item2-1);
+  }
+
+  private static int[] NumbersBelow(string[] inputMatrix, Coordinate coordinate) {
+    if (coordinate.Item2 == (inputMatrix.Length-1))
+      return [];
+
+    return NumbersInRow(inputMatrix, coordinate, coordinate.Item2+1);
+  }
+
+  private static int[] NumbersInRow(string[] inputMatrix, Coordinate coordinate, int rowY) {
     List<int> result = [];
     int x = Math.Max(0, coordinate.Item1 - 1);
-    int y = coordinate.Item2 - 1;
+    int y = rowY;
     int rowTotalLenght = inputMatrix[y].Length;
 
     while (x > 0)
