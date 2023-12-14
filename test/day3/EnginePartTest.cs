@@ -5,7 +5,7 @@ using Xunit;
 public class EnginePartTest {
 
     [Fact]
-    public void EnginePartWithoutAdjacentNumbers()
+    public void WithoutAdjacentNumbers()
     {
       string[] inputMatrix = [
         ".....12",
@@ -20,7 +20,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void EnginePartWithoutAdjacentNumberAtTheEdge()
+    public void WithoutAdjacentNumberAtTheEdge()
     {
       string[] inputMatrix = [
         "....*",
@@ -38,7 +38,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void EnginePartWithOneAdjacentNumberToTheRight()
+    public void WithOneAdjacentNumberToTheRight()
     {
       string[] inputMatrix = [
         "......",
@@ -53,7 +53,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void EnginePartWithOneAdjacentNumberToTheRightAtTheEdge()
+    public void WithOneAdjacentNumberToTheRightAtTheEdge()
     {
       string[] inputMatrix = [
         ".....",
@@ -68,7 +68,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void EnginePartWithOneAdjacentNumberToTheLeft()
+    public void WithOneAdjacentNumberToTheLeft()
     {
       string[] inputMatrix = [
         "......",
@@ -83,7 +83,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void EnginePartWithOneAdjacentNumberToTheLeftAtTheEdge()
+    public void WithOneAdjacentNumberToTheLeftAtTheEdge()
     {
       string[] inputMatrix = [
         ".....",
