@@ -1,6 +1,5 @@
 namespace aoc2023.day3;
 
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
 using Coordinate = Tuple<int, int>;
 
 public class EnginePart(char symbol, int[] adjacentNumbers)
@@ -20,8 +19,9 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
 
     int[] numbersOnTheRight = NumbersOnTheRight(inputMatrix, coordinate);
     int[] numbersOnTheLeft = NumbersOnTheLeft(inputMatrix, coordinate);
+    int[] numbersAbove = NumbersAbove(inputMatrix, coordinate);
 
-    return new EnginePart(symbol, numbersOnTheRight.Concat(numbersOnTheLeft).ToArray());
+    return new EnginePart(symbol, [.. numbersOnTheRight, .. numbersOnTheLeft, .. numbersAbove]);
   }
 
   private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate coordinate)
@@ -65,6 +65,45 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
       return [];
 
     return [int.Parse(number)];
+  }
+
+  private static int[] NumbersAbove(string[] inputMatrix, Coordinate coordinate)
+  {
+    if (coordinate.Item2 == 0)
+      return [];
+
+    List<int> result = [];
+    int x = Math.Max(0, coordinate.Item1 - 1);
+    int y = coordinate.Item2 - 1;
+    int rowTotalLenght = inputMatrix[y].Length;
+
+    while (x > 0)
+    {
+      char currentChar = inputMatrix[y][x];
+      if (!IsAnInteger(currentChar))
+        break;
+      x--;
+    }
+
+    while (x <= coordinate.Item1 + 1)
+    {
+      string number = "";
+      while (x < rowTotalLenght)
+      {
+        char currentChar = inputMatrix[y][x];
+        if (!IsAnInteger(currentChar))
+          break;
+
+        number += currentChar;
+        x++;
+      }
+
+      if (number != "")
+        result.Add(int.Parse(number));
+      x++;
+    }
+
+    return result.ToArray();
   }
 
 
