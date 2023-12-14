@@ -2,40 +2,44 @@ namespace aoc2023.day3;
 
 using Xunit;
 
-public class EnginePartTest {
+public class EnginePartTest
+{
 
-    [Fact]
-    public void WithoutAdjacentNumbers()
-    {
-      string[] inputMatrix = [
-        ".....12",
-        "93.*...",
-        ".......",
-      ];
+  [Fact]
+  public void WithoutAdjacentNumbers()
+  {
+    string[] inputMatrix = [
+      ".....12",
+      "93.*...",
+      ".......",
+    ];
 
-      var actual = EnginePart.From(inputMatrix, new(3, 1));
+    var actual = EnginePart.From(inputMatrix, new(3, 1));
 
-      Assert.Equal('*', actual.Symbol);
-      Assert.Equal([], actual.AdjacentNumbers);
-    }
+    Assert.Equal('*', actual.Symbol);
+    Assert.Equal([], actual.AdjacentNumbers);
+  }
 
-    [Fact]
-    public void WithoutAdjacentNumberAtTheEdge()
-    {
-      string[] inputMatrix = [
-        "....*",
-        ".....",
-        "#....",
-      ];
+  [Fact]
+  public void WithoutAdjacentNumberAtTheEdge()
+  {
+    string[] inputMatrix = [
+      "....*",
+      ".....",
+      "#....",
+    ];
 
-      var actual = EnginePart.From(inputMatrix, new(4, 0));
-      Assert.Equal('*', actual.Symbol);
-      Assert.Equal([], actual.AdjacentNumbers);
+    var actual = EnginePart.From(inputMatrix, new(4, 0));
+    Assert.Equal('*', actual.Symbol);
+    Assert.Equal([], actual.AdjacentNumbers);
 
-      actual = EnginePart.From(inputMatrix, new(0, 2));
-      Assert.Equal('#', actual.Symbol);
-      Assert.Equal([], actual.AdjacentNumbers);
-    }
+    actual = EnginePart.From(inputMatrix, new(0, 2));
+    Assert.Equal('#', actual.Symbol);
+    Assert.Equal([], actual.AdjacentNumbers);
+  }
+
+  public class RightAndLeftAdjacentNumbers
+  {
 
     [Fact]
     public void WithOneAdjacentNumberToTheRight()
@@ -96,9 +100,13 @@ public class EnginePartTest {
       Assert.Equal('*', actual.Symbol);
       Assert.Equal<int[]>([6], actual.AdjacentNumbers);
     }
+  }
+
+  public class AboveAdjacentNumbers
+  {
 
     [Fact]
-    public void WithOneAdjacentNumberAbove()
+    public void WithOne()
     {
       string[] inputMatrix = [
         "..30.",
@@ -113,7 +121,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void WithOneAdjacentNumberAboveStartingBefore()
+    public void WithOneStartingBefore()
     {
       string[] inputMatrix = [
         ".78..",
@@ -128,7 +136,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void WithOneAdjacentNumberAboveStartingFarBefore()
+    public void WithOneStartingFarBefore()
     {
       string[] inputMatrix = [
         ".54...",
@@ -144,7 +152,7 @@ public class EnginePartTest {
 
 
     [Fact]
-    public void WithOneAdjacentNumberAboveStartingAfter()
+    public void WithOneStartingAfter()
     {
       string[] inputMatrix = [
         "...57.",
@@ -159,7 +167,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void WithOneBigAdjacentNumberAbove()
+    public void WithOneBig()
     {
       string[] inputMatrix = [
         ".631575.",
@@ -174,7 +182,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void WithOneAdjacentNumberAboveInLeftCorner()
+    public void WithOneInLeftCorner()
     {
       string[] inputMatrix = [
         "89...",
@@ -189,7 +197,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void WithOneAdjacentNumberAboveInRightCorner()
+    public void WithOneInRightCorner()
     {
       string[] inputMatrix = [
         "...13",
@@ -204,7 +212,7 @@ public class EnginePartTest {
     }
 
     [Fact]
-    public void WithMultipleAdjacentNumberAbove()
+    public void WithMultiple()
     {
       string[] inputMatrix = [
         ".56.227.",
@@ -217,4 +225,5 @@ public class EnginePartTest {
       Assert.Equal('*', actual.Symbol);
       Assert.Equal<int[]>([56, 227], actual.AdjacentNumbers);
     }
+  }
 }
