@@ -20,7 +20,7 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     int[] numbersAbove = NumbersAbove(inputMatrix, coordinate);
     int[] numbersBelow = NumbersBelow(inputMatrix, coordinate);
 
-    return new EnginePart(symbol, [.. numbersOnTheRight, .. numbersOnTheLeft, .. numbersAbove, ..numbersBelow]);
+    return new EnginePart(symbol, [.. numbersOnTheRight, .. numbersOnTheLeft, .. numbersAbove, .. numbersBelow]);
   }
 
   private static int[] NumbersOnTheRight(string[] inputMatrix, Coordinate coordinate)
@@ -66,51 +66,63 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     return [int.Parse(number)];
   }
 
-  private static int[] NumbersAbove(string[] inputMatrix, Coordinate coordinate)
+  private static int[] NumbersAbove(string[] inputMatrix, Coordinate partCoordinate)
   {
-    if (coordinate.Item2 == 0)
+    (int partX, int partY) = partCoordinate;
+    if (partY == 0)
       return [];
 
-    return NumbersInRow(inputMatrix, coordinate, coordinate.Item2-1);
+    int rowY = partY - 1;
+    return FindNumbersInRow(inputMatrix, rowY, partX);
   }
 
-  private static int[] NumbersBelow(string[] inputMatrix, Coordinate coordinate) {
-    if (coordinate.Item2 == (inputMatrix.Length-1))
+  private static int[] NumbersBelow(string[] inputMatrix, Coordinate partCoordinate)
+  {
+    (int partX, int partY) = partCoordinate;
+    if (partY == (inputMatrix.Length - 1))
       return [];
 
-    return NumbersInRow(inputMatrix, coordinate, coordinate.Item2+1);
+    int rowY = partY + 1;
+    return FindNumbersInRow(inputMatrix, rowY, partX);
   }
 
-  private static int[] NumbersInRow(string[] inputMatrix, Coordinate coordinate, int rowY) {
+  private static int[] FindNumbersInRow(string[] inputMatrix, int rowY, int partX)
+  {
+    int maxPossibileXValue = inputMatrix[rowY].Length - 1;
+    int startingX = Math.Max(0, partX - 1);
+    int endX = Math.Min(partX + 1, maxPossibileXValue);
+    return FindNumbersWith(inputMatrix, rowY, startingX, endX, maxPossibileXValue);
+  }
+
+  private static int[] FindNumbersWith(string[] inputMatrix, int yCursor, int startingX, int endX, int maxPossibileXValue)
+  {
     List<int> result = [];
-    int x = Math.Max(0, coordinate.Item1 - 1);
-    int y = rowY;
-    int rowTotalLenght = inputMatrix[y].Length;
+    int xCursor = startingX;
 
-    while (x > 0)
+    while (xCursor > 0)
     {
-      char currentChar = inputMatrix[y][x];
+      char currentChar = inputMatrix[yCursor][xCursor];
       if (!IsAnInteger(currentChar))
         break;
-      x--;
+      xCursor--;
     }
 
-    while (x <= coordinate.Item1 + 1)
+    while (xCursor <= endX)
     {
       string number = "";
-      while (x < rowTotalLenght)
+      while (xCursor <= maxPossibileXValue)
       {
-        char currentChar = inputMatrix[y][x];
+        char currentChar = inputMatrix[yCursor][xCursor];
         if (!IsAnInteger(currentChar))
           break;
 
         number += currentChar;
-        x++;
+        xCursor++;
       }
 
       if (number != "")
         result.Add(int.Parse(number));
-      x++;
+      xCursor++;
     }
 
     return result.ToArray();
