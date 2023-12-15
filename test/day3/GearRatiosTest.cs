@@ -48,6 +48,14 @@ public class GearRatiosTest
       Assert.Equal((467 * 35) + (755 * 598), actual);
     }
 
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day3/input.txt");
+      var actual = solver.SumGearRatios(input);
+      Assert.Equal(81997870, actual);
+    }
+
   }
 
 }
