@@ -9,9 +9,10 @@ public class GearRatios
     return engineSchematic.EngineParts.Sum();
   }
 
-  public int SumGearRatios(string[] input)
+  public int SumGearRatios(string[] inputLines)
   {
-    throw new NotImplementedException();
+    var engineSchematic = EngineSchematicParser.Parse(inputLines);
+    return engineSchematic.GearRatios.Sum();
   }
 
 }

@@ -41,8 +41,7 @@ public class GearRatiosTest
 
   public class SecondPartTest : GearRatiosTest
   {
-
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheProvidedExample()
     {
       var actual = solver.SumGearRatios(PROVIDED_EXAMPLE_INPUT_LINES);
