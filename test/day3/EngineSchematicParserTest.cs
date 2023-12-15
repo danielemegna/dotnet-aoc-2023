@@ -10,7 +10,7 @@ public class EngineSchematicParserTest
     public void OfProvidedExample()
     {
       var actual = EngineSchematicParser.Parse(GearRatiosTest.PROVIDED_EXAMPLE_INPUT_LINES);
-      Assert.Equal<int[]>([467, 35, 633, 617, 592, 755, 664, 598], actual.EngineParts);
+      Assert.Equal<int[]>([467, 35, 633, 617, 592, 664, 755, 598], actual.EngineParts);
     }
 
     [Fact]
@@ -36,7 +36,7 @@ public class EngineSchematicParserTest
 
   public class GetGearRatios()
   {
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void OfProvidedExample()
     {
       var actual = EngineSchematicParser.Parse(GearRatiosTest.PROVIDED_EXAMPLE_INPUT_LINES);
