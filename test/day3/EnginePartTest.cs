@@ -322,6 +322,21 @@ public class EnginePartTest
     }
 
     [Fact]
+    public void WithVeryBigOne()
+    {
+      string[] inputMatrix = [
+        "........",
+        "...*....",
+        "19171603",
+      ];
+
+      var actual = EnginePart.From(inputMatrix, new(3, 1));
+
+      Assert.Equal('*', actual.Symbol);
+      Assert.Equal<int[]>([19171603], actual.AdjacentNumbers);
+    }
+
+    [Fact]
     public void WithOneInLeftCorner()
     {
       string[] inputMatrix = [
