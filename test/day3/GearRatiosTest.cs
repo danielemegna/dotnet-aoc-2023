@@ -19,6 +19,37 @@ public class GearRatiosTest
 
   private readonly GearRatios solver = new();
 
+  public class ParsingTest : GearRatiosTest
+  {
+    [Fact]
+    public void ProvidedExample()
+    {
+      var actual = solver.ParseEngineSchematic(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(6, actual.Length);
+      //Assert.Contains(new EnginePart('$', [664]), actual); -- better equality needed for this !
+    }
+
+    [Fact]
+    public void OfAnotherExampleWithPartsAtTheEdge()
+    {
+      string[] inputLines = [
+        ".....739.....",
+        "11....@..92..",
+        ".............",
+        "......83.....",
+        "44...........",
+        ".#.........32",
+        "...133....*..",
+        ".............",
+        "....&........",
+        ".....82......",
+      ];
+      var actual = solver.ParseEngineSchematic(inputLines);
+      Assert.Equal(4, actual.Length);
+      //Assert.Contains(new EnginePart('@', [739]), actual); -- better equality needed for this !
+    }
+  }
+
   public class FirstPartTest : GearRatiosTest
   {
 
@@ -55,7 +86,6 @@ public class GearRatiosTest
       var actual = solver.SumGearRatios(input);
       Assert.Equal(81997870, actual);
     }
-
   }
 
 }
