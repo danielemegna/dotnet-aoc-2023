@@ -4,11 +4,17 @@ using Coordinate = Tuple<int, int>;
 
 public class EnginePart(char symbol, int[] adjacentNumbers)
 {
-  private const int ZERO_CHAR_CODE = 48;
-  private const int NINE_CHAR_CODE = 57;
+  public const int ZERO_CHAR_CODE = 48;
+  public const int NINE_CHAR_CODE = 57;
+  public const int STAR_CHAR_CODE = 42;
+  public const int DOT_CHAR_CODE = 46;
 
   public char Symbol { get; } = symbol;
   public int[] AdjacentNumbers { get; } = adjacentNumbers;
+  public bool IsAGear() => Symbol == STAR_CHAR_CODE && AdjacentNumbers.Length == 2;
+  public int GearRatio() => AdjacentNumbers[0] * AdjacentNumbers[1];
+
+  public static bool IsAnInteger(char c) => c >= ZERO_CHAR_CODE && c <= NINE_CHAR_CODE;
 
   public static EnginePart From(string[] inputMatrix, Coordinate partCoordinate)
   {
@@ -126,9 +132,4 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     return result.ToArray();
   }
 
-
-  private static bool IsAnInteger(char c)
-  {
-    return c >= ZERO_CHAR_CODE && c <= NINE_CHAR_CODE;
-  }
 }
