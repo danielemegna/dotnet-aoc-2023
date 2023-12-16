@@ -26,7 +26,8 @@ public class GearRatiosTest
     {
       var actual = solver.ParseEngineSchematic(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(6, actual.Length);
-      //Assert.Contains(new EnginePart('$', [664]), actual); -- better equality needed for this !
+      Assert.Contains(new EnginePart('$', [664]), actual);
+      Assert.Contains(new EnginePart('*', [755, 598]), actual);
     }
 
     [Fact]
@@ -46,7 +47,9 @@ public class GearRatiosTest
       ];
       var actual = solver.ParseEngineSchematic(inputLines);
       Assert.Equal(4, actual.Length);
-      //Assert.Contains(new EnginePart('@', [739]), actual); -- better equality needed for this !
+      Assert.Contains(new EnginePart('@', [739]), actual);
+      Assert.Contains(new EnginePart('#', [44]), actual);
+      Assert.Contains(new EnginePart('*', [32]), actual);
     }
   }
 
