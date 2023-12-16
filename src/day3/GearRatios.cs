@@ -28,10 +28,10 @@ public class GearRatios
       for (int x = 0; x < inputLines[y].Length; x++)
       {
         char currentChar = inputLines[y][x];
-        if (EnginePart.IsAnInteger(currentChar) || currentChar == EnginePart.DOT_CHAR_CODE)
+        if (EnginePartFactory.IsAnInteger(currentChar) || currentChar == EnginePartFactory.DOT_CHAR_CODE)
           continue;
 
-        EnginePart enginePart = EnginePart.From(inputLines, new(x, y));
+        EnginePart enginePart = EnginePartFactory.From(inputLines, new(x, y));
         result.Add(enginePart);
       }
     }
