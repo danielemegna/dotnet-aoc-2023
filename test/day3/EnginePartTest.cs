@@ -50,7 +50,7 @@ public class EnginePartTest
     var actual = EnginePart.From(inputMatrix, new(3, 1));
 
     Assert.Equal('*', actual.Symbol);
-    Assert.Equal<int[]>([27, 312, 189], actual.AdjacentNumbers);
+    Assert.Equal([27, 312, 189], actual.AdjacentNumbers);
   }
 
   public class RightAndLeftAdjacentNumbers
@@ -68,7 +68,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([91], actual.AdjacentNumbers);
+      Assert.Equal([91], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -83,7 +83,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([62], actual.AdjacentNumbers);
+      Assert.Equal([62], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([59], actual.AdjacentNumbers);
+      Assert.Equal([59], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -113,7 +113,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(1, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([6], actual.AdjacentNumbers);
+      Assert.Equal([6], actual.AdjacentNumbers);
     }
   }
 
@@ -132,7 +132,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([30], actual.AdjacentNumbers);
+      Assert.Equal([30], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -147,7 +147,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([78], actual.AdjacentNumbers);
+      Assert.Equal([78], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -162,7 +162,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([54], actual.AdjacentNumbers);
+      Assert.Equal([54], actual.AdjacentNumbers);
     }
 
 
@@ -178,7 +178,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([57], actual.AdjacentNumbers);
+      Assert.Equal([57], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -193,7 +193,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([631575], actual.AdjacentNumbers);
+      Assert.Equal([631575], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -208,7 +208,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([89], actual.AdjacentNumbers);
+      Assert.Equal([89], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -223,7 +223,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([13], actual.AdjacentNumbers);
+      Assert.Equal([13], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -238,7 +238,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([56, 227], actual.AdjacentNumbers);
+      Assert.Equal([56, 227], actual.AdjacentNumbers);
     }
   }
 
@@ -257,7 +257,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([64], actual.AdjacentNumbers);
+      Assert.Equal([64], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -272,7 +272,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([23], actual.AdjacentNumbers);
+      Assert.Equal([23], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -287,7 +287,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([68], actual.AdjacentNumbers);
+      Assert.Equal([68], actual.AdjacentNumbers);
     }
 
 
@@ -303,7 +303,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([18], actual.AdjacentNumbers);
+      Assert.Equal([18], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -318,7 +318,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([316935], actual.AdjacentNumbers);
+      Assert.Equal([316935], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -333,7 +333,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(3, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([19171603], actual.AdjacentNumbers);
+      Assert.Equal([19171603], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -348,7 +348,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([43], actual.AdjacentNumbers);
+      Assert.Equal([43], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -363,7 +363,7 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(2, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([74], actual.AdjacentNumbers);
+      Assert.Equal([74], actual.AdjacentNumbers);
     }
 
     [Fact]
@@ -378,7 +378,57 @@ public class EnginePartTest
       var actual = EnginePart.From(inputMatrix, new(4, 1));
 
       Assert.Equal('*', actual.Symbol);
-      Assert.Equal<int[]>([313, 79], actual.AdjacentNumbers);
+      Assert.Equal([313, 79], actual.AdjacentNumbers);
     }
+  }
+
+  public class Equality()
+  {
+
+    [Fact]
+    public void SameSymbolWithoutAdjacent()
+    {
+      var firstPart = new EnginePart('#', []);
+      var secondPart = new EnginePart('#', []);
+      Assert.Equal(firstPart, secondPart);
+      Assert.True(firstPart.Equals(secondPart));
+    }
+
+    [Fact]
+    public void DifferentSymbolWithoutAdjacent()
+    {
+      var firstPart = new EnginePart('@', []);
+      var secondPart = new EnginePart('#', []);
+      Assert.NotEqual(firstPart, secondPart);
+      Assert.False(firstPart.Equals(secondPart));
+    }
+
+    [Fact]
+    public void SameSymbolDifferentAdjacent()
+    {
+      var firstPart = new EnginePart('#', [123]);
+      var secondPart = new EnginePart('#', [123, 32]);
+      Assert.NotEqual(firstPart, secondPart);
+      Assert.False(firstPart.Equals(secondPart));
+    }
+
+    [Fact]
+    public void SameSymbolAndAdjacent()
+    {
+      var firstPart = new EnginePart('#', [93, 12]);
+      var secondPart = new EnginePart('#', [93, 12]);
+      Assert.Equal(firstPart, secondPart);
+      Assert.True(firstPart.Equals(secondPart));
+    }
+
+    [Fact]
+    public void SameSymbolAndAdjacentInDifferentOrder()
+    {
+      var firstPart = new EnginePart('#', [123, 85]);
+      var secondPart = new EnginePart('#', [85, 123]);
+      Assert.Equal(firstPart, secondPart);
+      Assert.True(firstPart.Equals(secondPart));
+    }
+
   }
 }
