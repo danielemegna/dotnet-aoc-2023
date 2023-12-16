@@ -4,6 +4,57 @@ using Xunit;
 
 public class EnginePartTest
 {
+  public class IsAGear()
+  {
+
+    [Fact]
+    public void ReturnsFalseWithoutGearSymbol()
+    {
+      Assert.False(new EnginePart('@', []).IsAGear());
+      Assert.False(new EnginePart('#', [817]).IsAGear());
+      Assert.False(new EnginePart('&', [63, 2]).IsAGear());
+      Assert.False(new EnginePart('%', [72, 12, 233]).IsAGear());
+    }
+
+    [Fact]
+    public void ReturnsFalseWithGearSymbolAndLessThanTwoAjacentNumbers()
+    {
+      Assert.False(new EnginePart('*', []).IsAGear());
+      Assert.False(new EnginePart('*', [349]).IsAGear());
+    }
+
+    [Fact]
+    public void ReturnsFalseWithGearSymbolAndMoreThanTwoAjacentNumbers()
+    {
+      Assert.False(new EnginePart('*', [95, 1, 540]).IsAGear());
+      Assert.False(new EnginePart('*', [29, 311, 2, 44]).IsAGear());
+    }
+
+    [Fact]
+    public void ReturnsTrueWithGearSymbolAndExactlyTwoAjacentNumbers()
+    {
+      var part = new EnginePart('*', [51, 621]);
+      Assert.True(part.IsAGear());
+    }
+
+  }
+
+  public class GearRatio()
+  {
+    [Fact]
+    public void ReturnsProductOfAdjacentNumbers()
+    {
+      var part = new EnginePart('*', [51, 621]);
+      Assert.Equal(51 * 621, part.GearRatio());
+    }
+
+    [Fact]
+    public void ReturnsProductOfAdjacentNumbersAlsoForNonGearParts()
+    {
+      var part = new EnginePart('@', [51, 21, 11]);
+      Assert.Equal(51 * 21 * 11, part.GearRatio());
+    }
+  }
 
   public class Equality()
   {
@@ -54,5 +105,4 @@ public class EnginePartTest
     }
 
   }
-  
 }
