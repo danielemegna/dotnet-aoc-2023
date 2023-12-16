@@ -2,17 +2,15 @@ namespace aoc2023.day3;
 
 using Coordinate = Tuple<int, int>;
 
-public class EnginePart(char symbol, int[] adjacentNumbers)
+public record EnginePart(char Symbol, HashSet<int> AdjacentNumbers)
 {
   public const int ZERO_CHAR_CODE = 48;
   public const int NINE_CHAR_CODE = 57;
   public const int STAR_CHAR_CODE = 42;
   public const int DOT_CHAR_CODE = 46;
 
-  public char Symbol { get; } = symbol;
-  public int[] AdjacentNumbers { get; } = adjacentNumbers;
-  public bool IsAGear() => Symbol == STAR_CHAR_CODE && AdjacentNumbers.Length == 2;
-  public int GearRatio() => AdjacentNumbers[0] * AdjacentNumbers[1];
+  public bool IsAGear() => Symbol == STAR_CHAR_CODE && AdjacentNumbers.Count == 2;
+  public int GearRatio() => AdjacentNumbers.Aggregate((a, b) => a * b);
 
   public static bool IsAnInteger(char c) => c >= ZERO_CHAR_CODE && c <= NINE_CHAR_CODE;
 
@@ -130,6 +128,17 @@ public class EnginePart(char symbol, int[] adjacentNumbers)
     }
 
     return result.ToArray();
+  }
+
+  public virtual bool Equals(EnginePart? other)
+  {
+    if ((object)this == other) return true;
+    if (other is null) return false;
+    if (EqualityContract != other.EqualityContract) return false;
+
+    return
+      Symbol.Equals(other.Symbol) &&
+      AdjacentNumbers.SetEquals(other.AdjacentNumbers);
   }
 
 }
