@@ -7,7 +7,7 @@ public class Solver
     throw new NotImplementedException();
   }
 
-  internal object[] ParseScratchcards(string[] inputLines)
+  internal Scratchcard[] ParseScratchcards(string[] inputLines)
   {
     return [
       new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
