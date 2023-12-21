@@ -17,7 +17,7 @@ public class SolverTest
 
   public class ParsingTest : SolverTest
   {
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void ProvidedExample()
     {
       var actual = solver.ParseScratchcards(PROVIDED_EXAMPLE_INPUT_LINES);

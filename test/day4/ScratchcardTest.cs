@@ -5,7 +5,7 @@ using Xunit;
 public class ScratchcardTest
 {
 
-  [Fact(Skip = "WIP")]
+  [Fact]
   public void Equality()
   {
     var s1 = new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]);
