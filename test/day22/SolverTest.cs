@@ -2,9 +2,9 @@ namespace aoc2023.day22;
 
 using Xunit;
 
-class SolverTest
+public class SolverTest
 {
-  private static readonly string[] PROVIDED_EXAMPLE_INPUT_LINES = [
+  public static readonly string[] PROVIDED_EXAMPLE_INPUT_LINES = [
     "1,0,1~1,2,1",
     "0,0,2~2,0,2",
     "0,2,3~2,2,3",
