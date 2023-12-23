@@ -9,5 +9,3 @@ public class BricksSnapshot(params Brick[] bricks)
     return new NullBrick(coordinate);
   }
 }
-
-public record class Coordinate(int X, int Y, int Z);
