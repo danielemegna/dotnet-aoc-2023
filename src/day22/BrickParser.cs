@@ -1,12 +1,7 @@
 namespace aoc2023.day22;
 
-public class BricksSnapshotParser
+public class BrickParser
 {
-  public BricksSnapshot Parse(string[] inputLines)
-  {
-    return new BricksSnapshot();
-  }
-
   public ISet<Brick> ParseBricks(string[] inputLines)
   {
     return inputLines
