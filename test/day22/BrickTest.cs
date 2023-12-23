@@ -26,17 +26,38 @@ public class BrickTest
     Assert.True(brick.IsOccupying(new(1, 2, 1)));
   }
 
-  [Fact(Skip = "WIP")]
-  public void IsOccupyingMiddleCoordinate()
+  [Fact]
+  public void IsOccupyingMiddleCoordinateOnY()
   {
     var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
     Assert.True(brick.IsOccupying(new(1, 1, 1)));
   }
 
   [Fact]
+  public void IsOccupyingMiddleCoordinateOnYWithReverseStartEndCoordinates()
+  {
+    var brick = new Brick(new(1, 2, 1), new(1, 0, 1));
+    Assert.True(brick.IsOccupying(new(1, 1, 1)));
+  }
+
+  [Fact]
+  public void IsOccupyingMiddleCoordinateOnX()
+  {
+    var brick = new Brick(new(0, 2, 3), new(2, 2, 3));
+    Assert.True(brick.IsOccupying(new(1, 2, 3)));
+  }
+
+  [Fact]
+  public void IsOccupyingMiddleCoordinateOnZ()
+  {
+    var brick = new Brick(new(1, 1, 3), new(1, 1, 9));
+    Assert.True(brick.IsOccupying(new(1, 1, 7)));
+  }
+
+  [Fact]
   public void NullBricksDoNotOccupyAnyCoordinate()
   {
-    var brick = new NullBrick(new(1,1,1));
+    var brick = new NullBrick(new(1, 1, 1));
     Assert.False(brick.IsOccupying(new(1, 1, 1)));
     Assert.False(brick.IsOccupying(new(0, 1, 1)));
   }
