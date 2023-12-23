@@ -18,8 +18,8 @@ public class BricksSnapshotTest
     Assert.IsType<NullBrick>(actual);
   }
 
-  [Fact(Skip = "WIP")]
-  public void GetBrickAtCoordinate()
+  [Fact]
+  public void GetBrickAtBrickStartCoordinate()
   {
     Brick actual = snapshot.BrickAt(new Coordinate(1, 0, 1));
 
@@ -28,7 +28,9 @@ public class BricksSnapshotTest
     Assert.Equal(expected, actual);
   }
 
-  // TODO: test snapshots equality
+  // TODO: GetBrickAtBrickEndCoordinate() ?
+  // TODO: GetBrickAtBrickMiddleCoordinate()
+  // TODO: test snapshots equality ?
   // TODO: assert two coordinates of same brick returns same object reference
   // TODO: test snapshot.BrickAt(new(x,x,0)) -> throws an exception ?
 
