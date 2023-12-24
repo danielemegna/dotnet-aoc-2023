@@ -8,7 +8,9 @@ public class BrickTest
   [Fact]
   public void IsNotOccupyingFarCoordinate()
   {
-    var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
+    var brick = new Brick(new(1, 5, 1), new(1, 6, 1));
+    Assert.False(brick.IsOccupying(new(1, 4, 1)));
+    Assert.False(brick.IsOccupying(new(1, 7, 1)));
     Assert.False(brick.IsOccupying(new(0, 0, 0)));
   }
 

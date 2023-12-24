@@ -44,9 +44,9 @@ public record Brick(Coordinate StartCoordinate, Coordinate EndCoordinate)
   private static IEnumerable<int> GetRange(int a, int b)
   {
     if (a < b)
-      return Enumerable.Range(a, b);
+      return Enumerable.Range(a, b - a);
 
-    return Enumerable.Range(b, a);
+    return Enumerable.Range(b, a - b);
   }
 }
 
