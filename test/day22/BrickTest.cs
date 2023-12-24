@@ -80,4 +80,18 @@ public class BrickTest
     Assert.Equal(new(5, 6, 1), invertOnZ.StartCoordinate);
   }
 
+  [Fact]
+  public void Equality()
+  {
+    var first = new Brick(new(1, 0, 1), new(1, 2, 1));
+    var second = new Brick(new(0, 2, 3), new(2, 2, 3));
+    var third = new Brick(new(1, 0, 1), new(1, 2, 1));
+    var fourth = new Brick(new(1, 2, 1), new(1, 0, 1));
+
+    Assert.NotEqual(first, second);
+    Assert.Equal(first, third);
+    Assert.NotEqual(second, third);
+    Assert.Equal(first, fourth);
+  }
+
 }
