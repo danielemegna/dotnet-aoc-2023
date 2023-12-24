@@ -88,14 +88,28 @@ public class BrickTest
     var third = new Brick(new(1, 0, 1), new(1, 2, 1));
     var fourth = new Brick(new(1, 2, 1), new(1, 0, 1));
 
+    Assert.Equal(first, first);
+    Assert.Same(first, first);
+
     Assert.NotEqual(first, second);
-    Assert.Equal(first, third);
-    Assert.NotEqual(second, third);
-    Assert.Equal(first, fourth);
     Assert.NotEqual(first.GetHashCode(), second.GetHashCode());
+    Assert.False(first == second);
+    Assert.NotSame(first, second);
+
+    Assert.Equal(first, third);
     Assert.Equal(first.GetHashCode(), third.GetHashCode());
+    Assert.False(first == third);
+    Assert.NotSame(first, third);
+
+    Assert.NotEqual(second, third);
     Assert.NotEqual(second.GetHashCode(), third.GetHashCode());
+    Assert.False(first == third);
+    Assert.NotSame(first, third);
+
+    Assert.Equal(first, fourth);
     Assert.Equal(first.GetHashCode(), fourth.GetHashCode());
+    Assert.False(first == fourth);
+    Assert.NotSame(first, fourth);
   }
 
 }
