@@ -22,16 +22,29 @@ public class BricksSnapshotTest
   public void GetBrickAtBrickStartCoordinate()
   {
     Brick actual = snapshot.BrickAt(new Coordinate(1, 0, 1));
-
     Brick expected = new(new(1, 0, 1), new(1, 2, 1));
     Assert.IsType<Brick>(actual);
     Assert.Equal(expected, actual);
   }
 
-  // TODO: GetBrickAtBrickEndCoordinate() ?
-  // TODO: GetBrickAtBrickMiddleCoordinate()
+  [Fact]
+  public void GetBrickAtBrickMiddleCoordinate()
+  {
+    Brick actual = snapshot.BrickAt(new Coordinate(2, 1, 5));
+    Brick expected = new(new(2, 0, 5), new(2, 2, 5));
+    Assert.Equal(expected, actual);
+  }
+
+  [Fact]
+  public void TwoCoordinatesOccupiedBySameBrickReturnSameObjectReference()
+  {
+    Brick first = snapshot.BrickAt(new Coordinate(0, 0, 4));
+    Brick second = snapshot.BrickAt(new Coordinate(0, 1, 4));
+    Assert.True(first == second);
+    Assert.Same(first, second);
+  }
+
   // TODO: test snapshots equality ?
-  // TODO: assert two coordinates of same brick returns same object reference
   // TODO: test snapshot.BrickAt(new(x,x,0)) -> throws an exception ?
 
 }
