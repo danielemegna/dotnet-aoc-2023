@@ -7,7 +7,7 @@ public class BricksSnapshot(params Brick[] bricks)
   public Brick BrickAt(Coordinate coordinate)
   {
     return Bricks.FirstOrDefault(
-      b => b.StartCoordinate == coordinate,
+      b => b.IsOccupying(coordinate),
       new NullBrick(coordinate)
     );
   }
