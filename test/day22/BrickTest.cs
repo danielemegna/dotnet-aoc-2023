@@ -64,4 +64,20 @@ public class BrickTest
     Assert.False(brick.IsOccupying(new(0, 1, 1)));
   }
 
+  [Fact]
+  public void AutomaticallySwapStartAndEndCoordinateWhenNeeded()
+  {
+    var normal = new Brick(new(1, 0, 1), new(1, 2, 1));
+    var invertOnY = new Brick(new(1, 2, 1), new(1, 0, 1));
+    Assert.Equal(new(1, 0, 1), normal.StartCoordinate);
+    Assert.Equal(new(1, 0, 1), invertOnY.StartCoordinate);
+    Assert.Equal(new(1, 2, 1), normal.EndCoordinate);
+    Assert.Equal(new(1, 2, 1), invertOnY.EndCoordinate);
+
+    var invertOnX = new Brick(new(7, 3, 3), new(2, 3, 3));
+    Assert.Equal(new(2, 3, 3), invertOnX.StartCoordinate);
+    var invertOnZ = new Brick(new(5, 6, 3), new(5, 6, 1));
+    Assert.Equal(new(5, 6, 1), invertOnZ.StartCoordinate);
+  }
+
 }

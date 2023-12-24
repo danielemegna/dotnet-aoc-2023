@@ -1,7 +1,26 @@
 namespace aoc2023.day22;
 
-public record Brick(Coordinate StartCoordinate, Coordinate EndCoordinate)
+public record Brick
 {
+  public Coordinate StartCoordinate { get; }
+  public Coordinate EndCoordinate { get; }
+
+  public Brick(Coordinate startCoordinate, Coordinate endCoordinate)
+  {
+    if (
+      startCoordinate.X <= endCoordinate.X &&
+      startCoordinate.Y <= endCoordinate.Y &&
+      startCoordinate.Z <= endCoordinate.Z
+    )
+    {
+      StartCoordinate = startCoordinate;
+      EndCoordinate = endCoordinate;
+      return;
+    }
+
+    StartCoordinate = endCoordinate;
+    EndCoordinate = startCoordinate;
+  }
 
   public virtual bool IsOccupying(Coordinate inspectedCoordinate)
   {
@@ -10,7 +29,7 @@ public record Brick(Coordinate StartCoordinate, Coordinate EndCoordinate)
 
     if (StartCoordinate.X != EndCoordinate.X)
     {
-      foreach (int x in GetRange(StartCoordinate.X, EndCoordinate.X))
+      foreach (int x in RangeOf(StartCoordinate.X, EndCoordinate.X))
       {
         if (inspectedCoordinate == StartCoordinate with { X = x })
           return true;
@@ -20,7 +39,7 @@ public record Brick(Coordinate StartCoordinate, Coordinate EndCoordinate)
 
     if (StartCoordinate.Y != EndCoordinate.Y)
     {
-      foreach (int y in GetRange(StartCoordinate.Y, EndCoordinate.Y))
+      foreach (int y in RangeOf(StartCoordinate.Y, EndCoordinate.Y))
       {
         if (inspectedCoordinate == StartCoordinate with { Y = y })
           return true;
@@ -30,7 +49,7 @@ public record Brick(Coordinate StartCoordinate, Coordinate EndCoordinate)
 
     if (StartCoordinate.Z != EndCoordinate.Z)
     {
-      foreach (int z in GetRange(StartCoordinate.Z, EndCoordinate.Z))
+      foreach (int z in RangeOf(StartCoordinate.Z, EndCoordinate.Z))
       {
         if (inspectedCoordinate == StartCoordinate with { Z = z })
           return true;
@@ -41,13 +60,7 @@ public record Brick(Coordinate StartCoordinate, Coordinate EndCoordinate)
     return false;
   }
 
-  private static IEnumerable<int> GetRange(int a, int b)
-  {
-    if (a < b)
-      return Enumerable.Range(a, b - a);
-
-    return Enumerable.Range(b, a - b);
-  }
+  private static IEnumerable<int> RangeOf(int a, int b) => Enumerable.Range(a, b - a);
 }
 
 
