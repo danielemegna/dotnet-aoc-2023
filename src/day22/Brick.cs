@@ -1,9 +1,10 @@
 namespace aoc2023.day22;
 
-public record Brick
+public class Brick
 {
   public Coordinate StartCoordinate { get; }
   public Coordinate EndCoordinate { get; }
+  private readonly HashSet<Coordinate> occupiedCoordinates;
 
   public Brick(Coordinate startCoordinate, Coordinate endCoordinate)
   {
@@ -15,56 +16,72 @@ public record Brick
     {
       StartCoordinate = startCoordinate;
       EndCoordinate = endCoordinate;
-      return;
+    }
+    else
+    {
+      StartCoordinate = endCoordinate;
+      EndCoordinate = startCoordinate;
     }
 
-    StartCoordinate = endCoordinate;
-    EndCoordinate = startCoordinate;
+    occupiedCoordinates = GenerateOccupiedCoordinates();
   }
 
-  public virtual bool IsOccupying(Coordinate inspectedCoordinate)
+
+  private HashSet<Coordinate> GenerateOccupiedCoordinates()
   {
-    if (StartCoordinate == inspectedCoordinate || EndCoordinate == inspectedCoordinate)
-      return true;
+    if (StartCoordinate == EndCoordinate)
+      return [StartCoordinate];
 
     if (StartCoordinate.X != EndCoordinate.X)
     {
-      foreach (int x in RangeOf(StartCoordinate.X, EndCoordinate.X))
-      {
-        if (inspectedCoordinate == StartCoordinate with { X = x })
-          return true;
-      }
-      return false;
+      return RangeOf(StartCoordinate.X, EndCoordinate.X)
+        .Select(x => StartCoordinate with { X = x })
+        .ToHashSet();
     }
 
     if (StartCoordinate.Y != EndCoordinate.Y)
     {
-      foreach (int y in RangeOf(StartCoordinate.Y, EndCoordinate.Y))
-      {
-        if (inspectedCoordinate == StartCoordinate with { Y = y })
-          return true;
-      }
-      return false;
+      return RangeOf(StartCoordinate.Y, EndCoordinate.Y)
+        .Select(y => StartCoordinate with { Y = y })
+        .ToHashSet();
     }
 
     if (StartCoordinate.Z != EndCoordinate.Z)
     {
-      foreach (int z in RangeOf(StartCoordinate.Z, EndCoordinate.Z))
-      {
-        if (inspectedCoordinate == StartCoordinate with { Z = z })
-          return true;
-      }
-      return false;
+      return RangeOf(StartCoordinate.Z, EndCoordinate.Z)
+        .Select(z => StartCoordinate with { Z = z })
+        .ToHashSet();
     }
 
-    return false;
+    throw new SystemException("Something strange is happening here ...");
   }
 
-  private static IEnumerable<int> RangeOf(int a, int b) => Enumerable.Range(a, b - a);
+  public virtual bool IsOccupying(Coordinate inspectedCoordinate)
+  {
+    return occupiedCoordinates.Contains(inspectedCoordinate);
+  }
+
+  private static IEnumerable<int> RangeOf(int a, int b) => Enumerable.Range(a, b - a + 1);
+
+  override public bool Equals(object? other)
+  {
+    if (this == other) return true;
+    if (other is null) return false;
+    Brick otherBrick = (Brick)other;
+
+    return
+      StartCoordinate.Equals(otherBrick.StartCoordinate) &&
+      EndCoordinate.Equals(otherBrick.EndCoordinate);
+  }
+
+  override public int GetHashCode()
+  {
+    return StartCoordinate.GetHashCode() * 17 + EndCoordinate.GetHashCode();
+  }
 }
 
 
-public record NullBrick : Brick
+public class NullBrick : Brick
 {
   public NullBrick(Coordinate coordinate) : base(coordinate, coordinate) { }
   public override bool IsOccupying(Coordinate coordinate) => false;

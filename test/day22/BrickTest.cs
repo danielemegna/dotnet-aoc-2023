@@ -81,7 +81,7 @@ public class BrickTest
   }
 
   [Fact]
-  public void Equality()
+  public void EqualityAndHashCodes()
   {
     var first = new Brick(new(1, 0, 1), new(1, 2, 1));
     var second = new Brick(new(0, 2, 3), new(2, 2, 3));
@@ -92,6 +92,10 @@ public class BrickTest
     Assert.Equal(first, third);
     Assert.NotEqual(second, third);
     Assert.Equal(first, fourth);
+    Assert.NotEqual(first.GetHashCode(), second.GetHashCode());
+    Assert.Equal(first.GetHashCode(), third.GetHashCode());
+    Assert.NotEqual(second.GetHashCode(), third.GetHashCode());
+    Assert.Equal(first.GetHashCode(), fourth.GetHashCode());
   }
 
 }
