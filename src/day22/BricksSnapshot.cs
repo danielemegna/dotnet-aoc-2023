@@ -1,8 +1,13 @@
 namespace aoc2023.day22;
 
-public class BricksSnapshot(params Brick[] bricks)
+public class BricksSnapshot
 {
-  public ISet<Brick> Bricks { get; } = bricks.ToHashSet();
+  public ISet<Brick> Bricks { get; }
+
+  public BricksSnapshot(params Brick[] bricks)
+  {
+    Bricks = bricks.ToHashSet();
+  }
 
   public Brick BrickAt(Coordinate coordinate)
   {
