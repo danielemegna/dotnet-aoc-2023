@@ -22,16 +22,17 @@ public class Brick
   {
     if (this == other) return true;
     if (other is null) return false;
-    Brick otherBrick = (Brick)other;
+    if (other.GetType() != typeof(Brick)) return false;
+    Brick otherCasted = (Brick)other;
 
     return
-      StartCoordinate.Equals(otherBrick.StartCoordinate) &&
-      EndCoordinate.Equals(otherBrick.EndCoordinate);
+      StartCoordinate.Equals(otherCasted.StartCoordinate) &&
+      EndCoordinate.Equals(otherCasted.EndCoordinate);
   }
 
   override public int GetHashCode()
   {
-    return StartCoordinate.GetHashCode() * 17 + EndCoordinate.GetHashCode();
+    return StartCoordinate.GetHashCode() * 2 + EndCoordinate.GetHashCode();
   }
 
   private HashSet<Coordinate> GenerateOccupiedCoordinates()
