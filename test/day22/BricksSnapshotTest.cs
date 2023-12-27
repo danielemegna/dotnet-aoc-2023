@@ -19,6 +19,8 @@ public class BricksSnapshotTest
   {
     Brick actual = snapshot.BrickAt(new Coordinate(0, 0, 1));
     Assert.IsType<NullBrick>(actual);
+    actual = snapshot.BrickAt(new Coordinate(0, 0, 0));
+    Assert.IsType<NullBrick>(actual);
   }
 
   [Fact]
@@ -83,7 +85,5 @@ public class BricksSnapshotTest
     Assert.NotEqual(snapshot.GetHashCode(), another.GetHashCode());
     Assert.False(snapshot == another);
   }
-
-  // TODO: test snapshot.BrickAt(new(x,x,0)) -> throws an exception ?
 
 }
