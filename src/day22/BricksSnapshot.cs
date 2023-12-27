@@ -16,4 +16,19 @@ public class BricksSnapshot
       new NullBrick(coordinate)
     );
   }
+
+  public override bool Equals(object? other)
+  {
+    if (this == other) return true;
+    if (other is null) return false;
+    if (other.GetType() != typeof(BricksSnapshot)) return false;
+    BricksSnapshot otherCasted = (BricksSnapshot)other;
+
+    return Bricks.SetEquals(otherCasted.Bricks);
+  }
+
+  public override int GetHashCode()
+  {
+    return Convert.ToInt32(Bricks.Select(b => b.GetHashCode()).Average());
+  }
 }
