@@ -5,9 +5,12 @@ using Xunit;
 public class BricksSnapshotTest
 {
   private readonly BricksSnapshot snapshot = new BricksSnapshot([
-    new Brick(new(1,0,1), new(1,2,1)), new Brick(new(0,0,2), new(2,0,2)),
-    new Brick(new(0,2,3), new(2,2,3)), new Brick(new(0,0,4), new(0,2,4)),
-    new Brick(new(2,0,5), new(2,2,5)), new Brick(new(0,1,6), new(2,1,6)),
+    new Brick(new(1,0,1), new(1,2,1)),
+    new Brick(new(0,0,2), new(2,0,2)),
+    new Brick(new(0,2,3), new(2,2,3)),
+    new Brick(new(0,0,4), new(0,2,4)),
+    new Brick(new(2,0,5), new(2,2,5)),
+    new Brick(new(0,1,6), new(2,1,6)),
     new Brick(new(1,1,8), new(1,1,9)),
   ]);
 
@@ -44,7 +47,43 @@ public class BricksSnapshotTest
     Assert.Same(first, second);
   }
 
-  // TODO: test snapshots equality ?
+  [Fact]
+  public void EqualityForCloneSnapshot()
+  {
+    BricksSnapshot clone = new BricksSnapshot([
+      new Brick(new(1,0,1), new(1,2,1)),
+      new Brick(new(0,0,2), new(2,0,2)),
+      new Brick(new(0,2,3), new(2,2,3)),
+      new Brick(new(0,0,4), new(0,2,4)),
+      new Brick(new(2,0,5), new(2,2,5)),
+      new Brick(new(0,1,6), new(2,1,6)),
+      new Brick(new(1,1,8), new(1,1,9)),
+    ]);
+
+    Assert.NotSame(snapshot, clone);
+    Assert.Equal(snapshot, clone);
+    Assert.Equal(snapshot.GetHashCode(), clone.GetHashCode());
+    Assert.False(snapshot == clone);
+  }
+
+  [Fact]
+  public void EqualityForDifferentSnapshot()
+  {
+    BricksSnapshot another = new BricksSnapshot([
+      new Brick(new(1,0,1), new(1,2,1)),
+      new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
+      new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
+      new Brick(new(0,1,4), new(2,1,4)),
+      new Brick(new(1,1,5), new(1,1,6)),
+
+    ]);
+
+    Assert.NotSame(snapshot, another);
+    Assert.NotEqual(snapshot, another);
+    Assert.NotEqual(snapshot.GetHashCode(), another.GetHashCode());
+    Assert.False(snapshot == another);
+  }
+
   // TODO: test snapshot.BrickAt(new(x,x,0)) -> throws an exception ?
 
 }
