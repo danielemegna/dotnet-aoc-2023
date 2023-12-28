@@ -103,8 +103,8 @@ public class BrickTest
 
     Assert.NotEqual(second, third);
     Assert.NotEqual(second.GetHashCode(), third.GetHashCode());
-    Assert.False(first == third);
-    Assert.NotSame(first, third);
+    Assert.False(second == third);
+    Assert.NotSame(second, third);
 
     Assert.Equal(first, fourth);
     Assert.Equal(first.GetHashCode(), fourth.GetHashCode());
