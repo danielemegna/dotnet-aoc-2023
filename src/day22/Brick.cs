@@ -1,6 +1,6 @@
 namespace aoc2023.day22;
 
-public class Brick
+public record Brick
 {
   public Coordinate StartCoordinate { get; }
   public Coordinate EndCoordinate { get; }
@@ -18,16 +18,14 @@ public class Brick
     return occupiedCoordinates.Contains(inspectedCoordinate);
   }
 
-  override public bool Equals(object? other)
+  public virtual bool Equals(Brick? other)
   {
-    if (this == other) return true;
+    if (ReferenceEquals(this, other)) return true;
     if (other is null) return false;
-    if (other.GetType() != typeof(Brick)) return false;
-    Brick otherCasted = (Brick)other;
 
     return
-      StartCoordinate.Equals(otherCasted.StartCoordinate) &&
-      EndCoordinate.Equals(otherCasted.EndCoordinate);
+      StartCoordinate.Equals(other.StartCoordinate) &&
+      EndCoordinate.Equals(other.EndCoordinate);
   }
 
   override public int GetHashCode()
@@ -74,7 +72,7 @@ public class Brick
 
 }
 
-public class NullBrick : Brick
+public record NullBrick : Brick
 {
   public NullBrick(Coordinate coordinate) : base(coordinate, coordinate) { }
   public override bool IsOccupying(Coordinate coordinate) => false;
