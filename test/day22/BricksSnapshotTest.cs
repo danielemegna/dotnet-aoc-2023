@@ -118,9 +118,9 @@ public class BricksSnapshotTest
 
       simpleSnapshot.CompleteFall();
 
-      var expectedBrick = new Brick(new(0,0,1), new(2,0,1));
-      Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(0,0,1)));
-      Assert.Equal([expectedBrick], simpleSnapshot.Bricks);
+      var fallenBrick = new Brick(new(0,0,1), new(2,0,1));
+      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(0,0,1)));
+      Assert.Equal([fallenBrick], simpleSnapshot.Bricks);
     }
 
     [Fact]
@@ -132,8 +132,8 @@ public class BricksSnapshotTest
 
       simpleSnapshot.CompleteFall();
 
-      var expectedBrick = new Brick(new(1,2,1), new(1,4,1));
-      Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(1,2,1)));
+      var fallenBrick = new Brick(new(1,2,1), new(1,4,1));
+      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(1,2,1)));
     }
 
     [Fact]
@@ -146,8 +146,10 @@ public class BricksSnapshotTest
 
       simpleSnapshot.CompleteFall();
 
-      var expectedBrick = new Brick(new(0,0,2), new(0,2,2));
-      Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(0,0,2)));
+      var fallenBrick = new Brick(new(0,0,2), new(0,2,2));
+      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(0,0,2)));
+      var notMovingBrick = new Brick(new(0,0,1), new(0,2,1));
+      Assert.Equal(notMovingBrick, simpleSnapshot.BrickAt(new(0,0,1)));
     }
   }
 
