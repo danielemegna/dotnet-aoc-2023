@@ -17,6 +17,23 @@ public class BricksSnapshot
     );
   }
 
+  public void CompleteFall()
+  {
+    Brick b = Bricks.First();
+    if (b.StartCoordinate.Z == 1)
+    {
+      return;
+    }
+
+    var newBrick = new Brick(
+      b.StartCoordinate with { Z = 1 },
+      b.EndCoordinate with { Z = 1 }
+    );
+
+    Bricks.Remove(b);
+    Bricks.Add(newBrick);
+  }
+
   public override bool Equals(object? other)
   {
     if (this == other) return true;
@@ -31,4 +48,5 @@ public class BricksSnapshot
   {
     return Convert.ToInt32(Bricks.Select(b => b.GetHashCode()).Average());
   }
+
 }

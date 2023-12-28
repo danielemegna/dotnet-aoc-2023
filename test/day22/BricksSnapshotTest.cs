@@ -95,4 +95,47 @@ public class BricksSnapshotTest
 
   }
 
+  public class CompleteFallTest : BricksSnapshotTest
+  {
+    [Fact]
+    public void SingleNotFallingBrick()
+    {
+      var singleBrick = new Brick(new(1,0,1), new(1,2,1));
+      var simpleSnapshot = new BricksSnapshot([singleBrick]);
+
+      simpleSnapshot.CompleteFall();
+
+      Assert.Equal(singleBrick, simpleSnapshot.BrickAt(new(1,0,1)));
+      Assert.Equal([singleBrick], simpleSnapshot.Bricks);
+    }
+
+    [Fact]
+    public void SingleFallingBrick()
+    {
+      var simpleSnapshot = new BricksSnapshot([
+        new Brick(new(0,0,2), new(2,0,2))
+      ]);
+
+      simpleSnapshot.CompleteFall();
+
+      var expectedBrick = new Brick(new(0,0,1), new(2,0,1));
+      Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(0,0,1)));
+      Assert.Equal([expectedBrick], simpleSnapshot.Bricks);
+    }
+
+    [Fact]
+    public void SingleFallingBrickFromFar()
+    {
+      var simpleSnapshot = new BricksSnapshot([
+        new Brick(new(1,2,5), new(1,4,5))
+      ]);
+
+      simpleSnapshot.CompleteFall();
+
+      var expectedBrick = new Brick(new(1,2,1), new(1,4,1));
+      Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(1,2,1)));
+      Assert.Equal([expectedBrick], simpleSnapshot.Bricks);
+    }
+  }
+
 }
