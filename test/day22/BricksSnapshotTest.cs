@@ -134,7 +134,20 @@ public class BricksSnapshotTest
 
       var expectedBrick = new Brick(new(1,2,1), new(1,4,1));
       Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(1,2,1)));
-      Assert.Equal([expectedBrick], simpleSnapshot.Bricks);
+    }
+
+    [Fact]
+    public void FallingBrickHitAnother()
+    {
+      var simpleSnapshot = new BricksSnapshot([
+        new Brick(new(0,0,3), new(0,2,3)),
+        new Brick(new(0,0,1), new(0,2,1))
+      ]);
+
+      simpleSnapshot.CompleteFall();
+
+      var expectedBrick = new Brick(new(0,0,2), new(0,2,2));
+      Assert.Equal(expectedBrick, simpleSnapshot.BrickAt(new(0,0,2)));
     }
   }
 

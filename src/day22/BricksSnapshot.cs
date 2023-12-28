@@ -20,18 +20,28 @@ public class BricksSnapshot
   public void CompleteFall()
   {
     Brick b = Bricks.First();
-    if (b.StartCoordinate.Z == 1)
-    {
-      return;
+    if (b.StartCoordinate.Z == 1) return;
+
+    var newZValue = b.StartCoordinate.Z;
+    while (
+      !IsOccupied(b.StartCoordinate with { Z = newZValue - 1 })
+      && newZValue > 1
+    ) {
+      newZValue--;
     }
 
     var newBrick = new Brick(
-      b.StartCoordinate with { Z = 1 },
-      b.EndCoordinate with { Z = 1 }
+      b.StartCoordinate with { Z = newZValue },
+      b.EndCoordinate with { Z = newZValue }
     );
 
     Bricks.Remove(b);
     Bricks.Add(newBrick);
+  }
+
+  private bool IsOccupied(Coordinate coordinate)
+  {
+    return BrickAt(coordinate).GetType() != typeof(NullBrick);
   }
 
   public override bool Equals(object? other)
