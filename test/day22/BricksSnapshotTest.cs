@@ -139,17 +139,18 @@ public class BricksSnapshotTest
     [Fact]
     public void FallingBrickHitAnother()
     {
-      var simpleSnapshot = new BricksSnapshot([
+      var twoBricksSnapshot = new BricksSnapshot([
         new Brick(new(0,0,3), new(0,2,3)),
         new Brick(new(0,0,1), new(0,2,1))
       ]);
 
-      simpleSnapshot.CompleteFall();
+      twoBricksSnapshot.CompleteFall();
 
-      var fallenBrick = new Brick(new(0,0,2), new(0,2,2));
-      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(0,0,2)));
-      var notMovingBrick = new Brick(new(0,0,1), new(0,2,1));
-      Assert.Equal(notMovingBrick, simpleSnapshot.BrickAt(new(0,0,1)));
+      var expectedSnapshot = new BricksSnapshot([
+        new Brick(new(0,0,2), new(0,2,2)),
+        new Brick(new(0,0,1), new(0,2,1))
+      ]);
+      Assert.Equal(expectedSnapshot, twoBricksSnapshot);
     }
   }
 
