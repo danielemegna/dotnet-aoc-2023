@@ -19,24 +19,27 @@ public class BricksSnapshot
 
   public void CompleteFall()
   {
-    Brick b = Bricks.First();
-    if (b.StartCoordinate.Z == 1) return;
+    var clonedBricks = new HashSet<Brick>(Bricks);
+    foreach (var brick in clonedBricks)
+    {
+      if (brick.StartCoordinate.Z == 1) continue;
 
-    var newZValue = b.StartCoordinate.Z;
-    while (
-      !IsOccupied(b.StartCoordinate with { Z = newZValue - 1 })
-      && newZValue > 1
-    ) {
-      newZValue--;
+      var newZValue = brick.StartCoordinate.Z;
+      while (
+        !IsOccupied(brick.StartCoordinate with { Z = newZValue - 1 })
+        && newZValue > 1
+      ) {
+        newZValue--;
+      }
+
+      var newBrick = new Brick(
+        brick.StartCoordinate with { Z = newZValue },
+        brick.EndCoordinate with { Z = newZValue }
+      );
+
+      Bricks.Remove(brick);
+      Bricks.Add(newBrick);
     }
-
-    var newBrick = new Brick(
-      b.StartCoordinate with { Z = newZValue },
-      b.EndCoordinate with { Z = newZValue }
-    );
-
-    Bricks.Remove(b);
-    Bricks.Add(newBrick);
   }
 
   private bool IsOccupied(Coordinate coordinate)
