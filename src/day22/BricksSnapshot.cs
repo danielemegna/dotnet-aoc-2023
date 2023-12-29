@@ -26,8 +26,9 @@ public class BricksSnapshot
 
       var newZValue = brick.StartCoordinate.Z;
       while (
-        !IsOccupied(brick.StartCoordinate with { Z = newZValue - 1 })
-        && newZValue > 1
+        !IsOccupied(brick.StartCoordinate with { Z = newZValue - 1 }) &&
+        !IsOccupied(brick.EndCoordinate with { Z = newZValue - 1 }) &&
+        newZValue > 1
       ) {
         newZValue--;
       }

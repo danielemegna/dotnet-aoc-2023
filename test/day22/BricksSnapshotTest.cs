@@ -169,6 +169,40 @@ public class BricksSnapshotTest
       ]);
       Assert.Equal(expectedSnapshot, twoBricksSnapshot);
     }
+
+    [Fact]
+    public void BricksDoNotFallOnPartialHitAtTheEnd()
+    {
+      var twoBricksSnapshot = new BricksSnapshot([
+        new Brick(new(2,0,1), new(2,2,1)),
+        new Brick(new(0,2,2), new(2,2,2)),
+      ]);
+
+      twoBricksSnapshot.CompleteFall();
+
+      var expectedSnapshot = new BricksSnapshot([
+        new Brick(new(2,0,1), new(2,2,1)),
+        new Brick(new(0,2,2), new(2,2,2)),
+      ]);
+      Assert.Equal(expectedSnapshot, twoBricksSnapshot);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void BricksDoNotFallOnPartialHitAtMiddle()
+    {
+      var twoBricksSnapshot = new BricksSnapshot([
+        new Brick(new(1,0,1), new(1,2,1)),
+        new Brick(new(0,1,2), new(2,1,2)),
+      ]);
+
+      twoBricksSnapshot.CompleteFall();
+
+      var expectedSnapshot = new BricksSnapshot([
+        new Brick(new(1,0,1), new(1,2,1)),
+        new Brick(new(0,1,2), new(2,1,2)),
+      ]);
+      Assert.Equal(expectedSnapshot, twoBricksSnapshot);
+    }
   }
 
 }
