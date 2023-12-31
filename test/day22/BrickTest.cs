@@ -4,118 +4,126 @@ using Xunit;
 
 public class BrickTest
 {
-
-  [Fact]
-  public void IsNotOccupyingFarCoordinate()
+  public class IsOccupying
   {
-    var brick = new Brick(new(1, 5, 1), new(1, 6, 1));
-    Assert.False(brick.IsOccupying(new(1, 4, 1)));
-    Assert.False(brick.IsOccupying(new(1, 7, 1)));
-    Assert.False(brick.IsOccupying(new(0, 0, 0)));
+
+    [Fact]
+    public void IsNotOccupyingFarCoordinate()
+    {
+      var brick = new Brick(new(1, 5, 1), new(1, 6, 1));
+      Assert.False(brick.IsOccupying(new(1, 4, 1)));
+      Assert.False(brick.IsOccupying(new(1, 7, 1)));
+      Assert.False(brick.IsOccupying(new(0, 0, 0)));
+    }
+
+    [Fact]
+    public void IsOccupyingStartCoordinate()
+    {
+      var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
+      Assert.True(brick.IsOccupying(new(1, 0, 1)));
+    }
+
+    [Fact]
+    public void IsOccupyingEndCoordinate()
+    {
+      var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
+      Assert.True(brick.IsOccupying(new(1, 2, 1)));
+    }
+
+    [Fact]
+    public void IsOccupyingMiddleCoordinateOnX()
+    {
+      var brick = new Brick(new(0, 2, 3), new(2, 2, 3));
+      Assert.True(brick.IsOccupying(new(1, 2, 3)));
+    }
+
+    [Fact]
+    public void IsOccupyingMiddleCoordinateOnY()
+    {
+      var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
+      Assert.True(brick.IsOccupying(new(1, 1, 1)));
+    }
+
+    [Fact]
+    public void IsOccupyingMiddleCoordinateOnZ()
+    {
+      var brick = new Brick(new(1, 1, 3), new(1, 1, 9));
+      Assert.True(brick.IsOccupying(new(1, 1, 7)));
+    }
+
+    [Fact]
+    public void IsOccupyingMiddleCoordinateOnYWithReverseStartEndCoordinates()
+    {
+      var brick = new Brick(new(1, 2, 1), new(1, 0, 1));
+      Assert.True(brick.IsOccupying(new(1, 1, 1)));
+    }
+
+    [Fact]
+    public void NullBricksDoNotOccupyAnyCoordinate()
+    {
+      var brick = new NullBrick(new(1, 1, 1));
+      Assert.False(brick.IsOccupying(new(1, 1, 1)));
+      Assert.False(brick.IsOccupying(new(0, 1, 1)));
+    }
+
   }
 
-  [Fact]
-  public void IsOccupyingStartCoordinate()
+  public class GetOccupiedCoortinates()
   {
-    var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
-    Assert.True(brick.IsOccupying(new(1, 0, 1)));
+
+    [Fact]
+    public void OfSingleCube()
+    {
+      var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
+      Assert.Equal([new(0, 1, 2)], brick.GetOccupiedCoordinates());
+    }
+
+    [Fact]
+    public void OfHorizontalBricks()
+    {
+      Assert.Equal(
+        [new(0, 1, 2), new(1, 1, 2), new(2, 1, 2)],
+        new Brick(new(0, 1, 2), new(2, 1, 2)).GetOccupiedCoordinates()
+      );
+      Assert.Equal(
+        [new(1, 3, 2), new(1, 4, 2), new(1, 5, 2), new(1, 6, 2)],
+        new Brick(new(1, 3, 2), new(1, 6, 2)).GetOccupiedCoordinates()
+      );
+    }
+
+    [Fact]
+    public void OfVerticalBrick()
+    {
+      var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
+      Assert.Equal([new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)], brick.GetOccupiedCoordinates());
+    }
   }
 
-  [Fact]
-  public void IsOccupyingEndCoordinate()
+  public class GetBelowCoordinates()
   {
-    var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
-    Assert.True(brick.IsOccupying(new(1, 2, 1)));
-  }
 
-  [Fact]
-  public void IsOccupyingMiddleCoordinateOnX()
-  {
-    var brick = new Brick(new(0, 2, 3), new(2, 2, 3));
-    Assert.True(brick.IsOccupying(new(1, 2, 3)));
-  }
+    [Fact]
+    public void OfSingleCube()
+    {
+      var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
+      Assert.Equal([new(0, 1, 1)], brick.GetBelowCoordinates());
+    }
 
-  [Fact]
-  public void IsOccupyingMiddleCoordinateOnY()
-  {
-    var brick = new Brick(new(1, 0, 1), new(1, 2, 1));
-    Assert.True(brick.IsOccupying(new(1, 1, 1)));
-  }
+    [Fact]
+    public void OfHorizontalBricks()
+    {
+      var brick = new Brick(new(0, 1, 2), new(2, 1, 2));
+      Assert.Equal([new(0, 1, 1), new(1, 1, 1), new(2, 1, 1)], brick.GetBelowCoordinates());
+      brick = new Brick(new(1, 3, 2), new(1, 6, 2));
+      Assert.Equal([new(1, 3, 1), new(1, 4, 1), new(1, 5, 1), new(1, 6, 1)], brick.GetBelowCoordinates());
+    }
 
-  [Fact]
-  public void IsOccupyingMiddleCoordinateOnZ()
-  {
-    var brick = new Brick(new(1, 1, 3), new(1, 1, 9));
-    Assert.True(brick.IsOccupying(new(1, 1, 7)));
-  }
-
-  [Fact]
-  public void IsOccupyingMiddleCoordinateOnYWithReverseStartEndCoordinates()
-  {
-    var brick = new Brick(new(1, 2, 1), new(1, 0, 1));
-    Assert.True(brick.IsOccupying(new(1, 1, 1)));
-  }
-
-  [Fact]
-  public void NullBricksDoNotOccupyAnyCoordinate()
-  {
-    var brick = new NullBrick(new(1, 1, 1));
-    Assert.False(brick.IsOccupying(new(1, 1, 1)));
-    Assert.False(brick.IsOccupying(new(0, 1, 1)));
-  }
-
-  [Fact]
-  public void ExposeOccupiedCoordinatesOfSingleCube()
-  {
-    var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
-    Assert.Equal([new(0, 1, 2)], brick.GetOccupiedCoordinates());
-  }
-
-  [Fact]
-  public void ExposeOccupiedCoordinatesOfHorizontalBricks()
-  {
-    Assert.Equal(
-      [new(0, 1, 2), new(1, 1, 2), new(2, 1, 2)],
-      new Brick(new(0, 1, 2), new(2, 1, 2)).GetOccupiedCoordinates()
-    );
-    Assert.Equal(
-      [new(1, 3, 2), new(1, 4, 2), new(1, 5, 2), new(1, 6, 2)],
-      new Brick(new(1, 3, 2), new(1, 6, 2)).GetOccupiedCoordinates()
-    );
-  }
-
-  [Fact]
-  public void ExposeOccupiedCoordinatesOfVerticalBrick()
-  {
-    var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
-    Assert.Equal([new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)], brick.GetOccupiedCoordinates());
-  }
-
-  [Fact]
-  public void ExposeBelowCoordinatesOfSingleCube()
-  {
-    var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
-    Assert.Equal([new(0, 1, 1)], brick.GetBelowCoordinates());
-  }
-
-  [Fact]
-  public void ExposeBelowCoordinatesOfHorizontalBricks()
-  {
-    Assert.Equal(
-      [new(0, 1, 1), new(1, 1, 1), new(2, 1, 1)],
-      new Brick(new(0, 1, 2), new(2, 1, 2)).GetBelowCoordinates()
-    );
-    Assert.Equal(
-      [new(1, 3, 1), new(1, 4, 1), new(1, 5, 1), new(1, 6, 1)],
-      new Brick(new(1, 3, 2), new(1, 6, 2)).GetBelowCoordinates()
-    );
-  }
-
-  [Fact]
-  public void ExposeBelowCoordinatesOfVerticalBrick()
-  {
-    var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
-    Assert.Equal([new(1, 5, 1)], brick.GetBelowCoordinates());
+    [Fact]
+    public void OfVerticalBrick()
+    {
+      var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
+      Assert.Equal([new(1, 5, 1)], brick.GetBelowCoordinates());
+    }
   }
 
   [Fact]
