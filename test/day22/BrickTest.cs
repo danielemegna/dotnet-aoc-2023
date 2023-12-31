@@ -68,7 +68,7 @@ public class BrickTest
   public void ExposeOccupiedCoordinatesOfSingleCube()
   {
     var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
-    Assert.Equal([new(0, 1, 2)], brick.OccupiedCoordinates);
+    Assert.Equal([new(0, 1, 2)], brick.GetOccupiedCoordinates());
   }
 
   [Fact]
@@ -76,11 +76,11 @@ public class BrickTest
   {
     Assert.Equal(
       [new(0, 1, 2), new(1, 1, 2), new(2, 1, 2)],
-      new Brick(new(0, 1, 2), new(2, 1, 2)).OccupiedCoordinates
+      new Brick(new(0, 1, 2), new(2, 1, 2)).GetOccupiedCoordinates()
     );
     Assert.Equal(
       [new(1, 3, 2), new(1, 4, 2), new(1, 5, 2), new(1, 6, 2)],
-      new Brick(new(1, 3, 2), new(1, 6, 2)).OccupiedCoordinates
+      new Brick(new(1, 3, 2), new(1, 6, 2)).GetOccupiedCoordinates()
     );
   }
 
@@ -88,7 +88,7 @@ public class BrickTest
   public void ExposeOccupiedCoordinatesOfVerticalBrick()
   {
     var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
-    Assert.Equal([new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)], brick.OccupiedCoordinates);
+    Assert.Equal([new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)], brick.GetOccupiedCoordinates());
   }
 
   [Fact]
