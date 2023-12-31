@@ -32,6 +32,14 @@ public record Brick
     return occupiedCoordinates.Contains(inspectedCoordinate);
   }
 
+  public Brick MoveDown()
+  {
+    return new Brick(
+      StartCoordinate with { Z = StartCoordinate.Z - 1 },
+      EndCoordinate with { Z = EndCoordinate.Z - 1 }
+    );
+  }
+
   public virtual bool Equals(Brick? other)
   {
     if (ReferenceEquals(this, other)) return true;
@@ -83,7 +91,6 @@ public record Brick
       return (a, b);
     return (b, a);
   }
-
 }
 
 public record NullBrick : Brick

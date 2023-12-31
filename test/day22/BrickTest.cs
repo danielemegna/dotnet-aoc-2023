@@ -119,6 +119,20 @@ public class BrickTest
   }
 
   [Fact]
+  public void MoveDownReturnsNewBrickWithDecreasedZValue()
+  {
+    var cubeBrick = new Brick(new(0, 1, 2), new(0, 1, 2));
+    var horizontalBrickX = new Brick(new(0, 1, 2), new(2, 1, 2));
+    var horizontalBrickY = new Brick(new(1, 3, 2), new(1, 6, 2));
+    var verticalBrick = new Brick(new(1, 5, 4), new(1, 5, 2));
+
+    Assert.Equal(new Brick(new(0, 1, 1), new(0, 1, 1)), cubeBrick.MoveDown());
+    Assert.Equal(new Brick(new(0, 1, 1), new(2, 1, 1)), horizontalBrickX.MoveDown());
+    Assert.Equal(new Brick(new(1, 3, 1), new(1, 6, 1)), horizontalBrickY.MoveDown());
+    Assert.Equal(new Brick(new(1, 5, 3), new(1, 5, 1)), verticalBrick.MoveDown());
+  }
+
+  [Fact]
   public void AutomaticallySwapStartAndEndCoordinateWhenNeeded()
   {
     var normal = new Brick(new(1, 0, 1), new(1, 2, 1));
