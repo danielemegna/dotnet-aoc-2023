@@ -4,10 +4,8 @@ public class BricksSnapshot
 {
   private readonly HashSet<Brick> bricks;
 
-  public BricksSnapshot(params Brick[] bricks)
-  {
-    this.bricks = bricks.ToHashSet();
-  }
+  public BricksSnapshot(IEnumerable<Brick> bricks) => this.bricks = bricks.ToHashSet();
+  public BricksSnapshot(params Brick[] bricks) => this.bricks = bricks.ToHashSet();
 
   public Brick BrickAt(Coordinate coordinate)
   {
@@ -38,10 +36,19 @@ public class BricksSnapshot
     }
   }
 
-  private bool IsOccupied(Coordinate coordinate)
+  public bool CheckStabilityRemovingBrick(Brick brickToRemove)
   {
-    return BrickAt(coordinate).GetType() != typeof(NullBrick);
+    bricks.Remove(brickToRemove); // REFACTOR: i do not like this
+
+    var bricksAbove = bricks.Where(b => b.StartCoordinate.Z == brickToRemove.EndCoordinate.Z + 1);
+    var isAnyBricksFalling = bricksAbove.Any(b => AreFree(b.GetBelowCoordinates()));
+
+    bricks.Add(brickToRemove); // REFACTOR: i do not like this
+    return !isAnyBricksFalling;
   }
+
+  private bool AreFree(IEnumerable<Coordinate> coordinates) => coordinates.All(c => !IsOccupied(c));
+  private bool IsOccupied(Coordinate coordinate) => BrickAt(coordinate).GetType() != typeof(NullBrick);
 
   public override bool Equals(object? other)
   {

@@ -253,4 +253,32 @@ public class BricksSnapshotTest
 
   }
 
+  public class CheckStabilityRemovingBrickTest : BricksSnapshotTest
+  {
+    private readonly BricksSnapshot stableSnapshot = new BricksSnapshot([
+      new Brick(new(1,0,1), new(1,2,1)),
+      new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
+      new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
+      new Brick(new(0,1,4), new(2,1,4)),
+      new Brick(new(1,1,5), new(1,1,6)),
+    ]);
+
+    [Fact]
+    public void RemoveNotLoadBearingBrick()
+    {
+      Assert.True(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(0, 0, 2), new(2, 0, 2))));
+      Assert.True(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(0, 2, 2), new(2, 2, 2))));
+      Assert.True(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(0, 0, 3), new(0, 2, 3))));
+      Assert.True(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(2, 0, 3), new(2, 2, 3))));
+      Assert.True(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(1, 1, 5), new(1, 1, 6))));
+    }
+
+    [Fact]
+    public void RemoveLoadBearingBrick()
+    {
+      Assert.False(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(1, 0, 1), new(1, 2, 1))));
+      Assert.False(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(0, 1, 4), new(2, 1, 4))));
+    }
+  }
+
 }
