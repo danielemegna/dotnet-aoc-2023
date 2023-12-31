@@ -54,6 +54,34 @@ public class BricksSnapshotTest
 
   }
 
+  public class BricksAtTest : BricksSnapshotTest
+  {
+
+    [Fact]
+    public void GetBricksAtEmptyCoordinate()
+    {
+      var actual = snapshot.BricksAt([new(0, 0, 1), new(12, 24, 12)]);
+      Assert.Empty(actual);
+    }
+
+    [Fact]
+    public void GetBricksGettingDifferentBricks()
+    {
+      var actual = snapshot.BricksAt([new(0, 1, 4), new(2, 1, 5)]);
+      Assert.Equal(2, actual.Count);
+      Assert.Contains(new Brick(new(0, 0, 4), new(0, 2, 4)), actual);
+      Assert.Contains(new Brick(new(2, 0, 5), new(2, 2, 5)), actual);
+    }
+
+    [Fact]
+    public void GetSameBrickWithDifferentCoordinates()
+    {
+      var actual = snapshot.BricksAt([new(0, 0, 4), new(0, 1, 4), new(0, 2, 4)]);
+      Assert.Single(actual);
+      Assert.Equal(new Brick(new(0, 0, 4), new(0, 2, 4)), actual.First());
+    }
+  }
+
   public class Equality : BricksSnapshotTest
   {
 

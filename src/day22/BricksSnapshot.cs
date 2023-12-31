@@ -15,6 +15,14 @@ public class BricksSnapshot
     );
   }
 
+  public IReadOnlySet<Brick> BricksAt(IEnumerable<Coordinate> coordinate)
+  {
+    return coordinate
+      .Select(BrickAt)
+      .Where(b => b.GetType() != typeof(NullBrick))
+      .ToHashSet();
+  }
+
   public void CompleteFall()
   {
     var verticallySortedBricks = bricks.ToList().OrderBy(b => b.StartCoordinate.Z);
@@ -44,10 +52,7 @@ public class BricksSnapshot
   public bool CheckStabilityRemovingBrick(Brick brickToRemove)
   {
     var aboveCoordinates = brickToRemove.GetAboveCoordinates();
-    var aboveBricks = aboveCoordinates
-      .Select(BrickAt)
-      .Where(b => b.GetType() != typeof(NullBrick));
-
+    var aboveBricks = BricksAt(aboveCoordinates);
 
     BricksSnapshot clone = new(bricks);
     clone.bricks.Remove(brickToRemove);
