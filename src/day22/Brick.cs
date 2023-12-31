@@ -4,28 +4,32 @@ public record Brick
 {
   public Coordinate StartCoordinate { get; }
   public Coordinate EndCoordinate { get; }
-  public IReadOnlySet<Coordinate> OccupiedCoordinates { get; }
+
+  private readonly HashSet<Coordinate> occupiedCoordinates;
 
   public Brick(Coordinate startCoordinate, Coordinate endCoordinate)
   {
     (StartCoordinate, EndCoordinate) = Sorted(startCoordinate, endCoordinate);
-    OccupiedCoordinates = GenerateOccupiedCoordinates();
+    occupiedCoordinates = GenerateOccupiedCoordinates();
   }
 
-  public virtual bool IsOccupying(Coordinate inspectedCoordinate)
+  public IReadOnlySet<Coordinate> GetOccupiedCoordinates()
   {
-    return OccupiedCoordinates.Contains(inspectedCoordinate);
+    return occupiedCoordinates;
   }
-
-  // TODO for simmetry public IReadOnlySet<Coordinate> GetOccupiedCoordinates()
 
   public IReadOnlySet<Coordinate> GetBelowCoordinates()
   {
-    IEnumerable<Coordinate> lowestCoordinates = OccupiedCoordinates;
+    IEnumerable<Coordinate> lowestCoordinates = occupiedCoordinates;
     if (StartCoordinate.Z != EndCoordinate.Z)
       lowestCoordinates = [StartCoordinate];
 
     return lowestCoordinates.Select(c => c with { Z = c.Z - 1 }).ToHashSet();
+  }
+
+  public virtual bool IsOccupying(Coordinate inspectedCoordinate)
+  {
+    return occupiedCoordinates.Contains(inspectedCoordinate);
   }
 
   public virtual bool Equals(Brick? other)
@@ -43,10 +47,10 @@ public record Brick
     return StartCoordinate.GetHashCode() * 2 + EndCoordinate.GetHashCode();
   }
 
-  private IReadOnlySet<Coordinate> GenerateOccupiedCoordinates()
+  private HashSet<Coordinate> GenerateOccupiedCoordinates()
   {
     if (StartCoordinate == EndCoordinate)
-      return new HashSet<Coordinate>([StartCoordinate]);
+      return [StartCoordinate];
 
     if (StartCoordinate.X != EndCoordinate.X)
     {

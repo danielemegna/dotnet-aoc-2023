@@ -31,7 +31,7 @@ public class BricksSnapshot
       {
         IEnumerable<Coordinate> coordinatesUnderTheBrick;
         if (brick.StartCoordinate.Z == brick.EndCoordinate.Z)
-          coordinatesUnderTheBrick = brick.OccupiedCoordinates.Select(c => c with { Z = newZValue - 1 });
+          coordinatesUnderTheBrick = brick.GetOccupiedCoordinates().Select(c => c with { Z = newZValue - 1 });
         else
           coordinatesUnderTheBrick = [brick.StartCoordinate with { Z = newZValue - 1 }];
 
