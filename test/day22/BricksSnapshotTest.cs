@@ -235,6 +235,22 @@ public class BricksSnapshotTest
       ]);
       Assert.Equal(expectedSnapshot, singleBrickSnapshot);
     }
+
+    [Fact]
+    public void CompleteFallOfProvidedExample()
+    {
+      snapshot.CompleteFall();
+
+      var expectedSnapshot = new BricksSnapshot([
+        new Brick(new(1,0,1), new(1,2,1)),
+        new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
+        new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
+        new Brick(new(0,1,4), new(2,1,4)),
+        new Brick(new(1,1,5), new(1,1,6)),
+      ]);
+      Assert.Equal(expectedSnapshot, snapshot);
+    }
+
   }
 
 }
