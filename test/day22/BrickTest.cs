@@ -65,21 +65,57 @@ public class BrickTest
   }
 
   [Fact]
-  public void ExposeOccupiedCoordinates()
+  public void ExposeOccupiedCoordinatesOfSingleCube()
   {
-    Assert.Equal([new(0, 1, 0)], new Brick(new(0, 1, 0), new(0, 1, 0)).OccupiedCoordinates);
+    var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
+    Assert.Equal([new(0, 1, 2)], brick.OccupiedCoordinates);
+  }
+
+  [Fact]
+  public void ExposeOccupiedCoordinatesOfHorizontalBricks()
+  {
     Assert.Equal(
-      [new(0, 1, 0), new(1, 1, 0), new(2, 1, 0)],
-      new Brick(new(0, 1, 0), new(2, 1, 0)).OccupiedCoordinates
+      [new(0, 1, 2), new(1, 1, 2), new(2, 1, 2)],
+      new Brick(new(0, 1, 2), new(2, 1, 2)).OccupiedCoordinates
     );
     Assert.Equal(
-      [new(1, 3, 0), new(1, 4, 0), new(1, 5, 0), new(1, 6, 0)],
-      new Brick(new(1, 3, 0), new(1, 6, 0)).OccupiedCoordinates
+      [new(1, 3, 2), new(1, 4, 2), new(1, 5, 2), new(1, 6, 2)],
+      new Brick(new(1, 3, 2), new(1, 6, 2)).OccupiedCoordinates
+    );
+  }
+
+  [Fact]
+  public void ExposeOccupiedCoordinatesOfVerticalBrick()
+  {
+    var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
+    Assert.Equal([new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)], brick.OccupiedCoordinates);
+  }
+
+  [Fact]
+  public void ExposeBelowCoordinatesOfSingleCube()
+  {
+    var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
+    Assert.Equal([new(0, 1, 1)], brick.GetBelowCoordinates());
+  }
+
+  [Fact]
+  public void ExposeBelowCoordinatesOfHorizontalBricks()
+  {
+    Assert.Equal(
+      [new(0, 1, 1), new(1, 1, 1), new(2, 1, 1)],
+      new Brick(new(0, 1, 2), new(2, 1, 2)).GetBelowCoordinates()
     );
     Assert.Equal(
-      [new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)],
-      new Brick(new(1, 5, 4), new(1, 5, 2)).OccupiedCoordinates
+      [new(1, 3, 1), new(1, 4, 1), new(1, 5, 1), new(1, 6, 1)],
+      new Brick(new(1, 3, 2), new(1, 6, 2)).GetBelowCoordinates()
     );
+  }
+
+  [Fact]
+  public void ExposeBelowCoordinatesOfVerticalBrick()
+  {
+    var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
+    Assert.Equal([new(1, 5, 1)], brick.GetBelowCoordinates());
   }
 
   [Fact]
