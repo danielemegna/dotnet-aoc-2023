@@ -2,16 +2,16 @@ namespace aoc2023.day22;
 
 public class BricksSnapshot
 {
-  public ISet<Brick> Bricks { get; }
+  private readonly HashSet<Brick> bricks;
 
   public BricksSnapshot(params Brick[] bricks)
   {
-    Bricks = bricks.ToHashSet();
+    this.bricks = bricks.ToHashSet();
   }
 
   public Brick BrickAt(Coordinate coordinate)
   {
-    return Bricks.FirstOrDefault(
+    return bricks.FirstOrDefault(
       b => b.IsOccupying(coordinate),
       new NullBrick(coordinate)
     );
@@ -19,11 +19,11 @@ public class BricksSnapshot
 
   public void CompleteFall()
   {
-    var verticallySortedBrick = Bricks.ToList().OrderBy(b => b.StartCoordinate.Z);
+    var verticallySortedBricks = bricks.ToList().OrderBy(b => b.StartCoordinate.Z);
 
-    foreach (var brick in verticallySortedBrick)
+    foreach (var brick in verticallySortedBricks)
     {
-      var clonedBrick = brick with {};
+      var clonedBrick = brick with { };
       while (clonedBrick.StartCoordinate.Z > 1)
       {
         var belowCoordinates = clonedBrick.GetBelowCoordinates();
@@ -33,8 +33,8 @@ public class BricksSnapshot
 
       if (clonedBrick.Equals(brick)) continue;
 
-      Bricks.Remove(brick);
-      Bricks.Add(clonedBrick);
+      bricks.Remove(brick);
+      bricks.Add(clonedBrick);
     }
   }
 
@@ -50,12 +50,12 @@ public class BricksSnapshot
     if (other.GetType() != typeof(BricksSnapshot)) return false;
     BricksSnapshot otherCasted = (BricksSnapshot)other;
 
-    return Bricks.SetEquals(otherCasted.Bricks);
+    return bricks.SetEquals(otherCasted.bricks);
   }
 
   public override int GetHashCode()
   {
-    return Convert.ToInt32(Bricks.Select(b => b.GetHashCode()).Average());
+    return Convert.ToInt32(bricks.Select(b => b.GetHashCode()).Average());
   }
 
 }
