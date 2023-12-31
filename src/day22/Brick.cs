@@ -4,7 +4,7 @@ public record Brick
 {
   public Coordinate StartCoordinate { get; }
   public Coordinate EndCoordinate { get; }
-  public HashSet<Coordinate> OccupiedCoordinates { get; }
+  public IReadOnlySet<Coordinate> OccupiedCoordinates { get; }
 
   public Brick(Coordinate startCoordinate, Coordinate endCoordinate)
   {
@@ -32,10 +32,10 @@ public record Brick
     return StartCoordinate.GetHashCode() * 2 + EndCoordinate.GetHashCode();
   }
 
-  private HashSet<Coordinate> GenerateOccupiedCoordinates()
+  private IReadOnlySet<Coordinate> GenerateOccupiedCoordinates()
   {
     if (StartCoordinate == EndCoordinate)
-      return [StartCoordinate];
+      return new HashSet<Coordinate>([StartCoordinate]);
 
     if (StartCoordinate.X != EndCoordinate.X)
     {
