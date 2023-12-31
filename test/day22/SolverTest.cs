@@ -26,12 +26,12 @@ public class SolverTest
       Assert.Equal(5, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day22/input.txt");
       var actual = solver.CountSafeToDisintegrateBricks(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(465, actual);
     }
 
   }
