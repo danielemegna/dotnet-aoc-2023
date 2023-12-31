@@ -22,31 +22,25 @@ public class BricksSnapshot
   public void CompleteFall()
   {
     var verticallySortedBrick = Bricks.ToList().OrderBy(b => b.StartCoordinate.Z);
+
     foreach (var brick in verticallySortedBrick)
     {
-      if (brick.StartCoordinate.Z == 1) continue;
-
-      var newZValue = brick.StartCoordinate.Z;
-      do
+      var movedBrick = new Brick(brick.StartCoordinate, brick.EndCoordinate);
+      while (movedBrick.StartCoordinate.Z > 1)
       {
-        IEnumerable<Coordinate> coordinatesUnderTheBrick;
-        if (brick.StartCoordinate.Z == brick.EndCoordinate.Z)
-          coordinatesUnderTheBrick = brick.GetOccupiedCoordinates().Select(c => c with { Z = newZValue - 1 });
-        else
-          coordinatesUnderTheBrick = [brick.StartCoordinate with { Z = newZValue - 1 }];
+        var belowCoordinates = movedBrick.GetBelowCoordinates();
+        if (belowCoordinates.Any(IsOccupied)) break;
 
-        var isOccupiedUnderTheBrick = coordinatesUnderTheBrick.Any(c => this.IsOccupied(c));
-        if (isOccupiedUnderTheBrick) break;
-        newZValue--;
-      } while (newZValue > 1);
+        movedBrick = new Brick(
+          brick.StartCoordinate with { Z = movedBrick.StartCoordinate.Z - 1 },
+          brick.EndCoordinate with { Z = movedBrick.EndCoordinate.Z - 1 }
+        );
+      }
 
-      var newBrick = new Brick(
-        brick.StartCoordinate with { Z = newZValue },
-        brick.EndCoordinate with { Z = brick.EndCoordinate.Z - (brick.StartCoordinate.Z - newZValue) }
-      );
+      if (movedBrick.Equals(brick)) continue;
 
       Bricks.Remove(brick);
-      Bricks.Add(newBrick);
+      Bricks.Add(movedBrick);
     }
   }
 
