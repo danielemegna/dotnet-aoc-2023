@@ -27,6 +27,15 @@ public record Brick
     return lowestCoordinates.Select(c => c with { Z = c.Z - 1 }).ToHashSet();
   }
 
+  public IReadOnlySet<Coordinate> GetAboveCoordinates()
+  {
+    IEnumerable<Coordinate> highestCoordinates = occupiedCoordinates;
+    if (StartCoordinate.Z != EndCoordinate.Z)
+      highestCoordinates = [EndCoordinate];
+
+    return highestCoordinates.Select(c => c with { Z = c.Z + 1 }).ToHashSet();
+  }
+
   public virtual bool IsOccupying(Coordinate inspectedCoordinate)
   {
     return occupiedCoordinates.Contains(inspectedCoordinate);
