@@ -99,6 +99,33 @@ public class BrickTest
     }
   }
 
+  public class GetAboveCoordinates()
+  {
+
+    [Fact]
+    public void OfSingleCube()
+    {
+      var brick = new Brick(new(0, 1, 2), new(0, 1, 2));
+      Assert.Equal([new(0, 1, 3)], brick.GetAboveCoordinates());
+    }
+
+    [Fact]
+    public void OfHorizontalBricks()
+    {
+      var brick = new Brick(new(0, 1, 2), new(2, 1, 2));
+      Assert.Equal([new(0, 1, 3), new(1, 1, 3), new(2, 1, 3)], brick.GetAboveCoordinates());
+      brick = new Brick(new(1, 3, 2), new(1, 6, 2));
+      Assert.Equal([new(1, 3, 3), new(1, 4, 3), new(1, 5, 3), new(1, 6, 3)], brick.GetAboveCoordinates());
+    }
+
+    [Fact]
+    public void OfVerticalBrick()
+    {
+      var brick = new Brick(new(1, 5, 4), new(1, 5, 2));
+      Assert.Equal([new(1, 5, 5)], brick.GetAboveCoordinates());
+    }
+  }
+
   public class GetBelowCoordinates()
   {
 
