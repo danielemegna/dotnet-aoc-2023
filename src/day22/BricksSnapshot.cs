@@ -30,11 +30,7 @@ public class BricksSnapshot
       {
         var belowCoordinates = movedBrick.GetBelowCoordinates();
         if (belowCoordinates.Any(IsOccupied)) break;
-
-        movedBrick = new Brick(
-          brick.StartCoordinate with { Z = movedBrick.StartCoordinate.Z - 1 },
-          brick.EndCoordinate with { Z = movedBrick.EndCoordinate.Z - 1 }
-        );
+        movedBrick = movedBrick.MoveDown();
       }
 
       if (movedBrick.Equals(brick)) continue;
