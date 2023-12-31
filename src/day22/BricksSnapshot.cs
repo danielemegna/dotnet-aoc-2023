@@ -21,8 +21,8 @@ public class BricksSnapshot
 
   public void CompleteFall()
   {
-    var clonedBricks = new HashSet<Brick>(Bricks);
-    foreach (var brick in clonedBricks)
+    var verticallySortedBrick = Bricks.ToList().OrderBy(b => b.StartCoordinate.Z);
+    foreach (var brick in verticallySortedBrick)
     {
       if (brick.StartCoordinate.Z == 1) continue;
 
