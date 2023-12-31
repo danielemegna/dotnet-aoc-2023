@@ -27,19 +27,22 @@ public class BricksSnapshot
       if (brick.StartCoordinate.Z == 1) continue;
 
       var newZValue = brick.StartCoordinate.Z;
-      while (newZValue > 1)
+      do
       {
-        var coordinatesUnderTheBrick = brick.OccupiedCoordinates
-          .Select(c => c with { Z = newZValue - 1 });
-        
+        IEnumerable<Coordinate> coordinatesUnderTheBrick;
+        if (brick.StartCoordinate.Z == brick.EndCoordinate.Z)
+          coordinatesUnderTheBrick = brick.OccupiedCoordinates.Select(c => c with { Z = newZValue - 1 });
+        else
+          coordinatesUnderTheBrick = [brick.StartCoordinate with { Z = newZValue - 1 }];
+
         var isOccupiedUnderTheBrick = coordinatesUnderTheBrick.Any(c => this.IsOccupied(c));
-        if(isOccupiedUnderTheBrick) break;
+        if (isOccupiedUnderTheBrick) break;
         newZValue--;
-      }
+      } while (newZValue > 1);
 
       var newBrick = new Brick(
         brick.StartCoordinate with { Z = newZValue },
-        brick.EndCoordinate with { Z = newZValue }
+        brick.EndCoordinate with { Z = brick.EndCoordinate.Z - (brick.StartCoordinate.Z - newZValue) }
       );
 
       Bricks.Remove(brick);

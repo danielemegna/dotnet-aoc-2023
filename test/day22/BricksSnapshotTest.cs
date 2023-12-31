@@ -220,6 +220,21 @@ public class BricksSnapshotTest
       ]);
       Assert.Equal(expectedSnapshot, twoBricksSnapshot);
     }
+
+    [Fact]
+    public void VerticalFallingBrick()
+    {
+      var singleBrickSnapshot = new BricksSnapshot([
+        new Brick(new(0,0,7), new(0,0,9))
+      ]);
+
+      singleBrickSnapshot.CompleteFall();
+
+      var expectedSnapshot = new BricksSnapshot([
+        new Brick(new(0,0,1), new(0,0,3))
+      ]);
+      Assert.Equal(expectedSnapshot, singleBrickSnapshot);
+    }
   }
 
 }
