@@ -1,3 +1,5 @@
+using System.IO.Compression;
+
 namespace aoc2023.day22;
 
 public class BricksSnapshot
@@ -25,11 +27,13 @@ public class BricksSnapshot
       if (brick.StartCoordinate.Z == 1) continue;
 
       var newZValue = brick.StartCoordinate.Z;
-      while (
-        !IsOccupied(brick.StartCoordinate with { Z = newZValue - 1 }) &&
-        !IsOccupied(brick.EndCoordinate with { Z = newZValue - 1 }) &&
-        newZValue > 1
-      ) {
+      while (newZValue > 1)
+      {
+        var coordinatesUnderTheBrick = brick.OccupiedCoordinates
+          .Select(c => c with { Z = newZValue - 1 });
+        
+        var isOccupiedUnderTheBrick = coordinatesUnderTheBrick.Any(c => this.IsOccupied(c));
+        if(isOccupiedUnderTheBrick) break;
         newZValue--;
       }
 
