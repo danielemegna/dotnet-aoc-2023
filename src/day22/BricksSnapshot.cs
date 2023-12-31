@@ -1,5 +1,3 @@
-using System.IO.Compression;
-
 namespace aoc2023.day22;
 
 public class BricksSnapshot
@@ -25,18 +23,18 @@ public class BricksSnapshot
 
     foreach (var brick in verticallySortedBrick)
     {
-      var movedBrick = new Brick(brick.StartCoordinate, brick.EndCoordinate);
-      while (movedBrick.StartCoordinate.Z > 1)
+      var clonedBrick = brick with {};
+      while (clonedBrick.StartCoordinate.Z > 1)
       {
-        var belowCoordinates = movedBrick.GetBelowCoordinates();
+        var belowCoordinates = clonedBrick.GetBelowCoordinates();
         if (belowCoordinates.Any(IsOccupied)) break;
-        movedBrick = movedBrick.MoveDown();
+        clonedBrick = clonedBrick.MoveDown();
       }
 
-      if (movedBrick.Equals(brick)) continue;
+      if (clonedBrick.Equals(brick)) continue;
 
       Bricks.Remove(brick);
-      Bricks.Add(movedBrick);
+      Bricks.Add(clonedBrick);
     }
   }
 
