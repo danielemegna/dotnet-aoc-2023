@@ -94,8 +94,10 @@ public class BrickTest
 
     var invertOnX = new Brick(new(7, 3, 3), new(2, 3, 3));
     Assert.Equal(new(2, 3, 3), invertOnX.StartCoordinate);
+    Assert.Equal(new(7, 3, 3), invertOnX.EndCoordinate);
     var invertOnZ = new Brick(new(5, 6, 3), new(5, 6, 1));
     Assert.Equal(new(5, 6, 1), invertOnZ.StartCoordinate);
+    Assert.Equal(new(5, 6, 3), invertOnZ.EndCoordinate);
   }
 
   [Fact]
