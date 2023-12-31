@@ -187,7 +187,7 @@ public class BricksSnapshotTest
       Assert.Equal(expectedSnapshot, twoBricksSnapshot);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void BricksDoNotFallOnPartialHitAtMiddle()
     {
       var twoBricksSnapshot = new BricksSnapshot([
