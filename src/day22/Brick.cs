@@ -17,6 +17,17 @@ public record Brick
     return OccupiedCoordinates.Contains(inspectedCoordinate);
   }
 
+  // TODO for simmetry public IReadOnlySet<Coordinate> GetOccupiedCoordinates()
+
+  public IReadOnlySet<Coordinate> GetBelowCoordinates()
+  {
+    IEnumerable<Coordinate> lowestCoordinates = OccupiedCoordinates;
+    if (StartCoordinate.Z != EndCoordinate.Z)
+      lowestCoordinates = [StartCoordinate];
+
+    return lowestCoordinates.Select(c => c with { Z = c.Z - 1 }).ToHashSet();
+  }
+
   public virtual bool Equals(Brick? other)
   {
     if (ReferenceEquals(this, other)) return true;
