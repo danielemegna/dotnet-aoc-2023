@@ -253,7 +253,7 @@ public class BricksSnapshotTest
 
   }
 
-  public class CheckStabilityRemovingBrickTest : BricksSnapshotTest
+  public class CheckStabilityTest : BricksSnapshotTest
   {
     private readonly BricksSnapshot stableSnapshot = new BricksSnapshot([
       new Brick(new(1,0,1), new(1,2,1)),
@@ -278,6 +278,12 @@ public class BricksSnapshotTest
     {
       Assert.False(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(1, 0, 1), new(1, 2, 1))));
       Assert.False(stableSnapshot.CheckStabilityRemovingBrick(new Brick(new(0, 1, 4), new(2, 1, 4))));
+    }
+
+    [Fact]
+    public void CountLoadBearingBricks()
+    {
+      Assert.Equal(5, stableSnapshot.CountLoadBearingBricks());
     }
   }
 

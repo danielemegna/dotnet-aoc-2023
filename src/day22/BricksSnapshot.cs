@@ -36,6 +36,11 @@ public class BricksSnapshot
     }
   }
 
+  public int CountLoadBearingBricks()
+  {
+    return bricks.ToList().Count(CheckStabilityRemovingBrick); // REFACTOR: i do not like this
+  }
+
   public bool CheckStabilityRemovingBrick(Brick brickToRemove)
   {
     bricks.Remove(brickToRemove); // REFACTOR: i do not like this
