@@ -68,7 +68,7 @@ public class BricksSnapshotTest
         new Brick(new(2,0,5), new(2,2,5)),
         new Brick(new(0,1,6), new(2,1,6)),
         new Brick(new(1,1,8), new(1,1,9)),
-    ]);
+      ]);
 
       Assert.NotSame(snapshot, clone);
       Assert.Equal(snapshot, clone);
@@ -85,7 +85,7 @@ public class BricksSnapshotTest
         new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
         new Brick(new(0,1,4), new(2,1,4)),
         new Brick(new(1,1,5), new(1,1,6)),
-    ]);
+      ]);
 
       Assert.NotSame(snapshot, another);
       Assert.NotEqual(snapshot, another);
@@ -100,12 +100,12 @@ public class BricksSnapshotTest
     [Fact]
     public void SingleNotFallingBrick()
     {
-      var singleBrick = new Brick(new(1,0,1), new(1,2,1));
+      var singleBrick = new Brick(new(1, 0, 1), new(1, 2, 1));
       var simpleSnapshot = new BricksSnapshot([singleBrick]);
 
       simpleSnapshot.CompleteFall();
 
-      Assert.Equal(singleBrick, simpleSnapshot.BrickAt(new(1,0,1)));
+      Assert.Equal(singleBrick, simpleSnapshot.BrickAt(new(1, 0, 1)));
       Assert.Equal([singleBrick], simpleSnapshot.Bricks);
     }
 
@@ -118,8 +118,8 @@ public class BricksSnapshotTest
 
       simpleSnapshot.CompleteFall();
 
-      var fallenBrick = new Brick(new(0,0,1), new(2,0,1));
-      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(0,0,1)));
+      var fallenBrick = new Brick(new(0, 0, 1), new(2, 0, 1));
+      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(0, 0, 1)));
       Assert.Equal([fallenBrick], simpleSnapshot.Bricks);
     }
 
@@ -132,8 +132,8 @@ public class BricksSnapshotTest
 
       simpleSnapshot.CompleteFall();
 
-      var fallenBrick = new Brick(new(1,2,1), new(1,4,1));
-      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(1,2,1)));
+      var fallenBrick = new Brick(new(1, 2, 1), new(1, 4, 1));
+      Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(1, 2, 1)));
     }
 
     [Fact]
