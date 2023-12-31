@@ -25,7 +25,7 @@ public class BricksSnapshot
       while (clonedBrick.StartCoordinate.Z > 1)
       {
         var belowCoordinates = clonedBrick.GetBelowCoordinates();
-        if (belowCoordinates.Any(IsOccupied)) break;
+        if (!AreFree(belowCoordinates)) break;
         clonedBrick = clonedBrick.MoveDown();
       }
 
@@ -43,19 +43,20 @@ public class BricksSnapshot
 
   public bool CheckStabilityRemovingBrick(Brick brickToRemove)
   {
-    BricksSnapshot clone = new BricksSnapshot(bricks);
-    clone.bricks.Remove(brickToRemove);
-
     var aboveCoordinates = brickToRemove.GetAboveCoordinates();
-    var bricksAbove = aboveCoordinates
-      .Select(clone.BrickAt)
+    var aboveBricks = aboveCoordinates
+      .Select(BrickAt)
       .Where(b => b.GetType() != typeof(NullBrick));
-    var isAnyBricksFalling = bricksAbove.Any(b => clone.AreFree(b.GetBelowCoordinates()));
+
+
+    BricksSnapshot clone = new(bricks);
+    clone.bricks.Remove(brickToRemove);
+    var isAnyBricksFalling = aboveBricks.Any(b => clone.AreFree(b.GetBelowCoordinates()));
     return !isAnyBricksFalling;
   }
 
-  private bool AreFree(IEnumerable<Coordinate> coordinates) => coordinates.All(c => !IsOccupied(c));
-  private bool IsOccupied(Coordinate coordinate) => BrickAt(coordinate).GetType() != typeof(NullBrick);
+  private bool AreFree(IEnumerable<Coordinate> coordinates) => coordinates.All(IsFree);
+  private bool IsFree(Coordinate coordinate) => BrickAt(coordinate).GetType() == typeof(NullBrick);
 
   public override bool Equals(object? other)
   {
