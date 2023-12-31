@@ -38,17 +38,19 @@ public class BricksSnapshot
 
   public int CountLoadBearingBricks()
   {
-    return bricks.ToList().Count(CheckStabilityRemovingBrick); // REFACTOR: i do not like this
+    return bricks.Count(CheckStabilityRemovingBrick);
   }
 
   public bool CheckStabilityRemovingBrick(Brick brickToRemove)
   {
-    bricks.Remove(brickToRemove); // REFACTOR: i do not like this
+    BricksSnapshot clone = new BricksSnapshot(bricks);
+    clone.bricks.Remove(brickToRemove);
 
-    var bricksAbove = bricks.Where(b => b.StartCoordinate.Z == brickToRemove.EndCoordinate.Z + 1);
-    var isAnyBricksFalling = bricksAbove.Any(b => AreFree(b.GetBelowCoordinates()));
-
-    bricks.Add(brickToRemove); // REFACTOR: i do not like this
+    var aboveCoordinates = brickToRemove.GetAboveCoordinates();
+    var bricksAbove = aboveCoordinates
+      .Select(clone.BrickAt)
+      .Where(b => b.GetType() != typeof(NullBrick));
+    var isAnyBricksFalling = bricksAbove.Any(b => clone.AreFree(b.GetBelowCoordinates()));
     return !isAnyBricksFalling;
   }
 
