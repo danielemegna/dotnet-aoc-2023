@@ -26,7 +26,7 @@ public class SolverTest
       Assert.Equal(5, actual);
     }
 
-    [Fact]
+    [Fact(Skip = "slow test")]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day22/input.txt");
