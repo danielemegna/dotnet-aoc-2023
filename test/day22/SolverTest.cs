@@ -19,7 +19,7 @@ public class SolverTest
   public class FirstPartTest : SolverTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheProvidedExample()
     {
       var actual = solver.CountSafeToDisintegrateBricks(PROVIDED_EXAMPLE_INPUT_LINES);

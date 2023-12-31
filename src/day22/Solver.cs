@@ -4,6 +4,9 @@ public class Solver
 {
   public int CountSafeToDisintegrateBricks(string[] inputLines)
   {
-    throw new NotImplementedException();
+    var parsedBricks = new BrickParser().ParseBricks(inputLines);
+    var bricksSnapshot = new BricksSnapshot(parsedBricks);
+    bricksSnapshot.CompleteFall();
+    return bricksSnapshot.CountLoadBearingBricks();
   }
 }
