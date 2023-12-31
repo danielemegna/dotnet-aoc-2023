@@ -4,18 +4,17 @@ public record Brick
 {
   public Coordinate StartCoordinate { get; }
   public Coordinate EndCoordinate { get; }
-
-  private readonly HashSet<Coordinate> occupiedCoordinates;
+  public HashSet<Coordinate> OccupiedCoordinates { get; }
 
   public Brick(Coordinate startCoordinate, Coordinate endCoordinate)
   {
     (StartCoordinate, EndCoordinate) = Sorted(startCoordinate, endCoordinate);
-    occupiedCoordinates = GenerateOccupiedCoordinates();
+    OccupiedCoordinates = GenerateOccupiedCoordinates();
   }
 
   public virtual bool IsOccupying(Coordinate inspectedCoordinate)
   {
-    return occupiedCoordinates.Contains(inspectedCoordinate);
+    return OccupiedCoordinates.Contains(inspectedCoordinate);
   }
 
   public virtual bool Equals(Brick? other)

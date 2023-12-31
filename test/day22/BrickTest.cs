@@ -65,6 +65,24 @@ public class BrickTest
   }
 
   [Fact]
+  public void ExposeOccupiedCoordinates()
+  {
+    Assert.Equal([new(0, 1, 0)], new Brick(new(0, 1, 0), new(0, 1, 0)).OccupiedCoordinates);
+    Assert.Equal(
+      [new(0, 1, 0), new(1, 1, 0), new(2, 1, 0)],
+      new Brick(new(0, 1, 0), new(2, 1, 0)).OccupiedCoordinates
+    );
+    Assert.Equal(
+      [new(1, 3, 0), new(1, 4, 0), new(1, 5, 0), new(1, 6, 0)],
+      new Brick(new(1, 3, 0), new(1, 6, 0)).OccupiedCoordinates
+    );
+    Assert.Equal(
+      [new(1, 5, 2), new(1, 5, 3), new(1, 5, 4)],
+      new Brick(new(1, 5, 4), new(1, 5, 2)).OccupiedCoordinates
+    );
+  }
+
+  [Fact]
   public void AutomaticallySwapStartAndEndCoordinateWhenNeeded()
   {
     var normal = new Brick(new(1, 0, 1), new(1, 2, 1));
