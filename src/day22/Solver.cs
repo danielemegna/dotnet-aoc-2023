@@ -7,6 +7,6 @@ public class Solver
     var parsedBricks = new BrickParser().ParseBricks(inputLines);
     var bricksSnapshot = new BricksSnapshot(parsedBricks);
     bricksSnapshot.CompleteFall();
-    return bricksSnapshot.CountLoadBearingBricks();
+    return bricksSnapshot.CountSafeToDisintegrateBricks();
   }
 }

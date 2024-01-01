@@ -44,12 +44,12 @@ public class BricksSnapshot
     }
   }
 
-  public int CountLoadBearingBricks()
+  public int CountSafeToDisintegrateBricks()
   {
-    return bricks.Count(CheckStabilityRemovingBrick);
+    return bricks.Count(IsStableRemovingBrick);
   }
 
-  public bool CheckStabilityRemovingBrick(Brick brickToRemove)
+  internal bool IsStableRemovingBrick(Brick brickToRemove)
   {
     var aboveCoordinates = brickToRemove.GetAboveCoordinates();
     var aboveBricks = BricksAt(aboveCoordinates);
