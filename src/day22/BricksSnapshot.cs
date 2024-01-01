@@ -49,15 +49,27 @@ public class BricksSnapshot
     return bricks.Count(IsStableRemovingBrick);
   }
 
+  public int CountFallingBricksOnDisintegrates()
+  {
+    return bricks.Sum(CountFallingBricksRemovingBrick);
+  }
+
   internal bool IsStableRemovingBrick(Brick brickToRemove)
+  {
+    return CountFallingBricksRemovingBrick(brickToRemove) == 0;
+  }
+
+  internal int CountFallingBricksRemovingBrick(Brick brickToRemove)
   {
     var aboveCoordinates = brickToRemove.GetAboveCoordinates();
     var aboveBricks = BricksAt(aboveCoordinates);
 
     BricksSnapshot clone = new(bricks);
     clone.bricks.Remove(brickToRemove);
-    var isAnyBricksFalling = aboveBricks.Any(b => clone.AreFree(b.GetBelowCoordinates()));
-    return !isAnyBricksFalling;
+    var fallingBricks = aboveBricks.Count(b => clone.AreFree(b.GetBelowCoordinates()));
+
+    // TODO complete me including recursive falling bricks
+    return fallingBricks;
   }
 
   private bool AreFree(IEnumerable<Coordinate> coordinates) => coordinates.All(IsFree);

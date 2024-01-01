@@ -315,4 +315,43 @@ public class BricksSnapshotTest
     }
   }
 
+  public class CountFallingBricksOnRemoveTest : BricksSnapshotTest
+  {
+    private readonly BricksSnapshot stableSnapshot = new BricksSnapshot([
+      new Brick(new(1,0,1), new(1,2,1)),
+      new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
+      new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
+      new Brick(new(0,1,4), new(2,1,4)),
+      new Brick(new(1,1,5), new(1,1,6)),
+    ]);
+
+    [Fact]
+    public void RemoveNotLoadBearingBrick()
+    {
+      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 0, 2), new(2, 0, 2))));
+      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 2, 2), new(2, 2, 2))));
+      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 0, 3), new(0, 2, 3))));
+      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(2, 0, 3), new(2, 2, 3))));
+      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(1, 1, 5), new(1, 1, 6))));
+    }
+
+    [Fact]
+    public void RemoveBrickWithOneFallingBrickAbove()
+    {
+      Assert.Equal(1, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 1, 4), new(2, 1, 4))));
+    }
+
+    [Fact(Skip = "WIP")]
+    public void RecursiveFallingShouldBeIncluded()
+    {
+      Assert.Equal(6, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(1, 0, 1), new(1, 2, 1))));
+    }
+
+    [Fact(Skip = "WIP")]
+    public void CountFallingBricksOnDisintegrates()
+    {
+      Assert.Equal(6 + 1, stableSnapshot.CountFallingBricksOnDisintegrates());
+    }
+  }
+
 }
