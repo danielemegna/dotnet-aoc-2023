@@ -341,13 +341,13 @@ public class BricksSnapshotTest
       Assert.Equal(1, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 1, 4), new(2, 1, 4))));
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void RecursiveFallingShouldBeIncluded()
     {
       Assert.Equal(6, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(1, 0, 1), new(1, 2, 1))));
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void CountFallingBricksOnDisintegrates()
     {
       Assert.Equal(6 + 1, stableSnapshot.CountFallingBricksOnDisintegrates());
