@@ -61,15 +61,20 @@ public class BricksSnapshot
 
   internal int CountFallingBricksRemovingBrick(Brick brickToRemove)
   {
-    var aboveCoordinates = brickToRemove.GetAboveCoordinates();
-    var aboveBricks = BricksAt(aboveCoordinates);
-
     BricksSnapshot clone = new(bricks);
-    clone.bricks.Remove(brickToRemove);
-    var fallingBricks = aboveBricks.Count(b => clone.AreFree(b.GetBelowCoordinates()));
+    return CountFallingBricksRemovingBrickWith(clone, brickToRemove);
+  }
+  
+  private int CountFallingBricksRemovingBrickWith(BricksSnapshot snapshot, Brick brickToRemove) {
+    snapshot.bricks.Remove(brickToRemove);
 
-    // TODO complete me including recursive falling bricks
-    return fallingBricks;
+    var aboveCoordinates = brickToRemove.GetAboveCoordinates();
+    var aboveBricks = snapshot.BricksAt(aboveCoordinates);
+    var fallingBricks = aboveBricks.Where(b => snapshot.AreFree(b.GetBelowCoordinates()));
+    
+    var fallingBricksCount = fallingBricks.Count();
+    if(fallingBricksCount == 0) return 0;
+    return fallingBricksCount + fallingBricks.Sum(b => CountFallingBricksRemovingBrickWith(snapshot, b));
   }
 
   private bool AreFree(IEnumerable<Coordinate> coordinates) => coordinates.All(IsFree);
