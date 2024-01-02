@@ -9,4 +9,12 @@ public class Solver
     bricksSnapshot.CompleteFall();
     return bricksSnapshot.CountSafeToDisintegrateBricks();
   }
+
+  public int CountFallingBricksOnDisintegrates(string[] inputLines)
+  {
+    var parsedBricks = new BrickParser().ParseBricks(inputLines);
+    var bricksSnapshot = new BricksSnapshot(parsedBricks);
+    bricksSnapshot.CompleteFall();
+    return bricksSnapshot.CountFallingBricksOnDisintegrates();
+  }
 }

@@ -35,4 +35,24 @@ public class SolverTest
     }
 
   }
+
+  public class SecondPartTest : SolverTest
+  {
+
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.CountFallingBricksOnDisintegrates(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(6 + 1, actual);
+    }
+
+    [Fact(Skip = "slow test")]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day22/input.txt");
+      var actual = solver.CountFallingBricksOnDisintegrates(input);
+      Assert.Equal(79042, actual);
+    }
+
+  }
 }
