@@ -64,16 +64,17 @@ public class BricksSnapshot
     BricksSnapshot clone = new(bricks);
     return CountFallingBricksRemovingBrickWith(clone, brickToRemove);
   }
-  
-  private int CountFallingBricksRemovingBrickWith(BricksSnapshot snapshot, Brick brickToRemove) {
+
+  private int CountFallingBricksRemovingBrickWith(BricksSnapshot snapshot, Brick brickToRemove)
+  {
     snapshot.bricks.Remove(brickToRemove);
 
     var aboveCoordinates = brickToRemove.GetAboveCoordinates();
     var aboveBricks = snapshot.BricksAt(aboveCoordinates);
     var fallingBricks = aboveBricks.Where(b => snapshot.AreFree(b.GetBelowCoordinates()));
-    
+
     var fallingBricksCount = fallingBricks.Count();
-    if(fallingBricksCount == 0) return 0;
+    if (fallingBricksCount == 0) return 0;
     return fallingBricksCount + fallingBricks.Sum(b => CountFallingBricksRemovingBrickWith(snapshot, b));
   }
 
