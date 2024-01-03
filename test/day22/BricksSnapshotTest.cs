@@ -309,6 +309,14 @@ public class BricksSnapshotTest
     }
 
     [Fact]
+    public void CheckStabilityShouldNotAlterTheSnapshot()
+    {
+      Assert.Equal(new Brick(new(0, 2, 2), new(2, 2, 2)), stableSnapshot.BrickAt(new(0, 2, 2)));
+      stableSnapshot.IsStableRemovingBrick(new Brick(new(0, 2, 2), new(2, 2, 2)));
+      Assert.Equal(new Brick(new(0, 2, 2), new(2, 2, 2)), stableSnapshot.BrickAt(new(0, 2, 2)));
+    }
+
+    [Fact]
     public void CountSafeToDisintegrateBricks()
     {
       Assert.Equal(5, stableSnapshot.CountSafeToDisintegrateBricks());
