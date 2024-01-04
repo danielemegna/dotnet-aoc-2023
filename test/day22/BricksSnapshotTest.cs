@@ -279,6 +279,33 @@ public class BricksSnapshotTest
       Assert.Equal(expectedSnapshot, snapshot);
     }
 
+    [Fact]
+    public void AMoreComplexExample()
+    {
+      var complexSnapshot = new BricksSnapshot([
+        new Brick(new(3,0,1), new(3,2,1)), new Brick(new(6,0,1), new(9,0,1)), new Brick(new(0,2,1), new(0,5,1)), new Brick(new(6,2,1), new(6,2,3)),
+        new Brick(new(4,3,2), new(4,5,2)), new Brick(new(4,9,2), new(6,9,2)), new Brick(new(6,3,2), new(6,5,2)), new Brick(new(3,9,2), new(3,9,2)), new Brick(new(6,0,2), new(8,0,2)), new Brick(new(6,1,2), new(9,1,2)), new Brick(new(1,3,2), new(1,5,2)), new Brick(new(0,4,2), new(0,6,2)), new Brick(new(9,2,2), new(9,3,2)), new Brick(new(2,0,2), new(4,0,2)), new Brick(new(5,0,2), new(5,0,3)),
+        new Brick(new(1,6,3), new(3,6,3)), new Brick(new(2,8,3), new(2,9,3)), new Brick(new(8,4,3), new(8,5,3)), new Brick(new(7,2,3), new(7,2,6)), new Brick(new(2,3,3), new(2,5,3)), new Brick(new(1,0,3), new(1,3,3)), new Brick(new(5,8,3), new(5,8,3)), new Brick(new(7,9,3), new(8,9,3)), new Brick(new(0,7,3), new(0,8,3)), new Brick(new(5,7,3), new(6,7,3)), new Brick(new(7,6,3), new(7,7,3)), new Brick(new(5,3,3), new(8,3,3)), new Brick(new(2,7,3), new(4,7,3)),
+        new Brick(new(0,8,4), new(0,9,4)), new Brick(new(4,9,4), new(4,9,6)), new Brick(new(3,3,4), new(6,3,4)), new Brick(new(5,1,4), new(7,1,4)), new Brick(new(5,4,4), new(5,7,4)),
+        new Brick(new(1,1,5), new(3,1,5)), new Brick(new(9,0,5), new(9,2,5)), new Brick(new(5,6,5), new(5,8,5)), new Brick(new(6,0,5), new(8,0,5)), new Brick(new(7,5,5), new(7,7,5)), new Brick(new(5,9,5), new(5,9,6)), new Brick(new(7,9,5), new(8,9,5)), new Brick(new(1,2,5), new(1,5,5)),
+        new Brick(new(2,7,6), new(4,7,6)), new Brick(new(5,8,6), new(5,8,8)), new Brick(new(8,5,6), new(8,7,6)), new Brick(new(1,0,6), new(3,0,6)), new Brick(new(3,3,6), new(3,3,6)),
+        new Brick(new(0,7,7), new(0,8,7)), new Brick(new(4,3,7), new(4,5,7)), new Brick(new(6,3,7), new(8,3,7)), new Brick(new(9,1,7), new(9,3,7)), new Brick(new(1,7,7), new(4,7,7)), new Brick(new(1,4,7), new(1,6,7)), new Brick(new(6,1,7), new(6,1,7)),
+        new Brick(new(4,6,8), new(4,7,8)), new Brick(new(0,2,8), new(2,2,8)), new Brick(new(8,5,8), new(8,5,10)), new Brick(new(3,3,8), new(3,3,10)), new Brick(new(3,9,8), new(6,9,8)), new Brick(new(0,7,8), new(0,7,10)), new Brick(new(3,0,8), new(5,0,8)), new Brick(new(5,5,8), new(5,7,8)),
+      ]);
+
+      complexSnapshot.CompleteFall();
+
+      Assert.Equal(new Brick(new(4, 9, 1), new(6, 9, 1)), complexSnapshot.BrickAt(new(4, 9, 1)));
+      Assert.Equal(new Brick(new(4, 9, 2), new(4, 9, 4)), complexSnapshot.BrickAt(new(4, 9, 2)));
+      Assert.Equal(new Brick(new(4, 9, 2), new(4, 9, 4)), complexSnapshot.BrickAt(new(4, 9, 4)));
+      Assert.Equal(new Brick(new(4, 9, 2), new(4, 9, 4)), complexSnapshot.BrickAt(new(4, 9, 3)));
+      Assert.Equal(new Brick(new(3, 9, 5), new(6, 9, 5)), complexSnapshot.BrickAt(new(3, 9, 5)));
+      Assert.Equal(
+        [new Brick(new(4, 9, 2), new(4, 9, 4))],
+        complexSnapshot.BricksAt([new(3, 9, 4), new(4, 9, 4), new(5, 9, 4), new(6, 9, 4)])
+      );
+    }
+
   }
 
   public class CheckStabilityTest : BricksSnapshotTest
