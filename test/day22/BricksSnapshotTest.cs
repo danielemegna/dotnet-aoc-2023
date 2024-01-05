@@ -52,6 +52,24 @@ public class BricksSnapshotTest
       Assert.Same(first, second);
     }
 
+    [Fact]
+    public void GetVerticalBrickOnItsOccupiedCoordinates()
+    {
+      Brick first = snapshot.BrickAt(new Coordinate(1, 1, 8));
+      Brick second = snapshot.BrickAt(new Coordinate(1, 1, 9));
+      Brick third = snapshot.BrickAt(new Coordinate(1, 1, 10));
+
+      Brick expected = new Brick(new(1, 1, 8), new(1, 1, 10));
+      Assert.Equal(expected, first);
+      Assert.Equal(first, second);
+      Assert.Equal(second, third);
+
+      Assert.NotSame(first, expected);
+      Assert.Same(first, second);
+      Assert.Same(first, third);
+      Assert.Same(second, third);
+    }
+
   }
 
   public class BricksAtTest : BricksSnapshotTest
