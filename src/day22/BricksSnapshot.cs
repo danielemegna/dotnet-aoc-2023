@@ -2,17 +2,22 @@ namespace aoc2023.day22;
 
 public class BricksSnapshot
 {
-  private readonly HashSet<Brick> bricks;
+  private readonly Dictionary<int, HashSet<Brick>> bricksByZValue;
 
-  public BricksSnapshot(IEnumerable<Brick> bricks) => this.bricks = bricks.ToHashSet();
-  public BricksSnapshot(params Brick[] bricks) => this.bricks = bricks.ToHashSet();
+  public BricksSnapshot(IEnumerable<Brick> bricks)
+  {
+    this.bricksByZValue = [];
+    foreach (var brick in bricks)
+      this.AddBrick(brick);
+  }
 
   public Brick BrickAt(Coordinate coordinate)
   {
-    return bricks.FirstOrDefault(
-      b => b.IsOccupying(coordinate),
-      new NullBrick(coordinate)
-    );
+    var found = bricksByZValue
+      .GetValueOrDefault(coordinate.Z)?
+      .FirstOrDefault(b => b.IsOccupying(coordinate));
+
+    return found ?? new NullBrick(coordinate);
   }
 
   public IReadOnlySet<Brick> BricksAt(IEnumerable<Coordinate> coordinate)
@@ -25,7 +30,7 @@ public class BricksSnapshot
 
   public void CompleteFall()
   {
-    var verticallySortedBricks = bricks.ToList().OrderBy(b => b.StartCoordinate.Z);
+    var verticallySortedBricks = AllBricks().OrderBy(b => b.StartCoordinate.Z);
 
     foreach (var brick in verticallySortedBricks)
     {
@@ -38,20 +43,19 @@ public class BricksSnapshot
       }
 
       if (clonedBrick.Equals(brick)) continue;
-
-      bricks.Remove(brick);
-      bricks.Add(clonedBrick);
+      RemoveBrick(brick);
+      AddBrick(clonedBrick);
     }
   }
 
   public int CountSafeToDisintegrateBricks()
   {
-    return bricks.Count(IsStableRemovingBrick);
+    return AllBricks().Count(IsStableRemovingBrick);
   }
 
   public int CountFallingBricksOnDisintegrates()
   {
-    return bricks.Sum(CountFallingBricksRemovingBrick);
+    return AllBricks().Sum(CountFallingBricksRemovingBrick);
   }
 
   internal bool IsStableRemovingBrick(Brick brickToRemove)
@@ -61,13 +65,13 @@ public class BricksSnapshot
 
   internal int CountFallingBricksRemovingBrick(Brick brickToRemove)
   {
-    BricksSnapshot clone = new(bricks);
+    BricksSnapshot clone = new(AllBricks());
     return CountFallingBricksRemovingBrickWith(clone, brickToRemove);
   }
 
   private int CountFallingBricksRemovingBrickWith(BricksSnapshot snapshot, Brick brickToRemove)
   {
-    snapshot.bricks.Remove(brickToRemove);
+    snapshot.RemoveBrick(brickToRemove);
 
     var aboveCoordinates = brickToRemove.GetAboveCoordinates();
     var aboveBricks = snapshot.BricksAt(aboveCoordinates);
@@ -78,6 +82,30 @@ public class BricksSnapshot
     return fallingBricksCount + fallingBricks.Sum(b => CountFallingBricksRemovingBrickWith(snapshot, b));
   }
 
+  private void AddBrick(Brick brick)
+  {
+    for (var z = brick.StartCoordinate.Z; z <= brick.EndCoordinate.Z; z++)
+    {
+      if (!this.bricksByZValue.ContainsKey(z))
+        this.bricksByZValue[z] = [];
+
+      this.bricksByZValue[z].Add(brick);
+    }
+  }
+
+  private void RemoveBrick(Brick brick)
+  {
+    for (var z = brick.StartCoordinate.Z; z <= brick.EndCoordinate.Z; z++)
+    {
+      this.bricksByZValue[z].Remove(brick);
+    }
+  }
+
+  private IEnumerable<Brick> AllBricks()
+  {
+    return bricksByZValue.SelectMany(kv => kv.Value).Distinct();
+  }
+
   private bool AreFree(IEnumerable<Coordinate> coordinates) => coordinates.All(IsFree);
   private bool IsFree(Coordinate coordinate) => BrickAt(coordinate).GetType() == typeof(NullBrick);
 
@@ -86,14 +114,16 @@ public class BricksSnapshot
     if (this == other) return true;
     if (other is null) return false;
     if (other.GetType() != typeof(BricksSnapshot)) return false;
-    BricksSnapshot otherCasted = (BricksSnapshot)other;
+    var otherCasted = (BricksSnapshot)other;
 
-    return bricks.SetEquals(otherCasted.bricks);
+    var myBricksSet = AllBricks().ToHashSet();
+    var otherBricksSet = otherCasted.AllBricks().ToHashSet();
+    return myBricksSet.SetEquals(otherBricksSet);
   }
 
   public override int GetHashCode()
   {
-    return Convert.ToInt32(bricks.Select(b => b.GetHashCode()).Average());
+    return Convert.ToInt32(AllBricks().Select(b => b.GetHashCode()).Average());
   }
 
 }

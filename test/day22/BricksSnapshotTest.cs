@@ -147,12 +147,12 @@ public class BricksSnapshotTest
     public void SingleNotFallingBrick()
     {
       var singleBrick = new Brick(new(1, 0, 1), new(1, 2, 1));
-      var simpleSnapshot = new BricksSnapshot(singleBrick);
+      var simpleSnapshot = new BricksSnapshot([singleBrick]);
 
       simpleSnapshot.CompleteFall();
 
       Assert.Equal(singleBrick, simpleSnapshot.BrickAt(new(1, 0, 1)));
-      Assert.Equal(new BricksSnapshot(singleBrick), simpleSnapshot);
+      Assert.Equal(new BricksSnapshot([singleBrick]), simpleSnapshot);
     }
 
     [Fact]
@@ -166,7 +166,7 @@ public class BricksSnapshotTest
 
       var fallenBrick = new Brick(new(0, 0, 1), new(2, 0, 1));
       Assert.Equal(fallenBrick, simpleSnapshot.BrickAt(new(0, 0, 1)));
-      Assert.Equal(new BricksSnapshot(fallenBrick), simpleSnapshot);
+      Assert.Equal(new BricksSnapshot([fallenBrick]), simpleSnapshot);
     }
 
     [Fact]
