@@ -11,7 +11,7 @@ public class BricksSnapshotTest
     new Brick(new(0,0,4), new(0,2,4)),
     new Brick(new(2,0,5), new(2,2,5)),
     new Brick(new(0,1,6), new(2,1,6)),
-    new Brick(new(1,1,8), new(1,1,9)),
+    new Brick(new(1,1,8), new(1,1,10)),
   ]);
 
   public class BrickAtTest : BricksSnapshotTest
@@ -95,7 +95,7 @@ public class BricksSnapshotTest
         new Brick(new(0,0,4), new(0,2,4)),
         new Brick(new(2,0,5), new(2,2,5)),
         new Brick(new(0,1,6), new(2,1,6)),
-        new Brick(new(1,1,8), new(1,1,9)),
+        new Brick(new(1,1,8), new(1,1,10)),
       ]);
 
       Assert.NotSame(snapshot, clone);
@@ -112,7 +112,7 @@ public class BricksSnapshotTest
         new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
         new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
         new Brick(new(0,1,4), new(2,1,4)),
-        new Brick(new(1,1,5), new(1,1,6)),
+        new Brick(new(1,1,5), new(1,1,7)),
       ]);
 
       Assert.NotSame(snapshot, another);
@@ -274,7 +274,7 @@ public class BricksSnapshotTest
         new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
         new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
         new Brick(new(0,1,4), new(2,1,4)),
-        new Brick(new(1,1,5), new(1,1,6)),
+        new Brick(new(1,1,5), new(1,1,7)),
       ]);
       Assert.Equal(expectedSnapshot, snapshot);
     }
@@ -315,7 +315,7 @@ public class BricksSnapshotTest
       new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
       new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
       new Brick(new(0,1,4), new(2,1,4)),
-      new Brick(new(1,1,5), new(1,1,6)),
+      new Brick(new(1,1,5), new(1,1,7)),
     ]);
 
     [Fact]
@@ -325,7 +325,7 @@ public class BricksSnapshotTest
       Assert.True(stableSnapshot.IsStableRemovingBrick(new Brick(new(0, 2, 2), new(2, 2, 2))));
       Assert.True(stableSnapshot.IsStableRemovingBrick(new Brick(new(0, 0, 3), new(0, 2, 3))));
       Assert.True(stableSnapshot.IsStableRemovingBrick(new Brick(new(2, 0, 3), new(2, 2, 3))));
-      Assert.True(stableSnapshot.IsStableRemovingBrick(new Brick(new(1, 1, 5), new(1, 1, 6))));
+      Assert.True(stableSnapshot.IsStableRemovingBrick(new Brick(new(1, 1, 5), new(1, 1, 7))));
     }
 
     [Fact]
@@ -357,7 +357,7 @@ public class BricksSnapshotTest
       new Brick(new(0,0,2), new(2,0,2)), new Brick(new(0,2,2), new(2,2,2)),
       new Brick(new(0,0,3), new(0,2,3)), new Brick(new(2,0,3), new(2,2,3)),
       new Brick(new(0,1,4), new(2,1,4)),
-      new Brick(new(1,1,5), new(1,1,6)),
+      new Brick(new(1,1,5), new(1,1,7)),
     ]);
 
     [Fact]
@@ -367,7 +367,7 @@ public class BricksSnapshotTest
       Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 2, 2), new(2, 2, 2))));
       Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(0, 0, 3), new(0, 2, 3))));
       Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(2, 0, 3), new(2, 2, 3))));
-      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(1, 1, 5), new(1, 1, 6))));
+      Assert.Equal(0, stableSnapshot.CountFallingBricksRemovingBrick(new Brick(new(1, 1, 5), new(1, 1, 7))));
     }
 
     [Fact]
