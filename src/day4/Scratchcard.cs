@@ -5,6 +5,9 @@ public class Scratchcard(HashSet<int> winningNumbers, HashSet<int> numbers)
   public HashSet<int> WinningNumbers { get; } = winningNumbers;
   public HashSet<int> Numbers { get; } = numbers;
 
+  public Scratchcard(IEnumerable<int> winningNumbers, IEnumerable<int> numbers)
+    : this(winningNumbers.ToHashSet(), numbers.ToHashSet()) { }
+
   public override bool Equals(object? other)
   {
     if (this == other) return true;

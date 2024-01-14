@@ -9,13 +9,15 @@ public class Solver
 
   internal Scratchcard[] ParseScratchcards(string[] inputLines)
   {
-    return [
-      new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
-      new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
-      new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
-      new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
-      new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
-      new Scratchcard([41, 48, 83, 86, 17], [83, 86, 6, 31, 17, 9, 48, 53]),
-    ];
+    return inputLines.Select(line => {
+      var cardContentString = line.Split(":")[1];
+      var splitOptions = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries;
+      var (winningNumbersString, cardNumbersString) = cardContentString.Split("|") switch { var a => (a[0], a[1]) };
+
+      var winningNumbers = winningNumbersString.Split(" ", splitOptions).Select(int.Parse);
+      var cardNumbers = cardNumbersString.Split(" ", splitOptions).Select(int.Parse);
+      return new Scratchcard(winningNumbers, cardNumbers);
+    }).ToArray();
   }
+
 }
