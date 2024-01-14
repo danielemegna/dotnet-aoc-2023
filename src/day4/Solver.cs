@@ -2,9 +2,11 @@ namespace aoc2023.day4;
 
 public class Solver
 {
-  public int SumPointsOfScratchcards(string[] input)
+  public int SumPointsOfScratchcards(string[] inputLines)
   {
-    throw new NotImplementedException();
+    Scratchcard[] cards = ParseScratchcards(inputLines);
+    var evaluator = new ScratchcardsEvaluator();
+    return cards.Select(evaluator.PointsFor).Sum();
   }
 
   internal Scratchcard[] ParseScratchcards(string[] inputLines)

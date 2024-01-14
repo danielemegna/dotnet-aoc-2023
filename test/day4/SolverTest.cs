@@ -31,19 +31,19 @@ public class SolverTest
   public class FirstPartTest : SolverTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheProvidedExample()
     {
       var actual = solver.SumPointsOfScratchcards(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(8 + 2 + 2 + 1 + 0 + 0, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day4/input.txt");
       var actual = solver.SumPointsOfScratchcards(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(20667, actual);
     }
 
   }
