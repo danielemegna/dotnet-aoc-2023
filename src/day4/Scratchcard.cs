@@ -1,16 +1,25 @@
 namespace aoc2023.day4;
 
-public record Scratchcard(HashSet<int> WinningNumbers, HashSet<int> Numbers)
+public class Scratchcard(HashSet<int> winningNumbers, HashSet<int> numbers)
 {
+  public HashSet<int> WinningNumbers { get; } = winningNumbers;
+  public HashSet<int> Numbers { get; } = numbers;
 
-  public virtual bool Equals(Scratchcard? other)
+  public override bool Equals(object? other)
   {
-    if ((object)this == other) return true;
+    if (this == other) return true;
     if (other is null) return false;
+    if (other.GetType() != typeof(Scratchcard)) return false;
+    var otherCasted = (Scratchcard)other;
 
     return
-      WinningNumbers.SetEquals(other.WinningNumbers) &&
-      Numbers.SetEquals(other.Numbers);
+      WinningNumbers.SetEquals(otherCasted.WinningNumbers) &&
+      Numbers.SetEquals(otherCasted.Numbers);
   }
 
+  public override int GetHashCode()
+  {
+    var comparer = HashSet<int>.CreateSetComparer();
+    return (comparer.GetHashCode(WinningNumbers) * 2) + comparer.GetHashCode(Numbers);
+  }
 }
