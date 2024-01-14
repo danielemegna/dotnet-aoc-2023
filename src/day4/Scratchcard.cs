@@ -8,6 +8,8 @@ public class Scratchcard(HashSet<int> winningNumbers, HashSet<int> numbers)
   public Scratchcard(IEnumerable<int> winningNumbers, IEnumerable<int> numbers)
     : this(winningNumbers.ToHashSet(), numbers.ToHashSet()) { }
 
+  public ISet<int> GetWins() => WinningNumbers.Intersect(Numbers).ToHashSet();
+
   public override bool Equals(object? other)
   {
     if (this == other) return true;
