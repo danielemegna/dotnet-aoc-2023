@@ -13,8 +13,8 @@ public class ScratchcardsEvaluator
     var wonCardsCount = PointsFor(card);
     var wonCards = rest.Take(wonCardsCount);
 
-    return wonCardsCount + wonCards.Select((wonCard) =>
-      RecursiveWonScratchcards(wonCard, rest.Skip(1))
+    return wonCardsCount + wonCards.Select((wonCard, index) =>
+      RecursiveWonScratchcards(wonCard, rest.Skip(index + 1))
     ).Sum();
   }
 }
