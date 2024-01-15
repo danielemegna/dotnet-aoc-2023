@@ -12,7 +12,11 @@ public class Solver
 
   public int CollectedScratchards(string[] inputLines)
   {
-    return 1 + 2 + 4 + 8 + 14 + 1;
+    Scratchcard[] cards = ParseScratchcards(inputLines);
+    var evaluator = new ScratchcardsEvaluator();
+    return cards.Length + cards.Select((card, index) =>
+      evaluator.RecursiveWonScratchcards(card, cards.Skip(index + 1))
+    ).Sum();
   }
 
   internal Scratchcard[] ParseScratchcards(string[] inputLines)

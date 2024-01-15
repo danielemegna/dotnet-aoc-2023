@@ -58,12 +58,12 @@ public class SolverTest
       Assert.Equal(1 + 2 + 4 + 8 + 14 + 1, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact(Skip = "slow test")]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day4/input.txt");
       var actual = solver.CollectedScratchards(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(5833065, actual);
     }
 
   }
