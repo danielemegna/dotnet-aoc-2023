@@ -112,6 +112,23 @@ public class ScratchcardsEvaluatorTest
       int expected = wonByCard + wonByFirstWonCard + wonBySecondWonCard;
       Assert.Equal(expected, actual);
     }
+
+    [Fact]
+    public void IncludeScratchcardsWonByTheWonScratchcards_RecursivelyOnMoreThanThreeLevels()
+    {
+      var card = cards[0];
+      var rest = cards.Skip(1);
+
+      var actual = evaluator.RecursiveWonScratchcards(card, rest);
+
+      var wonByCard = 4;
+      var wonByFirstWonCard = 2 + 2 + 1 + 1;
+      var wonBySecondWonCard = 2 + 1;
+      var wonByThirdWonCard = 1;
+      var wonByFourthWonCard = 0;
+      int expected = wonByCard + wonByFirstWonCard + wonBySecondWonCard + wonByThirdWonCard + wonByFourthWonCard;
+      Assert.Equal(expected, actual);
+    }
   }
 
 }

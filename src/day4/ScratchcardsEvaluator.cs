@@ -10,7 +10,7 @@ public class ScratchcardsEvaluator
 
   public int RecursiveWonScratchcards(Scratchcard card, IEnumerable<Scratchcard> rest)
   {
-    var wonCardsCount = PointsFor(card);
+    var wonCardsCount = card.GetWins().Count();
     var wonCards = rest.Take(wonCardsCount);
 
     return wonCardsCount + wonCards.Select((wonCard, index) =>
