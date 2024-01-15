@@ -82,6 +82,21 @@ public class ScratchcardsEvaluatorTest
 
       Assert.Equal(1, actual);
     }
+
+    [Fact]
+    public void IncludeScratchcardsWonByTheWonScratchcards()
+    {
+      var card = cards[2];
+      var rest = cards.Skip(3);
+
+      var actual = evaluator.RecursiveWonScratchcards(card, rest);
+
+      var wonByCard = 2;
+      var wonByFirstWonCard = 1;
+      var wonBySecondWonCard = 0;
+      int expected = wonByCard + wonByFirstWonCard + wonBySecondWonCard;
+      Assert.Equal(expected, actual);
+    }
   }
 
 }
