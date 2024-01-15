@@ -16,7 +16,7 @@ $ docker run --rm -it -v $PWD:/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 bash
 
 VSCode can use devcontainers to be configured with the proper extensions and without dotnet executable locally installed.
 
-Do do it, install the [related extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) (`ms-vscode-remote.remote-containers`) and reopen vscode in Dev Container mode.
+In order to proceed, install the [related extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) (`ms-vscode-remote.remote-containers`) and reopen vscode in Dev Container mode.
 
 > the first run can take some minutes to install and setup properly container and vscode extensions
 
