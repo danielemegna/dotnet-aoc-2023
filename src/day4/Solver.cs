@@ -6,14 +6,14 @@ public class Solver
   public int SumPointsOfScratchcards(string[] inputLines)
   {
     Scratchcard[] cards = ParseScratchcards(inputLines);
-    var evaluator = new ScratchcardsEvaluator();
+    var evaluator = new ScratchcardsEvaluator(cards);
     return cards.Select(evaluator.PointsFor).Sum();
   }
 
   public int CollectedScratchards(string[] inputLines)
   {
     Scratchcard[] cards = ParseScratchcards(inputLines);
-    var evaluator = new ScratchcardsEvaluator();
+    var evaluator = new ScratchcardsEvaluator(cards);
     return cards.Length + cards.Select((card, index) =>
       evaluator.RecursiveWonScratchcards(card, cards.Skip(index + 1))
     ).Sum();
