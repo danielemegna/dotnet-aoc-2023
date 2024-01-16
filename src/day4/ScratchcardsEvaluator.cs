@@ -12,7 +12,12 @@ public class ScratchcardsEvaluator(Scratchcard[] cards)
 
   public int TotalWonScratchcards()
   {
-    return Enumerable.Range(0, scratchcards.Length - 1)
+    return WonScratchcardsInRange(0, scratchcards.Length - 1);
+  }
+
+  private int WonScratchcardsInRange(int fromIndex, int count)
+  {
+    return Enumerable.Range(fromIndex, count)
       .Reverse()
       .Select(WonScratchcardsByScratchcardAt)
       .Sum();
@@ -21,18 +26,10 @@ public class ScratchcardsEvaluator(Scratchcard[] cards)
   internal int WonScratchcardsByScratchcardAt(int index)
   {
     var card = scratchcards[index];
-    var rest = scratchcards.Skip(index + 1);
-    return RecursiveWonScratchcards(card, rest);
-  }
+    var wonByCard = card.GetWins().Count;
+    var wonByChildren = WonScratchcardsInRange(index + 1, wonByCard);
 
-  private int RecursiveWonScratchcards(Scratchcard card, IEnumerable<Scratchcard> rest)
-  {
-    var wonCardsCount = card.GetWins().Count;
-    var wonCards = rest.Take(wonCardsCount);
-
-    return wonCardsCount + wonCards.Select((wonCard, index) =>
-      RecursiveWonScratchcards(wonCard, rest.Skip(index + 1))
-    ).Sum();
+    return wonByCard + wonByChildren;
   }
 
 }
