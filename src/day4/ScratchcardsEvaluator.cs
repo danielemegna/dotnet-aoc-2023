@@ -3,6 +3,7 @@ namespace aoc2023.day4;
 public class ScratchcardsEvaluator(Scratchcard[] cards)
 {
   private readonly Scratchcard[] scratchcards = cards;
+  private readonly Dictionary<int, int> wonScratchcardsCache = [];
 
   public static int PointsFor(Scratchcard card)
   {
@@ -25,11 +26,16 @@ public class ScratchcardsEvaluator(Scratchcard[] cards)
 
   internal int WonScratchcardsByScratchcardAt(int index)
   {
+    if (wonScratchcardsCache.ContainsKey(index))
+      return wonScratchcardsCache[index];
+
     var card = scratchcards[index];
     var wonByCard = card.GetWins().Count;
     var wonByChildren = WonScratchcardsInRange(index + 1, wonByCard);
 
-    return wonByCard + wonByChildren;
+    var result = wonByCard + wonByChildren;
+    wonScratchcardsCache[index] = result;
+    return result;
   }
 
 }
