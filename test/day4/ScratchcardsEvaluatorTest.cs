@@ -112,6 +112,14 @@ public class ScratchcardsEvaluatorTest
       int expected = wonByCard + wonByFirstWonCard + wonBySecondWonCard + wonByThirdWonCard + wonByFourthWonCard;
       Assert.Equal(expected, actual);
     }
+
+    [Fact]
+    public void CalculateTotalWonScratchcards()
+    {
+      var actual = evaluator.TotalWonScratchcards();
+      int expected = 14 + 6 + 3 + 1;
+      Assert.Equal(expected, actual);
+    }
   }
 
 }

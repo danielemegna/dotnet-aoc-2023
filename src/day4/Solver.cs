@@ -13,9 +13,7 @@ public class Solver
   {
     Scratchcard[] cards = ParseScratchcards(inputLines);
     var evaluator = new ScratchcardsEvaluator(cards);
-    return cards.Length + cards.Select((card, index) =>
-      evaluator.RecursiveWonScratchcards(card, cards.Skip(index + 1))
-    ).Sum();
+    return cards.Length + evaluator.TotalWonScratchcards();
   }
 
   internal Scratchcard[] ParseScratchcards(string[] inputLines)
