@@ -4,7 +4,7 @@ public class ScratchcardsEvaluator(Scratchcard[] cards)
 {
   private readonly Scratchcard[] scratchcards = cards;
 
-  public int PointsFor(Scratchcard card)
+  public static int PointsFor(Scratchcard card)
   {
     var winsCount = card.GetWins().Count;
     return (int)Math.Pow(2, winsCount - 1);

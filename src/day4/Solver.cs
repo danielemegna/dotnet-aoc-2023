@@ -6,8 +6,7 @@ public class Solver
   public int SumPointsOfScratchcards(string[] inputLines)
   {
     Scratchcard[] cards = ParseScratchcards(inputLines);
-    var evaluator = new ScratchcardsEvaluator(cards);
-    return cards.Select(evaluator.PointsFor).Sum();
+    return cards.Select(ScratchcardsEvaluator.PointsFor).Sum();
   }
 
   public int CollectedScratchards(string[] inputLines)
