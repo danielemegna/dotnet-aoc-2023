@@ -52,7 +52,7 @@ public class SolverTest
     [Fact]
     public void SolveTheProvidedExample()
     {
-      var actual = solver.WinsFactor(PROVIDED_EXAMPLE_INPUT_LINES);
+      var actual = solver.WaysToWinFactor(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(4 * 8 * 9, actual);
     }
 
@@ -60,7 +60,7 @@ public class SolverTest
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day6/input.txt");
-      var actual = solver.WinsFactor(input);
+      var actual = solver.WaysToWinFactor(input);
       Assert.Equal(1624896, actual);
     }
 

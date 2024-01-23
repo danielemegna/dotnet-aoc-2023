@@ -4,7 +4,7 @@ namespace aoc2023.day6;
 public class Solver
 {
 
-  public int WinsFactor(string[] inputLines)
+  public int WaysToWinFactor(string[] inputLines)
   {
     var races = ParseRaces(inputLines);
 
