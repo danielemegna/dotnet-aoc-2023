@@ -1,0 +1,1 @@
+public record Race(int DurationInMilliseconds, int RecordInMillimeters);
