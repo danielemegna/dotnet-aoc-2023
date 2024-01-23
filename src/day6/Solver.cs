@@ -1,3 +1,4 @@
+
 namespace aoc2023.day6;
 
 public class Solver
@@ -42,6 +43,16 @@ public class Solver
       );
 
     }).ToArray();
+  }
+
+  internal Race ParseAsSingleRace(string[] inputLines)
+  {
+    var raceDurationString = string.Join("", inputLines[0].Split(" ").Skip(1));
+    var raceRecordString = string.Join("", inputLines[1].Split(" ").Skip(1));
+    return new Race(
+        DurationInMilliseconds: int.Parse(raceDurationString),
+        RecordInMillimeters: int.Parse(raceRecordString)
+    );
   }
 
 }

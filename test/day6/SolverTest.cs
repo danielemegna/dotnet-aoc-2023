@@ -37,6 +37,13 @@ public class SolverTest
         new Race(DurationInMilliseconds: 75, RecordInMillimeters: 1139)
       ], actual);
     }
+
+    [Fact]
+    public void AsSingleRace()
+    {
+      var actual = solver.ParseAsSingleRace(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(new Race(DurationInMilliseconds: 71530, RecordInMillimeters: 940200), actual);
+    }
   }
 
   public class FirstPartTest : SolverTest
