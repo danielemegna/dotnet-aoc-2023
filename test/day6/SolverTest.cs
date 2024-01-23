@@ -69,7 +69,7 @@ public class SolverTest
     {
       var input = File.ReadAllLines("day6/input.txt");
       var actual = solver.WaysToWinFactor(input);
-      Assert.Equal(1624896, actual);
+      Assert.Equal(1_624_896, actual);
     }
 
   }
@@ -81,15 +81,15 @@ public class SolverTest
     public void SolveTheProvidedExample()
     {
       var actual = solver.WaysToWinCount(PROVIDED_EXAMPLE_INPUT_LINES);
-      Assert.Equal(71503, actual);
+      Assert.Equal(71_503, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day6/input.txt");
       var actual = solver.WaysToWinCount(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(32_583_852, actual);
     }
 
   }
