@@ -1,4 +1,3 @@
-
 namespace aoc2023.day6;
 
 public class Solver
@@ -25,8 +24,8 @@ public class Solver
     return firstLineParts.Skip(1).Select((raceDurationInMilliseconds, raceIndex) =>
     {
       return new Race(
-        DurationInMilliseconds: int.Parse(raceDurationInMilliseconds),
-        RecordInMillimeters: int.Parse(secondLineParts[raceIndex + 1])
+        DurationInMilliseconds: long.Parse(raceDurationInMilliseconds),
+        RecordInMillimeters: long.Parse(secondLineParts[raceIndex + 1])
       );
 
     }).ToArray();
@@ -37,8 +36,8 @@ public class Solver
     var raceDurationString = string.Join("", inputLines[0].Split(" ").Skip(1));
     var raceRecordString = string.Join("", inputLines[1].Split(" ").Skip(1));
     return new Race(
-        DurationInMilliseconds: int.Parse(raceDurationString),
-        RecordInMillimeters: int.Parse(raceRecordString)
+        DurationInMilliseconds: long.Parse(raceDurationString),
+        RecordInMillimeters: long.Parse(raceRecordString)
     );
   }
 
@@ -46,7 +45,7 @@ public class Solver
   {
     var wins = 0;
     var toyBoat = new ToyBoat();
-    for (int chargeTimeAttempt = 1; chargeTimeAttempt < race.DurationInMilliseconds - 1; chargeTimeAttempt++)
+    for (long chargeTimeAttempt = 1; chargeTimeAttempt < race.DurationInMilliseconds - 1; chargeTimeAttempt++)
     {
       toyBoat.ChargeFor(chargeTimeAttempt);
       var reachedDistance = toyBoat.DistanceAfter(race.DurationInMilliseconds);

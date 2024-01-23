@@ -42,7 +42,15 @@ public class SolverTest
     public void AsSingleRace()
     {
       var actual = solver.ParseAsSingleRace(PROVIDED_EXAMPLE_INPUT_LINES);
-      Assert.Equal(new Race(DurationInMilliseconds: 71530, RecordInMillimeters: 940200), actual);
+      Assert.Equal(new Race(DurationInMilliseconds: 71_530, RecordInMillimeters: 940_200), actual);
+    }
+
+    [Fact]
+    public void FileContentAsSingleRace()
+    {
+      var input = File.ReadAllLines("day6/input.txt");
+      var actual = solver.ParseAsSingleRace(input);
+      Assert.Equal(new Race(DurationInMilliseconds: 56_977_875, RecordInMillimeters: 546_192_711_311_139), actual);
     }
   }
 

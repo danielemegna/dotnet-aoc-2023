@@ -2,14 +2,14 @@ namespace aoc2023.day6;
 
 public class ToyBoat
 {
-  private int chargeTimeInMilliseconds = 0;
+  private long chargeTimeInMilliseconds = 0;
 
-  public void ChargeFor(int milliseconds)
+  public void ChargeFor(long milliseconds)
   {
     chargeTimeInMilliseconds = milliseconds;
   }
 
-  public int DistanceAfter(int milliseconds)
+  public long DistanceAfter(long milliseconds)
   {
     return (milliseconds - chargeTimeInMilliseconds) * chargeTimeInMilliseconds;
   }
