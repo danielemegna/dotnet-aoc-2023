@@ -7,26 +7,13 @@ public class Solver
   public int WaysToWinFactor(string[] inputLines)
   {
     var races = ParseRaces(inputLines);
+    return races.Select(WaysToWinCount).Aggregate((a, b) => a * b);
+  }
 
-    return races.Select(race =>
-    {
-      var wins = 0;
-      var toyBoat = new ToyBoat();
-      for (int chargeTimeAttempt = 1; chargeTimeAttempt < race.DurationInMilliseconds - 1; chargeTimeAttempt++)
-      {
-        toyBoat.ChargeFor(chargeTimeAttempt);
-        var reachedDistance = toyBoat.DistanceAfter(race.DurationInMilliseconds);
-        if (reachedDistance > race.RecordInMillimeters)
-        {
-          wins++;
-          continue;
-        }
-
-        if (chargeTimeAttempt > race.DurationInMilliseconds / 2)
-          break;
-      }
-      return wins;
-    }).Aggregate((a, b) => a * b);
+  public int WaysToWinCount(string[] inputLines)
+  {
+    var race = ParseAsSingleRace(inputLines);
+    return WaysToWinCount(race);
   }
 
   internal Race[] ParseRaces(string[] inputLines)
@@ -53,6 +40,26 @@ public class Solver
         DurationInMilliseconds: int.Parse(raceDurationString),
         RecordInMillimeters: int.Parse(raceRecordString)
     );
+  }
+
+  internal int WaysToWinCount(Race race)
+  {
+    var wins = 0;
+    var toyBoat = new ToyBoat();
+    for (int chargeTimeAttempt = 1; chargeTimeAttempt < race.DurationInMilliseconds - 1; chargeTimeAttempt++)
+    {
+      toyBoat.ChargeFor(chargeTimeAttempt);
+      var reachedDistance = toyBoat.DistanceAfter(race.DurationInMilliseconds);
+      if (reachedDistance > race.RecordInMillimeters)
+      {
+        wins++;
+        continue;
+      }
+
+      if (chargeTimeAttempt > race.DurationInMilliseconds / 2)
+        break;
+    }
+    return wins;
   }
 
 }

@@ -66,4 +66,24 @@ public class SolverTest
 
   }
 
+  public class SecondPartTest : SolverTest
+  {
+
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.WaysToWinCount(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(71503, actual);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day6/input.txt");
+      var actual = solver.WaysToWinCount(input);
+      Assert.Equal(-1, actual);
+    }
+
+  }
+
 }
