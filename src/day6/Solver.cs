@@ -13,10 +13,16 @@ public class Solver
       var toyBoat = new ToyBoat();
       for (int chargeTimeAttempt = 1; chargeTimeAttempt < race.DurationInMilliseconds - 1; chargeTimeAttempt++)
       {
-        toyBoat.ChargeFor(chargeTimeAttempt); 
+        toyBoat.ChargeFor(chargeTimeAttempt);
         var reachedDistance = toyBoat.DistanceAfter(race.DurationInMilliseconds);
-        if(reachedDistance > race.RecordInMillimeters)
+        if (reachedDistance > race.RecordInMillimeters)
+        {
           wins++;
+          continue;
+        }
+
+        if (chargeTimeAttempt > race.DurationInMilliseconds / 2)
+          break;
       }
       return wins;
     }).Aggregate((a, b) => a * b);
