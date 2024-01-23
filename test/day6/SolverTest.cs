@@ -42,19 +42,19 @@ public class SolverTest
   public class FirstPartTest : SolverTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheProvidedExample()
     {
       var actual = solver.WinsFactor(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(4 * 8 * 9, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day6/input.txt");
       var actual = solver.WinsFactor(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(1624896, actual);
     }
 
   }
