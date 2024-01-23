@@ -24,6 +24,19 @@ public class SolverTest
         new Race(DurationInMilliseconds: 30, RecordInMillimeters: 200)
       ], actual);
     }
+
+    [Fact]
+    public void FileContent()
+    {
+      var input = File.ReadAllLines("day6/input.txt");
+      var actual = solver.ParseRaces(input);
+      Assert.Equal<Race[]>([
+        new Race(DurationInMilliseconds: 56, RecordInMillimeters: 546),
+        new Race(DurationInMilliseconds: 97, RecordInMillimeters: 1927),
+        new Race(DurationInMilliseconds: 78, RecordInMillimeters: 1131),
+        new Race(DurationInMilliseconds: 75, RecordInMillimeters: 1139)
+      ], actual);
+    }
   }
 
   public class FirstPartTest : SolverTest
