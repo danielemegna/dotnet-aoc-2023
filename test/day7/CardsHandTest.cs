@@ -24,13 +24,42 @@ public class CardsHandTest {
   }
 
   [Fact]
-  public void cannotBuildCardsHandWithMoreOrLessThanFiveCards() {
+  public void CannotBuildCardsHandWithMoreOrLessThanFiveCards() {
     Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE));
     Assert.Throws<CardsHandBuildException>(() => new CardsHand());
     Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN));
     Assert.Throws<CardsHandBuildException>(() =>
       new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN, Card.ACE, Card.JACK)
     );
+  }
+
+  [Fact]
+  public void Equality() {
+    var first = new CardsHand(Card.TEN, Card.TEN, Card.ACE, Card.FIVE, Card.FIVE);
+    var second = new CardsHand(Card.TEN, Card.TEN, Card.FIVE, Card.FIVE, Card.ACE);
+    var third = new CardsHand(Card.TEN, Card.TEN, Card.ACE, Card.FIVE, Card.FIVE);
+    var fourth = new CardsHand(Card.TWO, Card.THREE, Card.FOUR, Card.KING, Card.QUEEN);
+
+    Assert.NotEqual(first, second);
+    Assert.False(first.Equals(second));
+    Assert.False(first == second);
+    Assert.NotEqual(first.GetHashCode(), second.GetHashCode());
+
+    Assert.Equal(first, third);
+    Assert.True(first.Equals(third));
+    Assert.False(first == third);
+    Assert.NotSame(first, third);
+    Assert.Equal(first.GetHashCode(), third.GetHashCode());
+
+    Assert.NotEqual(first, fourth);
+    Assert.False(first.Equals(fourth));
+    Assert.False(first == fourth);
+    Assert.NotEqual(first.GetHashCode(), fourth.GetHashCode());
+
+    Assert.Equal(first, first);
+    Assert.True(first.Equals(first));
+    Assert.Same(first, first);
+    Assert.Equal(first.GetHashCode(), first.GetHashCode());
   }
 
 }

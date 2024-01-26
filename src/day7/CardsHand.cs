@@ -1,5 +1,7 @@
 namespace aoc2023.day7;
 
+using System.Collections;
+
 public class CardsHand
 {
   private readonly Card[] cards;
@@ -40,6 +42,19 @@ public class CardsHand
   {
     return this.handType;
   }
+
+  public override bool Equals(object? other)
+  {
+    if (this == other) return true;
+    if (other is null) return false;
+    if (other.GetType() != typeof(CardsHand)) return false;
+    var otherCasted = (CardsHand)other;
+
+    return cards.SequenceEqual(otherCasted.cards);
+  }
+
+  public override int GetHashCode() =>
+    StructuralComparisons.StructuralEqualityComparer.GetHashCode(cards);
 }
 
 public class CardsHandBuildException : Exception { }
