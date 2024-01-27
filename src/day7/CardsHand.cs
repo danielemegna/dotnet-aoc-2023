@@ -74,6 +74,17 @@ public class CardsHand
     return this.handType;
   }
 
+  public static bool operator >(CardsHand first, CardsHand second)
+  {
+    if (first.GetHandType() == HandType.ONE_PAIR)
+      return true;
+
+    return false;
+  }
+
+  public static bool operator <(CardsHand first, CardsHand second) =>
+    !first.Equals(second) && !(first > second);
+
   public override bool Equals(object? other)
   {
     if (this == other) return true;

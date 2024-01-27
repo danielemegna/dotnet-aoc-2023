@@ -25,6 +25,33 @@ public class CardsHandTest
     Assert.Equal(HandType.FIVE_OF_A_KIND, fiveOfAKind.GetHandType());
   }
 
+  public class Compare()
+  {
+
+    [Fact]
+    public void ComparingSameHands()
+    {
+      var hand1 = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
+      var hand2 = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
+      Assert.False(hand1 > hand2);
+      Assert.False(hand1 < hand2);
+      Assert.False(hand2 > hand1);
+      Assert.False(hand2 < hand1);
+    }
+
+    [Fact]
+    public void OnePairAlwaysBetterThanAnHighCard()
+    {
+      var highCard = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
+      var onePair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.FOUR, Card.FIVE);
+      Assert.True(onePair > highCard);
+      Assert.False(highCard > onePair);
+      Assert.True(highCard < onePair);
+      Assert.False(onePair < highCard);
+    }
+
+  }
+
   public class ParseAndBuild
   {
 
