@@ -38,6 +38,8 @@ public class CardsHandTest
       Assert.False(hand1 < hand2);
       Assert.False(hand2 > hand1);
       Assert.False(hand2 < hand1);
+      Assert.Equal(0, hand1.CompareTo(hand2));
+      Assert.Equal(0, hand2.CompareTo(hand1));
     }
 
     [Fact]
@@ -111,6 +113,8 @@ public class CardsHandTest
       Assert.False(first < second, $"{first} should not be lower than {second}");
       Assert.False(second > first, $"{second} should not be greater than {first}");
       Assert.True(second < first, $"{second} should be lower than {first}");
+      Assert.Equal(1, first.CompareTo(second));
+      Assert.Equal(-1, second.CompareTo(first));
     }
 
     private static Card[] GetFiveRandomCards()
@@ -125,6 +129,42 @@ public class CardsHandTest
       }).ToArray();
     }
 
+    public class CompareTo
+    {
+      private CardsHand fiveOfAKind = CardsHand.From("AAAAA");
+      private CardsHand fullHouse = CardsHand.From("AAAKK");
+      private CardsHand onePair = CardsHand.From("22345");
+      private CardsHand highHand = CardsHand.From("23456");
+
+      [Fact]
+      public void ReturnsOneForBetterHands()
+      {
+        Assert.Equal(1, fiveOfAKind.CompareTo(fullHouse));
+        Assert.Equal(1, fiveOfAKind.CompareTo(onePair));
+        Assert.Equal(1, fiveOfAKind.CompareTo(highHand));
+        Assert.Equal(1, fullHouse.CompareTo(onePair));
+        Assert.Equal(1, fullHouse.CompareTo(highHand));
+        Assert.Equal(1, onePair.CompareTo(highHand));
+      }
+
+      [Fact]
+      public void ReturnsMinosOneForWorstHands()
+      {
+        Assert.Equal(-1, highHand.CompareTo(fiveOfAKind));
+        Assert.Equal(-1, highHand.CompareTo(fullHouse));
+        Assert.Equal(-1, highHand.CompareTo(onePair));
+        Assert.Equal(-1, onePair.CompareTo(fiveOfAKind));
+        Assert.Equal(-1, onePair.CompareTo(fullHouse));
+        Assert.Equal(-1, fullHouse.CompareTo(fiveOfAKind));
+      }
+
+      [Fact]
+      public void ReturnsZeroForSameHands()
+      {
+        Assert.Equal(0, fiveOfAKind.CompareTo(fiveOfAKind));
+        Assert.Equal(0, highHand.CompareTo(highHand));
+      }
+    }
   }
 
   public class ParseAndBuild

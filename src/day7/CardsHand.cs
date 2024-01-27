@@ -2,7 +2,7 @@ namespace aoc2023.day7;
 
 using System.Collections;
 
-public class CardsHand
+public class CardsHand : IComparable<CardsHand>
 {
   private readonly Card[] cards;
   public HandType HandType { get; }
@@ -69,27 +69,6 @@ public class CardsHand
     }
   }
 
-  public static bool operator >(CardsHand first, CardsHand second)
-  {
-    if (first.HandType != second.HandType)
-      return first.HandType > second.HandType;
-
-    for (int i = 0; i < 5; i++)
-    {
-      Card cardFromFirstHand = first.cards[i];
-      Card cardFromSecondHand = second.cards[i];
-      if (cardFromFirstHand > cardFromSecondHand)
-        return true;
-      if (cardFromFirstHand < cardFromSecondHand)
-        return false;
-    }
-
-    return false;
-  }
-
-  public static bool operator <(CardsHand first, CardsHand second) =>
-    !first.Equals(second) && !(first > second);
-
   public override bool Equals(object? other)
   {
     if (this == other) return true;
@@ -107,6 +86,28 @@ public class CardsHand
   {
     return "[" + string.Join(",", cards.Select(c => c.ToString())) + "]";
   }
+
+  public int CompareTo(CardsHand? other)
+  {
+    if (other == null) return 1;
+
+    if (this.HandType != other.HandType)
+      return this.HandType.CompareTo(other.HandType);
+
+    for (int i = 0; i < 5; i++)
+    {
+      Card cardFromFirstHand = this.cards[i];
+      Card cardFromSecondHand = other.cards[i];
+      if (cardFromFirstHand != cardFromSecondHand)
+        return cardFromFirstHand.CompareTo(cardFromSecondHand);
+    }
+
+    return 0;
+  }
+
+  public static bool operator >(CardsHand a, CardsHand b) => a.CompareTo(b) > 0;
+  public static bool operator <(CardsHand a, CardsHand b) => a.CompareTo(b) < 0;
+
 }
 
 public class CardsHandBuildException(string message) : Exception(message) { }
