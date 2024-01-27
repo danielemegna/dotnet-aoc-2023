@@ -5,7 +5,7 @@ using System.Collections;
 public class CardsHand
 {
   private readonly Card[] cards;
-  private readonly HandType handType;
+  public HandType HandType { get; }
 
   public CardsHand(params Card[] cards)
   {
@@ -13,7 +13,7 @@ public class CardsHand
       throw new CardsHandBuildException($"Cannot build CardsHand with {cards.Length} elements");
 
     this.cards = cards;
-    this.handType = HandTypeFor(cards);
+    this.HandType = HandTypeFor(cards);
   }
 
   public static CardsHand From(string stringValue)
@@ -69,15 +69,10 @@ public class CardsHand
     }
   }
 
-  public HandType GetHandType()
-  {
-    return this.handType;
-  }
-
   public static bool operator >(CardsHand first, CardsHand second)
   {
-    if (first.GetHandType() != second.GetHandType())
-      return first.GetHandType() > second.GetHandType();
+    if (first.HandType != second.HandType)
+      return first.HandType > second.HandType;
 
     for (int i = 0; i < 5; i++)
     {
