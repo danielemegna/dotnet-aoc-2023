@@ -10,7 +10,7 @@ public class CardsHand
   public CardsHand(params Card[] cards)
   {
     if (cards.Length != 5)
-      throw new CardsHandBuildException();
+      throw new CardsHandBuildException($"Cannot build CardsHand with {cards.Length} elements");
 
     this.cards = cards;
     this.handType = HandTypeFor(cards);
@@ -57,7 +57,7 @@ public class CardsHand
     StructuralComparisons.StructuralEqualityComparer.GetHashCode(cards);
 }
 
-public class CardsHandBuildException : Exception { }
+public class CardsHandBuildException(string message) : Exception(message) { }
 
 public enum Card
 {

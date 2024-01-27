@@ -2,10 +2,12 @@ namespace aoc2023.day7;
 
 using Xunit;
 
-public class CardsHandTest {
+public class CardsHandTest
+{
 
   [Fact]
-  public void RecognizeHandType() {
+  public void RecognizeHandType()
+  {
     var highCard = new CardsHand(Card.TEN, Card.FOUR, Card.ACE, Card.FIVE, Card.TWO);
     var onePair = new CardsHand(Card.TEN, Card.TEN, Card.ACE, Card.FIVE, Card.TWO);
     var twoPair = new CardsHand(Card.TEN, Card.TEN, Card.ACE, Card.FIVE, Card.FIVE);
@@ -24,17 +26,25 @@ public class CardsHandTest {
   }
 
   [Fact]
-  public void CannotBuildCardsHandWithMoreOrLessThanFiveCards() {
-    Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE));
-    Assert.Throws<CardsHandBuildException>(() => new CardsHand());
-    Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN));
-    Assert.Throws<CardsHandBuildException>(() =>
+  public void CannotBuildCardsHandWithMoreOrLessThanFiveCards()
+  {
+    var ex = Assert.Throws<CardsHandBuildException>(() =>
+      new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN
+    ));
+    Assert.Equal("Cannot build CardsHand with 4 elements", ex.Message);
+
+    ex = Assert.Throws<CardsHandBuildException>(() =>
       new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN, Card.ACE, Card.JACK)
     );
+    Assert.Equal("Cannot build CardsHand with 6 elements", ex.Message);
+
+    Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE));
+    Assert.Throws<CardsHandBuildException>(() => new CardsHand());
   }
 
   [Fact]
-  public void Equality() {
+  public void Equality()
+  {
     var first = new CardsHand(Card.TEN, Card.TEN, Card.ACE, Card.FIVE, Card.FIVE);
     var second = new CardsHand(Card.TEN, Card.TEN, Card.FIVE, Card.FIVE, Card.ACE);
     var third = new CardsHand(Card.TEN, Card.TEN, Card.ACE, Card.FIVE, Card.FIVE);
