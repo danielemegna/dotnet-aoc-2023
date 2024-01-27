@@ -44,10 +44,23 @@ public class CardsHandTest
     {
       var highCard = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
       var onePair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.FOUR, Card.FIVE);
-      Assert.True(onePair > highCard);
-      Assert.False(highCard > onePair);
-      Assert.True(highCard < onePair);
-      Assert.False(onePair < highCard);
+      AssertFirstBetterThanSecond(onePair, highCard);
+    }
+
+    [Fact]
+    public void TwoPairAlwaysBetterThanOnePair()
+    {
+      var onePair = new CardsHand(Card.ACE, Card.ACE, Card.KING, Card.QUEEN, Card.JACK);
+      var twoPair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.THREE, Card.FOUR);
+      AssertFirstBetterThanSecond(twoPair, onePair);
+    }
+
+    private static void AssertFirstBetterThanSecond(CardsHand first, CardsHand second)
+    {
+      Assert.True(first > second);
+      Assert.False(first < second);
+      Assert.False(second > first);
+      Assert.True(second < first);
     }
 
   }

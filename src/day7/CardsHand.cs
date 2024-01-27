@@ -76,7 +76,7 @@ public class CardsHand
 
   public static bool operator >(CardsHand first, CardsHand second)
   {
-    if (first.GetHandType() == HandType.ONE_PAIR)
+    if (first.GetHandType() > second.GetHandType())
       return true;
 
     return false;
