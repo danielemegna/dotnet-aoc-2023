@@ -97,6 +97,11 @@ public class CardsHand
 
   public override int GetHashCode() =>
     StructuralComparisons.StructuralEqualityComparer.GetHashCode(cards);
+
+  public override string ToString()
+  {
+    return "[" + string.Join(",", cards.Select(c => c.ToString())) + "]";
+  }
 }
 
 public class CardsHandBuildException(string message) : Exception(message) { }

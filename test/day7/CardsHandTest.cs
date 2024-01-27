@@ -57,10 +57,10 @@ public class CardsHandTest
 
     private static void AssertFirstBetterThanSecond(CardsHand first, CardsHand second)
     {
-      Assert.True(first > second);
-      Assert.False(first < second);
-      Assert.False(second > first);
-      Assert.True(second < first);
+      Assert.True(first > second, $"{first} should be greater than {second}");
+      Assert.False(first < second, $"{first} should not be lower than {second}");
+      Assert.False(second > first, $"{second} should not be greater than {first}");
+      Assert.True(second < first, $"{second} should be lower than {first}");
     }
 
   }
@@ -104,6 +104,13 @@ public class CardsHandTest
       Assert.Throws<CardsHandBuildException>(() => new CardsHand());
     }
 
+  }
+
+  [Fact]
+  public void ToStringValue()
+  {
+    var hand = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.THREE, Card.KING);
+    Assert.Equal("[THREE,TWO,TEN,THREE,KING]", hand.ToString());
   }
 
   [Fact]
