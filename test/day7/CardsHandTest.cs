@@ -42,43 +42,44 @@ public class CardsHandTest
     [Fact]
     public void OnePairAlwaysBetterThanAnHighCard()
     {
-      var onePair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.FOUR, Card.FIVE);
-      var highCard = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
+      var onePair = CardsHand.From("22345");
+      var highCard = CardsHand.From("AKQJT");
       AssertFirstBetterThanSecond(onePair, highCard);
     }
 
     [Fact]
     public void TwoPairAlwaysBetterThanOnePair()
     {
-      var twoPair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.THREE, Card.FOUR);
-      var onePair = new CardsHand(Card.ACE, Card.ACE, Card.KING, Card.QUEEN, Card.JACK);
+      var twoPair = CardsHand.From("22334");
+      var onePair = CardsHand.From("AAKQJ");
       AssertFirstBetterThanSecond(twoPair, onePair);
     }
-    
+
     [Fact]
     public void FullHouseAlwaysBetterThanThreeOfAKind()
     {
-      var fullHouse = new CardsHand(Card.TWO, Card.TWO, Card.TWO, Card.THREE, Card.THREE);
-      var threeOfAKind = new CardsHand(Card.ACE, Card.ACE, Card.ACE, Card.KING, Card.QUEEN);
+      var fullHouse = CardsHand.From("22233");
+      var threeOfAKind = CardsHand.From("AAAKQ");
       AssertFirstBetterThanSecond(fullHouse, threeOfAKind);
     }
 
     [Fact]
     public void FiveOfAKindAlwaysBetterThanFourOfAKind()
     {
-      var fiveOfAKind = new CardsHand(Card.TWO, Card.TWO, Card.TWO, Card.TWO, Card.TWO);
-      var fourOfAKind = new CardsHand(Card.ACE, Card.ACE, Card.ACE, Card.ACE, Card.KING);
+      var fiveOfAKind = CardsHand.From("22222");
+      var fourOfAKind = CardsHand.From("AAAAK");
       AssertFirstBetterThanSecond(fiveOfAKind, fourOfAKind);
     }
 
     [Fact]
-    public void OnSameKindFirstCardMatters() {
-      var highCardWithGreaterFirstCard = new CardsHand(Card.THREE, Card.FOUR, Card.FIVE, Card.SIX, Card.SEVEN);
-      var highCardWithLowerFirstCard = new CardsHand(Card.TWO, Card.ACE, Card.KING, Card.QUEEN, Card.JACK);
+    public void OnSameKindFirstCardMatters()
+    {
+      var highCardWithGreaterFirstCard = CardsHand.From("34567");
+      var highCardWithLowerFirstCard = CardsHand.From("2AKQJ");
       AssertFirstBetterThanSecond(highCardWithGreaterFirstCard, highCardWithLowerFirstCard);
 
-      var fullHouseWithGreaterFistCard = new CardsHand(Card.THREE, Card.THREE, Card.FOUR, Card.FOUR, Card.FOUR);
-      var fullHouseWithLowerFirstCard = new CardsHand(Card.TWO, Card.TWO, Card.ACE, Card.ACE, Card.ACE);
+      var fullHouseWithGreaterFistCard = CardsHand.From("33444");
+      var fullHouseWithLowerFirstCard = CardsHand.From("22AAA");
       AssertFirstBetterThanSecond(fullHouseWithGreaterFistCard, fullHouseWithLowerFirstCard);
     }
 
