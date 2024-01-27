@@ -20,31 +20,31 @@ public class CardsHand
   {
     var cards = stringValue
       .ToCharArray()
-      .Select(cardFrom)
+      .Select(CardFrom)
       .ToArray();
 
     return new CardsHand(cards);
   }
 
-  private static Card cardFrom(char c)
+  private static Card CardFrom(char character)
   {
-    switch (c)
+    return character switch
     {
-      case 'A': return Card.ACE;
-      case 'K': return Card.KING;
-      case 'Q': return Card.QUEEN;
-      case 'J': return Card.JACK;
-      case 'T': return Card.TEN;
-      case '9': return Card.NINE;
-      case '8': return Card.EIGHT;
-      case '7': return Card.SEVEN;
-      case '6': return Card.SIX;
-      case '5': return Card.FIVE;
-      case '4': return Card.FOUR;
-      case '3': return Card.THREE;
-      case '2': return Card.TWO;
-      default: throw new CardsHandBuildException($"Cannot build card from char [{c}]");
-    }
+      'A' => Card.ACE,
+      'K' => Card.KING,
+      'Q' => Card.QUEEN,
+      'J' => Card.JACK,
+      'T' => Card.TEN,
+      '9' => Card.NINE,
+      '8' => Card.EIGHT,
+      '7' => Card.SEVEN,
+      '6' => Card.SIX,
+      '5' => Card.FIVE,
+      '4' => Card.FOUR,
+      '3' => Card.THREE,
+      '2' => Card.TWO,
+      _ => throw new CardsHandBuildException($"Cannot build card from char [{character}]"),
+    };
   }
 
   private static HandType HandTypeFor(Card[] cards)
