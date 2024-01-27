@@ -16,6 +16,37 @@ public class CardsHand
     this.handType = HandTypeFor(cards);
   }
 
+  public static CardsHand From(string stringValue)
+  {
+    var cards = stringValue
+      .ToCharArray()
+      .Select(cardFrom)
+      .ToArray();
+
+    return new CardsHand(cards);
+  }
+
+  private static Card cardFrom(char c)
+  {
+    switch (c)
+    {
+      case 'A': return Card.ACE;
+      case 'K': return Card.KING;
+      case 'Q': return Card.QUEEN;
+      case 'J': return Card.JACK;
+      case 'T': return Card.TEN;
+      case '9': return Card.NINE;
+      case '8': return Card.EIGHT;
+      case '7': return Card.SEVEN;
+      case '6': return Card.SIX;
+      case '5': return Card.FIVE;
+      case '4': return Card.FOUR;
+      case '3': return Card.THREE;
+      case '2': return Card.TWO;
+      default: throw new CardsHandBuildException($"Cannot build card from char [{c}]");
+    }
+  }
+
   private static HandType HandTypeFor(Card[] cards)
   {
     var groupedCardsCount = cards.GroupBy(c => c).Select(g => g.Count());

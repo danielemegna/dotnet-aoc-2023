@@ -26,6 +26,25 @@ public class CardsHandTest
   }
 
   [Fact]
+  public void BuildFromString()
+  {
+    var hand = CardsHand.From("32T3K");
+    var expected = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.THREE, Card.KING);
+    Assert.Equal(expected, hand);
+  }
+
+  [Fact]
+  public void CannotBuildCardFromStringWithBadStringInput()
+  {
+    var ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From("WRONG"));
+    Assert.Equal("Cannot build card from char [W]", ex.Message);
+    ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From("43KQ"));
+    Assert.Equal("Cannot build CardsHand with 4 elements", ex.Message);
+    ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From(""));
+    Assert.Equal("Cannot build CardsHand with 0 elements", ex.Message);
+  }
+
+  [Fact]
   public void CannotBuildCardsHandWithMoreOrLessThanFiveCards()
   {
     var ex = Assert.Throws<CardsHandBuildException>(() =>
