@@ -42,17 +42,33 @@ public class CardsHandTest
     [Fact]
     public void OnePairAlwaysBetterThanAnHighCard()
     {
-      var highCard = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
       var onePair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.FOUR, Card.FIVE);
+      var highCard = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
       AssertFirstBetterThanSecond(onePair, highCard);
     }
 
     [Fact]
     public void TwoPairAlwaysBetterThanOnePair()
     {
-      var onePair = new CardsHand(Card.ACE, Card.ACE, Card.KING, Card.QUEEN, Card.JACK);
       var twoPair = new CardsHand(Card.TWO, Card.TWO, Card.THREE, Card.THREE, Card.FOUR);
+      var onePair = new CardsHand(Card.ACE, Card.ACE, Card.KING, Card.QUEEN, Card.JACK);
       AssertFirstBetterThanSecond(twoPair, onePair);
+    }
+    
+    [Fact]
+    public void FullHouseAlwaysBetterThanThreeOfAKind()
+    {
+      var fullHouse = new CardsHand(Card.TWO, Card.TWO, Card.TWO, Card.THREE, Card.THREE);
+      var threeOfAKind = new CardsHand(Card.ACE, Card.ACE, Card.ACE, Card.KING, Card.QUEEN);
+      AssertFirstBetterThanSecond(fullHouse, threeOfAKind);
+    }
+
+    [Fact]
+    public void FiveOfAKindAlwaysBetterThanFourOfAKind()
+    {
+      var fiveOfAKind = new CardsHand(Card.TWO, Card.TWO, Card.TWO, Card.TWO, Card.TWO);
+      var fourOfAKind = new CardsHand(Card.ACE, Card.ACE, Card.ACE, Card.ACE, Card.KING);
+      AssertFirstBetterThanSecond(fiveOfAKind, fourOfAKind);
     }
 
     private static void AssertFirstBetterThanSecond(CardsHand first, CardsHand second)
