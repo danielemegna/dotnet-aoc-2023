@@ -25,40 +25,45 @@ public class CardsHandTest
     Assert.Equal(HandType.FIVE_OF_A_KIND, fiveOfAKind.GetHandType());
   }
 
-  [Fact]
-  public void BuildFromString()
+  public class ParseAndBuild
   {
-    var hand = CardsHand.From("32T3K");
-    var expected = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.THREE, Card.KING);
-    Assert.Equal(expected, hand);
-  }
 
-  [Fact]
-  public void CannotBuildCardFromStringWithBadStringInput()
-  {
-    var ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From("WRONG"));
-    Assert.Equal("Cannot build card from char [W]", ex.Message);
-    ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From("43KQ"));
-    Assert.Equal("Cannot build CardsHand with 4 elements", ex.Message);
-    ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From(""));
-    Assert.Equal("Cannot build CardsHand with 0 elements", ex.Message);
-  }
+    [Fact]
+    public void BuildFromString()
+    {
+      var hand = CardsHand.From("32T3K");
+      var expected = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.THREE, Card.KING);
+      Assert.Equal(expected, hand);
+    }
 
-  [Fact]
-  public void CannotBuildCardsHandWithMoreOrLessThanFiveCards()
-  {
-    var ex = Assert.Throws<CardsHandBuildException>(() =>
-      new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN
-    ));
-    Assert.Equal("Cannot build CardsHand with 4 elements", ex.Message);
+    [Fact]
+    public void CannotBuildCardFromStringWithBadStringInput()
+    {
+      var ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From("WRONG"));
+      Assert.Equal("Cannot build card from char [W]", ex.Message);
+      ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From("43KQ"));
+      Assert.Equal("Cannot build CardsHand with 4 elements", ex.Message);
+      ex = Assert.Throws<CardsHandBuildException>(() => CardsHand.From(""));
+      Assert.Equal("Cannot build CardsHand with 0 elements", ex.Message);
+    }
 
-    ex = Assert.Throws<CardsHandBuildException>(() =>
-      new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN, Card.ACE, Card.JACK)
-    );
-    Assert.Equal("Cannot build CardsHand with 6 elements", ex.Message);
+    [Fact]
+    public void CannotBuildCardsHandWithMoreOrLessThanFiveCards()
+    {
+      var ex = Assert.Throws<CardsHandBuildException>(() =>
+        new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN
+      ));
+      Assert.Equal("Cannot build CardsHand with 4 elements", ex.Message);
 
-    Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE));
-    Assert.Throws<CardsHandBuildException>(() => new CardsHand());
+      ex = Assert.Throws<CardsHandBuildException>(() =>
+        new CardsHand(Card.THREE, Card.ACE, Card.QUEEN, Card.SEVEN, Card.ACE, Card.JACK)
+      );
+      Assert.Equal("Cannot build CardsHand with 6 elements", ex.Message);
+
+      Assert.Throws<CardsHandBuildException>(() => new CardsHand(Card.THREE));
+      Assert.Throws<CardsHandBuildException>(() => new CardsHand());
+    }
+
   }
 
   [Fact]
