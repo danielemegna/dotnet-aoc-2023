@@ -71,6 +71,17 @@ public class CardsHandTest
       AssertFirstBetterThanSecond(fiveOfAKind, fourOfAKind);
     }
 
+    [Fact]
+    public void OnSameKindFirstCardMatters() {
+      var highCardWithGreaterFirstCard = new CardsHand(Card.THREE, Card.FOUR, Card.FIVE, Card.SIX, Card.SEVEN);
+      var highCardWithLowerFirstCard = new CardsHand(Card.TWO, Card.ACE, Card.KING, Card.QUEEN, Card.JACK);
+      AssertFirstBetterThanSecond(highCardWithGreaterFirstCard, highCardWithLowerFirstCard);
+
+      var fullHouseWithGreaterFistCard = new CardsHand(Card.THREE, Card.THREE, Card.FOUR, Card.FOUR, Card.FOUR);
+      var fullHouseWithLowerFirstCard = new CardsHand(Card.TWO, Card.TWO, Card.ACE, Card.ACE, Card.ACE);
+      AssertFirstBetterThanSecond(fullHouseWithGreaterFistCard, fullHouseWithLowerFirstCard);
+    }
+
     private static void AssertFirstBetterThanSecond(CardsHand first, CardsHand second)
     {
       Assert.True(first > second, $"{first} should be greater than {second}");

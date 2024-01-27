@@ -76,7 +76,10 @@ public class CardsHand
 
   public static bool operator >(CardsHand first, CardsHand second)
   {
-    if (first.GetHandType() > second.GetHandType())
+    if (first.GetHandType() != second.GetHandType())
+      return first.GetHandType() > second.GetHandType();
+
+    if (first.cards[0] > second.cards[0])
       return true;
 
     return false;
@@ -108,9 +111,9 @@ public class CardsHandBuildException(string message) : Exception(message) { }
 
 public enum Card
 {
-  ACE, KING, QUEEN, JACK,
-  TEN, NINE, EIGHT, SEVEN,
-  SIX, FIVE, FOUR, THREE, TWO
+  TWO, THREE, FOUR, FIVE, SIX,
+  SEVEN, EIGHT, NINE, TEN,
+  JACK, QUEEN, KING, ACE
 }
 
 public enum HandType
