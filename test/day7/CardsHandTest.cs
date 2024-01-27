@@ -73,7 +73,7 @@ public class CardsHandTest
     }
 
     [Fact]
-    public void OnSameKindFirstCardMatters()
+    public void OnSameKind_FirstCardMatters()
     {
       var highCardWithGreaterFirstCard = CardsHand.From("34567");
       var highCardWithLowerFirstCard = CardsHand.From("2AKQJ");
@@ -82,6 +82,27 @@ public class CardsHandTest
       var fullHouseWithGreaterFistCard = CardsHand.From("33444");
       var fullHouseWithLowerFirstCard = CardsHand.From("22AAA");
       AssertFirstBetterThanSecond(fullHouseWithGreaterFistCard, fullHouseWithLowerFirstCard);
+    }
+
+    [Fact]
+    public void OnSameKindAndSameFirstTwo_ThirdCardMatters()
+    {
+      var highCardWithGreaterThirdCard = CardsHand.From("AK345");
+      var highCardWithLowerThirdCard = CardsHand.From("AK2QJ");
+      AssertFirstBetterThanSecond(highCardWithGreaterThirdCard, highCardWithLowerThirdCard);
+
+      var twoPairsWithGreaterThirdCard = CardsHand.From("KK322");
+      var twoPairsWithLowerThirdCard = CardsHand.From("KK2QQ");
+      AssertFirstBetterThanSecond(twoPairsWithGreaterThirdCard, twoPairsWithLowerThirdCard);
+    }
+
+    [Fact]
+    public void SomeMoreComparision()
+    {
+      AssertFirstBetterThanSecond(CardsHand.From("33332"), CardsHand.From("2AAAA"));
+      AssertFirstBetterThanSecond(CardsHand.From("77888"), CardsHand.From("77788"));
+      AssertFirstBetterThanSecond(CardsHand.From("KK677"), CardsHand.From("KTJJT"));
+      AssertFirstBetterThanSecond(CardsHand.From("QQQJA"), CardsHand.From("T55J5"));
     }
 
     private static void AssertFirstBetterThanSecond(CardsHand first, CardsHand second)

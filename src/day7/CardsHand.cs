@@ -79,8 +79,15 @@ public class CardsHand
     if (first.GetHandType() != second.GetHandType())
       return first.GetHandType() > second.GetHandType();
 
-    if (first.cards[0] > second.cards[0])
-      return true;
+    for (int i = 0; i < 5; i++)
+    {
+      Card cardFromFirstHand = first.cards[i];
+      Card cardFromSecondHand = second.cards[i];
+      if (cardFromFirstHand > cardFromSecondHand)
+        return true;
+      if (cardFromFirstHand < cardFromSecondHand)
+        return false;
+    }
 
     return false;
   }
