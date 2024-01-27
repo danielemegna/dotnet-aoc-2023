@@ -31,8 +31,9 @@ public class CardsHandTest
     [Fact]
     public void ComparingSameHands()
     {
-      var hand1 = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
-      var hand2 = new CardsHand(Card.ACE, Card.KING, Card.QUEEN, Card.JACK, Card.TEN);
+      Card[] randomCards = GetFiveRandomCards();
+      var hand1 = new CardsHand(randomCards);
+      var hand2 = new CardsHand((Card[])randomCards.Clone());
       Assert.False(hand1 > hand2);
       Assert.False(hand1 < hand2);
       Assert.False(hand2 > hand1);
@@ -89,6 +90,18 @@ public class CardsHandTest
       Assert.False(first < second, $"{first} should not be lower than {second}");
       Assert.False(second > first, $"{second} should not be greater than {first}");
       Assert.True(second < first, $"{second} should be lower than {first}");
+    }
+
+    private static Card[] GetFiveRandomCards()
+    {
+      var random = new Random();
+      var kindsOfCard = Enum.GetValues<Card>();
+      return Enumerable.Range(1, 5).Select((_) =>
+      {
+        int randomKindIndex = random.Next(kindsOfCard.Length);
+        var randomCard = kindsOfCard.GetValue(randomKindIndex);
+        return (Card)randomCard!;
+      }).ToArray();
     }
 
   }
