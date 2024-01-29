@@ -173,8 +173,16 @@ public class CardsHandTest
     [Fact]
     public void BuildFromString()
     {
-      var hand = CardsHand.From("32T3K");
-      var expected = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.THREE, Card.KING);
+      var hand = CardsHand.From("32TJK");
+      var expected = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.JACK, Card.KING);
+      Assert.Equal(expected, hand);
+    }
+
+    [Fact]
+    public void BuildFromStringUsingJoker()
+    {
+      var hand = CardsHand.From("32TJK", true);
+      var expected = new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.JOKER, Card.KING);
       Assert.Equal(expected, hand);
     }
 

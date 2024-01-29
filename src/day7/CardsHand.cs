@@ -16,24 +16,24 @@ public class CardsHand : IComparable<CardsHand>
     this.HandType = HandTypeFor(cards);
   }
 
-  public static CardsHand From(string stringValue)
+  public static CardsHand From(string stringValue, bool useJoker = false)
   {
     var cards = stringValue
       .ToCharArray()
-      .Select(CardFrom)
+      .Select(c => CardFrom(c, useJoker))
       .ToArray();
 
     return new CardsHand(cards);
   }
 
-  private static Card CardFrom(char character)
+  private static Card CardFrom(char character, bool useJoker)
   {
     return character switch
     {
       'A' => Card.ACE,
       'K' => Card.KING,
       'Q' => Card.QUEEN,
-      'J' => Card.JACK,
+      'J' => useJoker ? Card.JOKER : Card.JACK,
       'T' => Card.TEN,
       '9' => Card.NINE,
       '8' => Card.EIGHT,
@@ -114,6 +114,7 @@ public class CardsHandBuildException(string message) : Exception(message) { }
 
 public enum Card
 {
+  JOKER,
   TWO, THREE, FOUR, FIVE, SIX,
   SEVEN, EIGHT, NINE, TEN,
   JACK, QUEEN, KING, ACE
