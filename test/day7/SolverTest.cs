@@ -18,7 +18,8 @@ public class SolverTest
   {
 
     [Fact]
-    public void ParseProvidingExample() {
+    public void ParseProvidingExample()
+    {
       Bet[] actual = solver.ParseBetList(PROVIDED_EXAMPLE_INPUT_LINES);
       Bet[] expected = [
         new Bet(Hand: new CardsHand(Card.THREE, Card.TWO, Card.TEN, Card.THREE, Card.KING), Amount: 765),
@@ -53,6 +54,20 @@ public class SolverTest
       Assert.Equal(expected, cardsHands);
     }
 
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.TotalWinningsOfHands(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(765 * 1 + 220 * 2 + 28 * 3 + 684 * 4 + 483 * 5, actual);
+    }
+
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day7/input.txt");
+      var actual = solver.TotalWinningsOfHands(input);
+      Assert.Equal(250898830, actual);
+    }
   }
 
 }

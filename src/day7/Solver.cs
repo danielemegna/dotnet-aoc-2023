@@ -2,6 +2,15 @@ namespace aoc2023.day7;
 
 public class Solver()
 {
+  public long TotalWinningsOfHands(string[] inputLines)
+  {
+    Bet[] bets = ParseBetList(inputLines);
+    return bets
+      .OrderBy(b => b.Hand)
+      .Select((bet, index) => bet.Amount * (index + 1))
+      .Sum();
+  }
+
   internal Bet[] ParseBetList(string[] inputLines)
   {
     return inputLines.Select(line =>
@@ -18,4 +27,5 @@ public class Solver()
   {
     Array.Sort(cardsHands);
   }
+
 }
