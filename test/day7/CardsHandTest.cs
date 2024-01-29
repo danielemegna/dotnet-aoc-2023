@@ -25,7 +25,7 @@ public class CardsHandTest
     Assert.Equal(HandType.FIVE_OF_A_KIND, fiveOfAKind.HandType);
   }
 
-  public class Compare()
+  public class Comparison()
   {
 
     [Fact]

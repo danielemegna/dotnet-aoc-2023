@@ -32,26 +32,26 @@ public class SolverTest
     }
 
     [Fact]
-    public void SortProvidedExampleCardsHands()
+    public void SortProvidedExampleByHandsRank()
     {
-      CardsHand[] cardsHands = [
-        CardsHand.From("32T3K"),
-        CardsHand.From("T55J5"),
-        CardsHand.From("KK677"),
-        CardsHand.From("KTJJT"),
-        CardsHand.From("QQQJA")
+      Bet[] bets = [
+        new Bet(CardsHand.From("32T3K"), 123),
+        new Bet(CardsHand.From("T55J5"), 234),
+        new Bet(CardsHand.From("KK677"), 345),
+        new Bet(CardsHand.From("KTJJT"), 456),
+        new Bet(CardsHand.From("QQQJA"), 567)
       ];
 
-      solver.SortCardsHandsByRank(ref cardsHands);
+      solver.SortBetsByHandsRank(ref bets);
 
-      CardsHand[] expected = [
-        CardsHand.From("32T3K"),
-        CardsHand.From("KTJJT"),
-        CardsHand.From("KK677"),
-        CardsHand.From("T55J5"),
-        CardsHand.From("QQQJA")
+      Bet[] expected = [
+        new Bet(CardsHand.From("32T3K"), 123),
+        new Bet(CardsHand.From("KTJJT"), 456),
+        new Bet(CardsHand.From("KK677"), 345),
+        new Bet(CardsHand.From("T55J5"), 234),
+        new Bet(CardsHand.From("QQQJA"), 567)
       ];
-      Assert.Equal(expected, cardsHands);
+      Assert.Equal(expected, bets);
     }
 
     [Fact]

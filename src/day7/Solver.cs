@@ -5,8 +5,9 @@ public class Solver()
   public long TotalWinningsOfHands(string[] inputLines)
   {
     Bet[] bets = ParseBetList(inputLines);
+    SortBetsByHandsRank(ref bets);
+
     return bets
-      .OrderBy(b => b.Hand)
       .Select((bet, index) => bet.Amount * (index + 1))
       .Sum();
   }
@@ -23,9 +24,9 @@ public class Solver()
     }).ToArray();
   }
 
-  internal void SortCardsHandsByRank(ref CardsHand[] cardsHands)
+  internal void SortBetsByHandsRank(ref Bet[] bets)
   {
-    Array.Sort(cardsHands);
+    Array.Sort(bets, (a,b) => a.Hand.CompareTo(b.Hand));
   }
 
 }
