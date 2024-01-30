@@ -109,19 +109,19 @@ public class SolverTest
       Assert.Equal(765 * 1 + 28 * 2 + 684 * 3 + 483 * 4 + 220 * 5, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveAnotherExample()
     {
       var actual = solver.TotalWinningsOfHands(ANOTHER_EXAMPLE_INPUT_LINES, GameMode.JOKER);
       Assert.Equal(6839, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day7/input.txt");
       var actual = solver.TotalWinningsOfHands(input, GameMode.JOKER);
-      Assert.Equal(-1, actual);
+      Assert.Equal(252127335, actual);
     }
   }
 
