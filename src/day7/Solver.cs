@@ -17,10 +17,11 @@ public class Solver()
     return inputLines.Select(line =>
     {
       string[] lineParts = line.Split(" ");
+      bool useJoker = gameMode == GameMode.JOKER;
       return new Bet(
-        Hand: CardsHand.From(lineParts[0]),
+        Hand: CardsHand.From(lineParts[0], useJoker),
         Amount: int.Parse(lineParts[1])
-    );
+      );
     }).ToArray();
   }
 

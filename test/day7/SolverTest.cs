@@ -70,4 +70,16 @@ public class SolverTest
     }
   }
 
+  public class SecondPartTest : SolverTest
+  {
+
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.TotalWinningsOfHands(PROVIDED_EXAMPLE_INPUT_LINES, GameMode.JOKER);
+      Assert.Equal(765 * 1 + 28 * 2 + 684 * 3 + 483 * 4 + 220 * 5, actual);
+    }
+
+  }
+
 }
