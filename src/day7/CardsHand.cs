@@ -57,9 +57,9 @@ public class CardsHand : IComparable<CardsHand>
       if(numberOfJokers == 5)
         return HandType.FIVE_OF_A_KIND;
 
+      groupedCards.Remove(Card.JOKER);
       var biggestGroup = groupedCards.MaxBy(g => g.Value);
       groupedCards[biggestGroup.Key] += numberOfJokers;
-      groupedCards.Remove(Card.JOKER);
     }
 
     switch (groupedCards.Count)

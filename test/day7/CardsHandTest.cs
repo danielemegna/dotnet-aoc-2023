@@ -45,6 +45,18 @@ public class CardsHandTest
     Assert.Equal(HandType.FIVE_OF_A_KIND, fiveJokers.HandType);
   }
 
+  [Fact]
+  public void RecognizeHandTypeWithManyJoker()
+  {
+    var threeOfAKind = new CardsHand(Card.JOKER, Card.JOKER, Card.QUEEN, Card.TWO, Card.KING);
+    var fourOfAKind  = new CardsHand(Card.JOKER, Card.JOKER, Card.JOKER, Card.TEN, Card.FIVE);
+    var fiveOfAKind   = new CardsHand(Card.JOKER, Card.JOKER, Card.JOKER, Card.JOKER, Card.FIVE);
+
+    Assert.Equal(HandType.THREE_OF_A_KIND, threeOfAKind.HandType);
+    Assert.Equal(HandType.FOUR_OF_A_KIND, fourOfAKind.HandType);
+    Assert.Equal(HandType.FIVE_OF_A_KIND, fiveOfAKind.HandType);
+  }
+
   public class Comparison()
   {
 
@@ -128,7 +140,8 @@ public class CardsHandTest
     }
 
     [Fact]
-    public void JokerIsTheWeakestIndividualCard() {
+    public void JokerIsTheWeakestIndividualCard()
+    {
       AssertFirstBetterThanSecond(CardsHand.From("22222", true), CardsHand.From("JJJJJ", true));
       AssertFirstBetterThanSecond(CardsHand.From("44442", true), CardsHand.From("JJQQ2", true));
       AssertFirstBetterThanSecond(CardsHand.From("QQQQ2", true), CardsHand.From("QJJQ2", true));
