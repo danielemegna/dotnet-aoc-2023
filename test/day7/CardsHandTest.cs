@@ -127,6 +127,22 @@ public class CardsHandTest
       AssertFirstBetterThanSecond(CardsHand.From("QQQJA"), CardsHand.From("T55J5"));
     }
 
+    [Fact]
+    public void JokerIsTheWeakestIndividualCard() {
+      AssertFirstBetterThanSecond(CardsHand.From("22222", true), CardsHand.From("JJJJJ", true));
+      AssertFirstBetterThanSecond(CardsHand.From("44442", true), CardsHand.From("JJQQ2", true));
+      AssertFirstBetterThanSecond(CardsHand.From("QQQQ2", true), CardsHand.From("QJJQ2", true));
+    }
+
+    [Fact]
+    public void SomeMoreComparisionWithJoker()
+    {
+      AssertFirstBetterThanSecond(CardsHand.From("KTJJT", true), CardsHand.From("QQQJA", true));
+      AssertFirstBetterThanSecond(CardsHand.From("QQQJA", true), CardsHand.From("T55J5", true));
+      AssertFirstBetterThanSecond(CardsHand.From("T55J5", true), CardsHand.From("KK677", true));
+      AssertFirstBetterThanSecond(CardsHand.From("KK677", true), CardsHand.From("32T3K", true));
+    }
+
     private static void AssertFirstBetterThanSecond(CardsHand first, CardsHand second)
     {
       Assert.True(first > second, $"{first} should be greater than {second}");
