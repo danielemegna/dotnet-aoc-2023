@@ -25,6 +25,26 @@ public class CardsHandTest
     Assert.Equal(HandType.FIVE_OF_A_KIND, fiveOfAKind.HandType);
   }
 
+  [Fact]
+  public void RecognizeHandTypeWithJoker()
+  {
+    var onePair = new CardsHand(Card.TEN, Card.JOKER, Card.ACE, Card.FIVE, Card.TWO);
+    var threeOfAKind = new CardsHand(Card.TEN, Card.TEN, Card.JOKER, Card.FIVE, Card.TWO);
+    var fullHouse = new CardsHand(Card.TEN, Card.TEN, Card.JOKER, Card.FIVE, Card.FIVE);
+    var fourOfAKind = new CardsHand(Card.TEN, Card.TEN, Card.TEN, Card.JOKER, Card.FIVE);
+    var fiveOfAKind = new CardsHand(Card.TEN, Card.TEN, Card.TEN, Card.TEN, Card.JOKER);
+    var fourJokers = new CardsHand(Card.TEN, Card.TEN, Card.TEN, Card.TEN, Card.JOKER);
+    var fiveJokers = new CardsHand(Card.JOKER, Card.JOKER, Card.JOKER, Card.JOKER, Card.JOKER);
+
+    Assert.Equal(HandType.ONE_PAIR, onePair.HandType);
+    Assert.Equal(HandType.THREE_OF_A_KIND, threeOfAKind.HandType);
+    Assert.Equal(HandType.FULL_HOUSE, fullHouse.HandType);
+    Assert.Equal(HandType.FOUR_OF_A_KIND, fourOfAKind.HandType);
+    Assert.Equal(HandType.FIVE_OF_A_KIND, fiveOfAKind.HandType);
+    Assert.Equal(HandType.FIVE_OF_A_KIND, fourJokers.HandType);
+    Assert.Equal(HandType.FIVE_OF_A_KIND, fiveJokers.HandType);
+  }
+
   public class Comparison()
   {
 

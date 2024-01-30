@@ -49,19 +49,30 @@ public class CardsHand : IComparable<CardsHand>
 
   private static HandType HandTypeFor(Card[] cards)
   {
-    var groupedCardsCount = cards.GroupBy(c => c).Select(g => g.Count());
+    var groupedCards = cards.GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
+    var numberOfJokers = groupedCards.GetValueOrDefault(Card.JOKER, 0);
 
-    switch (groupedCardsCount.Count())
+    if (numberOfJokers > 0)
+    {
+      if(numberOfJokers == 5)
+        return HandType.FIVE_OF_A_KIND;
+
+      var biggestGroup = groupedCards.MaxBy(g => g.Value);
+      groupedCards[biggestGroup.Key] += numberOfJokers;
+      groupedCards.Remove(Card.JOKER);
+    }
+
+    switch (groupedCards.Count)
     {
       case 5: return HandType.HIGH_CARD;
       case 4: return HandType.ONE_PAIR;
       case 3:
-        if (groupedCardsCount.Any(g => g == 3))
+        if (groupedCards.Any(g => g.Value == 3))
           return HandType.THREE_OF_A_KIND;
         return HandType.TWO_PAIR;
 
       case 2:
-        if (groupedCardsCount.Any(g => g == 4))
+        if (groupedCards.Any(g => g.Value == 4))
           return HandType.FOUR_OF_A_KIND;
         return HandType.FULL_HOUSE;
 
