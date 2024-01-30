@@ -12,6 +12,28 @@ public class SolverTest
     "QQQJA 483"
   ];
 
+  public static readonly string[] ANOTHER_EXAMPLE_INPUT_LINES = [
+    "2345A 1",
+    "Q2KJJ 13",
+    "Q2Q2Q 19",
+    "T3T3J 17",
+    "T3Q33 11",
+    "2345J 3",
+    "J345A 2",
+    "32T3K 5",
+    "T55J5 29",
+    "KK677 7",
+    "KTJJT 34",
+    "QQQJA 31",
+    "JJJJJ 37",
+    "JAAAA 43",
+    "AAAAJ 59",
+    "AAAAA 61",
+    "2AAAA 23",
+    "2JJJJ 53",
+    "JJJJ2 41",
+  ];
+
   private readonly Solver solver = new();
 
   public class FirstPartTest : SolverTest
@@ -62,6 +84,13 @@ public class SolverTest
     }
 
     [Fact]
+    public void SolveAnotherExample()
+    {
+      var actual = solver.TotalWinningsOfHands(ANOTHER_EXAMPLE_INPUT_LINES, GameMode.JACK);
+      Assert.Equal(6592, actual);
+    }
+
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day7/input.txt");
@@ -80,6 +109,20 @@ public class SolverTest
       Assert.Equal(765 * 1 + 28 * 2 + 684 * 3 + 483 * 4 + 220 * 5, actual);
     }
 
+    [Fact(Skip = "WIP")]
+    public void SolveAnotherExample()
+    {
+      var actual = solver.TotalWinningsOfHands(ANOTHER_EXAMPLE_INPUT_LINES, GameMode.JOKER);
+      Assert.Equal(6839, actual);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day7/input.txt");
+      var actual = solver.TotalWinningsOfHands(input, GameMode.JOKER);
+      Assert.Equal(-1, actual);
+    }
   }
 
 }
