@@ -2,9 +2,9 @@ namespace aoc2023.day7;
 
 public class Solver()
 {
-  public long TotalWinningsOfHands(string[] inputLines)
+  public long TotalWinningsOfHands(string[] inputLines, GameMode gameMode)
   {
-    Bet[] bets = ParseBetList(inputLines);
+    Bet[] bets = ParseBetList(inputLines, gameMode);
     SortBetsByHandsRank(ref bets);
 
     return bets
@@ -12,7 +12,7 @@ public class Solver()
       .Sum();
   }
 
-  internal Bet[] ParseBetList(string[] inputLines)
+  internal Bet[] ParseBetList(string[] inputLines, GameMode gameMode)
   {
     return inputLines.Select(line =>
     {
@@ -30,3 +30,5 @@ public class Solver()
   }
 
 }
+
+public enum GameMode { JACK, JOKER }
