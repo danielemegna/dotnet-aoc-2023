@@ -39,24 +39,45 @@ public class DocumentsParserTest
     Assert.Equal(expectedNetwork, actual.NetworkMap);
   }
 
-  [Fact]
-  public void NodeNameToInt()
+  public class NodeNameToInt()
   {
-    Assert.Equal(0, DocumentsParser.NodeNameToInt("AAA"));
-    Assert.Equal(1, DocumentsParser.NodeNameToInt("AAB"));
-    Assert.Equal(2525, DocumentsParser.NodeNameToInt("AZZ"));
 
-    Assert.Equal(10000, DocumentsParser.NodeNameToInt("BAA"));
-    Assert.Equal(10001, DocumentsParser.NodeNameToInt("BAB"));
-    Assert.Equal(12525, DocumentsParser.NodeNameToInt("BZZ"));
+    [Fact]
+    public void EndingWithAGoesFromZeroTo2525()
+    {
+      Assert.Equal(0, DocumentsParser.NodeNameToInt("AAA"));
+      Assert.Equal(1, DocumentsParser.NodeNameToInt("BAA"));
+      Assert.Equal(100, DocumentsParser.NodeNameToInt("ABA"));
+      Assert.Equal(2525, DocumentsParser.NodeNameToInt("ZZA"));
+    }
 
-    Assert.Equal(20000, DocumentsParser.NodeNameToInt("CAA"));
-    Assert.Equal(20001, DocumentsParser.NodeNameToInt("CAB"));
-    Assert.Equal(22525, DocumentsParser.NodeNameToInt("CZZ"));
+    [Fact]
+    public void EndingWithBGoesFrom10000To12525()
+    {
+      Assert.Equal(10000, DocumentsParser.NodeNameToInt("AAB"));
+      Assert.Equal(10001, DocumentsParser.NodeNameToInt("BAB"));
+      Assert.Equal(10100, DocumentsParser.NodeNameToInt("ABB"));
+      Assert.Equal(12525, DocumentsParser.NodeNameToInt("ZZB"));
+    }
 
-    Assert.Equal(250000, DocumentsParser.NodeNameToInt("ZAA"));
-    Assert.Equal(250001, DocumentsParser.NodeNameToInt("ZAB"));
-    Assert.Equal(252525, DocumentsParser.NodeNameToInt("ZZZ"));
+    [Fact]
+    public void EndingWithCGoesFrom20000To22525()
+    {
+      Assert.Equal(20000, DocumentsParser.NodeNameToInt("AAC"));
+      Assert.Equal(20001, DocumentsParser.NodeNameToInt("BAC"));
+      Assert.Equal(20100, DocumentsParser.NodeNameToInt("ABC"));
+      Assert.Equal(22525, DocumentsParser.NodeNameToInt("ZZC"));
+    }
+
+    [Fact]
+    public void EndingWithZGoesFrom25000To252525()
+    {
+      Assert.Equal(250000, DocumentsParser.NodeNameToInt("AAZ"));
+      Assert.Equal(250001, DocumentsParser.NodeNameToInt("BAZ"));
+      Assert.Equal(250100, DocumentsParser.NodeNameToInt("ABZ"));
+      Assert.Equal(252525, DocumentsParser.NodeNameToInt("ZZZ"));
+    }
+
   }
 
 

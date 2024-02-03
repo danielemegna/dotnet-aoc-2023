@@ -19,6 +19,7 @@ public class DocumentsParser
   {
     string numberAsString = nodeName
       .ToCharArray()
+      .Reverse()
       .Select(c => c - 65)
       .Select(i => i.ToString().PadLeft(2, '0'))
       .Aggregate((a, b) => a + b);
