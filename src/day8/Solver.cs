@@ -7,12 +7,17 @@ public class Solver
     var (moves, networkMap) = DocumentsParser.Parse(inputLines);
     var camel = new Camel("AAA", networkMap);
 
+    var movesIndex = 0;
     do
     {
-      var move = moves[camel.WalkedSteps % moves.Length];
-      camel.Move(move);
+      if(movesIndex == moves.Length)
+        movesIndex = 0;
+
+      camel.Move(moves[movesIndex]);
+      movesIndex++;
     } while (!camel.IsCurrentPositionFinal());
 
     return camel.WalkedSteps;
   }
+
 }
