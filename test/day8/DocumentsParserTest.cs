@@ -15,11 +15,11 @@ public class DocumentsParserTest
     Dictionary<int, (int, int)> expectedNetwork = new() {
         { 111, (222, 333) },
         { 222, (444, 555) },
-        { 333, (0, 777) },
+        { 333, (262626, 777) },
         { 444, (444, 444) },
         { 555, (555, 555) },
         { 777, (777, 777) },
-        { 0, (0, 0) },
+        { 262626, (262626, 262626) },
       };
     Assert.Equal(expectedMoves, actual.Moves);
     Assert.Equal(expectedNetwork, actual.Network);
@@ -33,8 +33,8 @@ public class DocumentsParserTest
     Move[] expectedMoves = [Move.LEFT, Move.LEFT, Move.RIGHT];
     Dictionary<int, (int, int)> expectedNetwork = new() {
         { 111, (222, 222) },
-        { 222, (111, 0) },
-        { 0, (0, 0) },
+        { 222, (111, 262626) },
+        { 262626, (262626, 262626) },
       };
     Assert.Equal(expectedMoves, actual.Moves);
     Assert.Equal(expectedNetwork, actual.Network);

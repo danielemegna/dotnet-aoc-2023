@@ -2,9 +2,8 @@ namespace aoc2023.day8;
 
 public class DocumentsParser
 {
-  public const int DESTINATION_NODE_INT_VALUE = 0;
   public const int STARTING_NODE_INT_VALUE = 111;
-  private const string DESTINATION_NODE_NAME = "ZZZ";
+  public const int DESTINATION_NODE_INT_VALUE = 262626;
 
   public Documents Parse(string[] inputLines)
   {
@@ -56,9 +55,6 @@ public class DocumentsParser
 
   private static int NodeNameToInt(string nodeName)
   {
-    if (nodeName == DESTINATION_NODE_NAME)
-      return DESTINATION_NODE_INT_VALUE;
-
     string numberAsString = nodeName
       .ToCharArray()
       .Select(c => c - 64)
