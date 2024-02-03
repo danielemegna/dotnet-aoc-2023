@@ -5,7 +5,7 @@ public class Solver
   public int StepsToReachDestination(string[] inputLines)
   {
     var (moves, networkMap) = DocumentsParser.Parse(inputLines);
-    var camel = new Camel(DocumentsParser.STARTING_NODE_INT_VALUE, networkMap);
+    var camel = new Camel("AAA", networkMap);
 
     do
     {
