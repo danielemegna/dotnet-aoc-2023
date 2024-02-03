@@ -11,11 +11,11 @@ public class DocumentsParser
     Move[] moves = MovesFromString(movesString);
 
     var networkLines = inputLines.Skip(2);
-    var network = networkLines
-      .Select(NetworkElementFrom)
+    var networkMap = networkLines
+      .Select(NetworkNodeFrom)
       .ToDictionary();
 
-    return new Documents(moves, network);
+    return new Documents(moves, networkMap);
   }
 
   public static int NodeNameToInt(string nodeName)
@@ -30,7 +30,7 @@ public class DocumentsParser
 
   }
 
-  private static KeyValuePair<int, (int, int)> NetworkElementFrom(string line)
+  private static KeyValuePair<int, (int, int)> NetworkNodeFrom(string line)
   {
     var cleanedLine = line.Replace(",", "").Replace("=", "").Replace("(", "").Replace(")", "");
     var lineParts = cleanedLine.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);

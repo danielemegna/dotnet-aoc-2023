@@ -2,11 +2,10 @@ namespace aoc2023.day8;
 
 public class Solver
 {
-
   public int StepsToReachDestination(string[] inputLines)
   {
-    var (moves, network) = DocumentsParser.Parse(inputLines);
-    var camel = new Camel(DocumentsParser.STARTING_NODE_INT_VALUE, network);
+    var (moves, networkMap) = DocumentsParser.Parse(inputLines);
+    var camel = new Camel(DocumentsParser.STARTING_NODE_INT_VALUE, networkMap);
 
     do
     {

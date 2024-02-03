@@ -21,7 +21,7 @@ public class DocumentsParserTest
         { 252525, (252525, 252525) },
       };
     Assert.Equal(expectedMoves, actual.Moves);
-    Assert.Equal(expectedNetwork, actual.Network);
+    Assert.Equal(expectedNetwork, actual.NetworkMap);
   }
 
   [Fact]
@@ -36,7 +36,7 @@ public class DocumentsParserTest
         { 252525, (252525, 252525) },
       };
     Assert.Equal(expectedMoves, actual.Moves);
-    Assert.Equal(expectedNetwork, actual.Network);
+    Assert.Equal(expectedNetwork, actual.NetworkMap);
   }
 
   [Fact]

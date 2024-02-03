@@ -2,20 +2,21 @@ namespace aoc2023.day8;
 
 public class Camel
 {
-  private Dictionary<int, (int, int)> networkMap;
-  private int currentPosition;
-  public int WalkedSteps { get; private set; }
+  private readonly Dictionary<int, (int, int)> networkMap;
 
-  public Camel(int startingPosition, Dictionary<int, (int, int)> networkMap)
+  public int WalkedSteps { get; private set; }
+  private int currentPositionNodeValue;
+
+  public Camel(int startingNodeValue, Dictionary<int, (int, int)> networkMap)
   {
-    this.currentPosition = startingPosition;
     this.networkMap = networkMap;
+    this.currentPositionNodeValue = startingNodeValue;
     this.WalkedSteps = 0;
   }
 
   public void Move(Move move)
   {
-    var currentPositionNode = networkMap[currentPosition];
+    var currentPositionNode = networkMap[currentPositionNodeValue];
     var newPosition = move switch
     {
       day8.Move.LEFT => currentPositionNode.Item1,
@@ -23,12 +24,12 @@ public class Camel
       _ => throw new SystemException("Something very strange here ..")
     };
 
-    currentPosition = newPosition;
+    currentPositionNodeValue = newPosition;
     WalkedSteps++;
   }
 
   public bool IsCurrentPositionFinal()
   {
-    return currentPosition == DocumentsParser.DESTINATION_NODE_INT_VALUE;
+    return currentPositionNodeValue == DocumentsParser.DESTINATION_NODE_INT_VALUE;
   }
 }
