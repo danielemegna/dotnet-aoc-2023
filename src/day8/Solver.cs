@@ -15,7 +15,7 @@ public class Solver
 
       camel.Move(moves[movesIndex]);
       movesIndex++;
-    } while (!camel.IsCurrentPositionFinal());
+    } while (!camel.IsDestinationReached());
 
     return camel.WalkedSteps;
   }
