@@ -42,6 +42,15 @@ public class SolverTest
       var actual = solver.StepsToReachDestination(SECOND_PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(6, actual);
     }
+
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day8/input.txt");
+      var actual = solver.StepsToReachDestination(input);
+      Assert.Equal(17263, actual);
+    }
+
   }
 
 }
