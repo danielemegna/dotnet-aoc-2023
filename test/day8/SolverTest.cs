@@ -37,7 +37,7 @@ public class SolverTest
     }
 
     [Fact]
-    public void SolveTheSeconProvidedExample()
+    public void SolveTheSecondProvidedExample()
     {
       var actual = solver.StepsToReachDestination(SECOND_PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(6, actual);
