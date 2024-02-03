@@ -29,6 +29,19 @@ public class SolverTest
   public class FirstPartTest : SolverTest
   {
 
+    [Fact]
+    public void SolveTheFirstProvidedExample()
+    {
+      var actual = solver.StepsToReachDestination(FIRST_PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(2, actual);
+    }
+
+    [Fact]
+    public void SolveTheSeconProvidedExample()
+    {
+      var actual = solver.StepsToReachDestination(SECOND_PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(6, actual);
+    }
   }
 
 }
