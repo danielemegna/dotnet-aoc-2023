@@ -1,6 +1,9 @@
 namespace aoc2023.day8;
 
-public class DocumentsParser {
+public class DocumentsParser
+{
+  public const int DESTINATION_NODE_INT_VALUE = 0;
+  private const string DESTINATION_NODE_NAME = "ZZZ";
 
   public Documents Parse(string[] inputLines)
   {
@@ -24,10 +27,10 @@ public class DocumentsParser {
     var leftConnection = lineParts[1];
     var rightConnection = lineParts[2];
     return new KeyValuePair<int, (int, int)>(
-      startingPoint.GetHashCode(),
+      NodeNameToInt(startingPoint),
       (
-        leftConnection.GetHashCode(),
-        rightConnection.GetHashCode()
+        NodeNameToInt(leftConnection),
+        NodeNameToInt(rightConnection)
       )
     );
   }
@@ -48,5 +51,20 @@ public class DocumentsParser {
       'R' => Move.RIGHT,
       _ => throw new SystemException($"Cannot parse move from char [{c}]")
     };
+  }
+
+  private static int NodeNameToInt(string nodeName)
+  {
+    if (nodeName == DESTINATION_NODE_NAME)
+      return DESTINATION_NODE_INT_VALUE;
+
+    string numberAsString = nodeName
+      .ToCharArray()
+      .Select(c => c - 64)
+      .Select(i => i.ToString())
+      .Aggregate((a, b) => a + b);
+
+    return int.Parse(numberAsString);
+
   }
 }

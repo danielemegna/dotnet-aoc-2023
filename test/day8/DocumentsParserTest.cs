@@ -13,13 +13,13 @@ public class DocumentsParserTest
 
     Move[] expectedMoves = [Move.RIGHT, Move.LEFT];
     Dictionary<int, (int, int)> expectedNetwork = new() {
-        { "AAA".GetHashCode(), ("BBB".GetHashCode(), "CCC".GetHashCode() ) },
-        { "BBB".GetHashCode(), ("DDD".GetHashCode(), "EEE".GetHashCode() ) },
-        { "CCC".GetHashCode(), ("ZZZ".GetHashCode(), "GGG".GetHashCode() ) },
-        { "DDD".GetHashCode(), ("DDD".GetHashCode(), "DDD".GetHashCode() ) },
-        { "EEE".GetHashCode(), ("EEE".GetHashCode(), "EEE".GetHashCode() ) },
-        { "GGG".GetHashCode(), ("GGG".GetHashCode(), "GGG".GetHashCode() ) },
-        { "ZZZ".GetHashCode(), ("ZZZ".GetHashCode(), "ZZZ".GetHashCode() ) },
+        { 111, (222, 333) },
+        { 222, (444, 555) },
+        { 333, (0, 777) },
+        { 444, (444, 444) },
+        { 555, (555, 555) },
+        { 777, (777, 777) },
+        { 0, (0, 0) },
       };
     Assert.Equal(expectedMoves, actual.Moves);
     Assert.Equal(expectedNetwork, actual.Network);
@@ -32,9 +32,9 @@ public class DocumentsParserTest
 
     Move[] expectedMoves = [Move.LEFT, Move.LEFT, Move.RIGHT];
     Dictionary<int, (int, int)> expectedNetwork = new() {
-        { "AAA".GetHashCode(), ("BBB".GetHashCode(), "BBB".GetHashCode() ) },
-        { "BBB".GetHashCode(), ("AAA".GetHashCode(), "ZZZ".GetHashCode() ) },
-        { "ZZZ".GetHashCode(), ("ZZZ".GetHashCode(), "ZZZ".GetHashCode() ) },
+        { 111, (222, 222) },
+        { 222, (111, 0) },
+        { 0, (0, 0) },
       };
     Assert.Equal(expectedMoves, actual.Moves);
     Assert.Equal(expectedNetwork, actual.Network);
