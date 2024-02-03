@@ -4,12 +4,11 @@ using Xunit;
 
 public class DocumentsParserTest
 {
-  private readonly DocumentsParser parser = new();
 
   [Fact]
   public void ParseFirstProvidedExample()
   {
-    Documents actual = parser.Parse(SolverTest.FIRST_PROVIDED_EXAMPLE_INPUT_LINES);
+    Documents actual = DocumentsParser.Parse(SolverTest.FIRST_PROVIDED_EXAMPLE_INPUT_LINES);
 
     Move[] expectedMoves = [Move.RIGHT, Move.LEFT];
     Dictionary<int, (int, int)> expectedNetwork = new() {
@@ -28,7 +27,7 @@ public class DocumentsParserTest
   [Fact]
   public void ParseSecondProvidedExample()
   {
-    Documents actual = parser.Parse(SolverTest.SECOND_PROVIDED_EXAMPLE_INPUT_LINES);
+    Documents actual = DocumentsParser.Parse(SolverTest.SECOND_PROVIDED_EXAMPLE_INPUT_LINES);
 
     Move[] expectedMoves = [Move.LEFT, Move.LEFT, Move.RIGHT];
     Dictionary<int, (int, int)> expectedNetwork = new() {
@@ -41,27 +40,23 @@ public class DocumentsParserTest
   }
 
   [Fact]
-  public void ParseSomeOther()
+  public void NodeNameToInt()
   {
-    string[] input = [
-      "L",
-      "",
-      "AAA = (AAB, AZZ)",
-      "BAA = (BAB, BZZ)",
-      "CAA = (CAB, CZZ)",
-      "ZAA = (ZAB, ZZZ)",
-  ];
-    Documents actual = parser.Parse(input);
+    Assert.Equal(0, DocumentsParser.NodeNameToInt("AAA"));
+    Assert.Equal(1, DocumentsParser.NodeNameToInt("AAB"));
+    Assert.Equal(2525, DocumentsParser.NodeNameToInt("AZZ"));
 
-    Move[] expectedMoves = [Move.LEFT];
-    Dictionary<int, (int, int)> expectedNetwork = new() {
-        { 0,      (1,      2525) },
-        { 10000,  (10001,  12525) },
-        { 20000,  (20001,  22525) },
-        { 250000, (250001, 252525) },
-      };
-    Assert.Equal(expectedMoves, actual.Moves);
-    Assert.Equal(expectedNetwork, actual.Network);
+    Assert.Equal(10000, DocumentsParser.NodeNameToInt("BAA"));
+    Assert.Equal(10001, DocumentsParser.NodeNameToInt("BAB"));
+    Assert.Equal(12525, DocumentsParser.NodeNameToInt("BZZ"));
+
+    Assert.Equal(20000, DocumentsParser.NodeNameToInt("CAA"));
+    Assert.Equal(20001, DocumentsParser.NodeNameToInt("CAB"));
+    Assert.Equal(22525, DocumentsParser.NodeNameToInt("CZZ"));
+
+    Assert.Equal(250000, DocumentsParser.NodeNameToInt("ZAA"));
+    Assert.Equal(250001, DocumentsParser.NodeNameToInt("ZAB"));
+    Assert.Equal(252525, DocumentsParser.NodeNameToInt("ZZZ"));
   }
 
 
