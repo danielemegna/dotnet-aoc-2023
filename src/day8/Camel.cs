@@ -3,7 +3,7 @@ namespace aoc2023.day8;
 public class Camel
 {
   private readonly Dictionary<int, (int, int)> networkMap;
-  private readonly int destinationNodeValue;
+  private readonly int destinationNodeMinimumValue;
 
   public int WalkedSteps { get; private set; }
   private int currentPositionNodeValue;
@@ -11,7 +11,7 @@ public class Camel
   public Camel(int startingNodeValue, Dictionary<int, (int, int)> networkMap)
   {
     this.networkMap = networkMap;
-    this.destinationNodeValue = DocumentsParser.NodeNameToInt("ZZZ");
+    this.destinationNodeMinimumValue = DocumentsParser.NodeNameToInt("AAZ");
 
     this.WalkedSteps = 0;
     this.currentPositionNodeValue = startingNodeValue;
@@ -37,6 +37,6 @@ public class Camel
 
   public bool IsDestinationReached()
   {
-    return currentPositionNodeValue == destinationNodeValue;
+    return currentPositionNodeValue >= destinationNodeMinimumValue;
   }
 }

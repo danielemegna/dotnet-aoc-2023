@@ -48,6 +48,7 @@ public class DocumentsParserTest
       Assert.Equal(0, DocumentsParser.NodeNameToInt("AAA"));
       Assert.Equal(1, DocumentsParser.NodeNameToInt("BAA"));
       Assert.Equal(100, DocumentsParser.NodeNameToInt("ABA"));
+      Assert.Equal(101, DocumentsParser.NodeNameToInt("BBA"));
       Assert.Equal(2525, DocumentsParser.NodeNameToInt("ZZA"));
     }
 
