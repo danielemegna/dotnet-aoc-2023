@@ -6,18 +6,7 @@ public class Solver
   {
     var (moves, networkMap) = DocumentsParser.Parse(inputLines);
     var camel = new Camel("AAA", networkMap);
-
-    var movesIndex = 0;
-    do
-    {
-      if (movesIndex == moves.Length)
-        movesIndex = 0;
-
-      camel.Move(moves[movesIndex]);
-      movesIndex++;
-    } while (!camel.IsDestinationReached());
-
-    return camel.WalkedSteps;
+    return camel.WalkedStepsToReachDestinationWith(moves);
   }
 
   public long StepsToReachDestinationWithEveryGhost(string[] inputLines)
