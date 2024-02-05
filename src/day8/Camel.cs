@@ -5,7 +5,7 @@ public class Camel
   private readonly Dictionary<int, (int, int)> networkMap;
   private readonly int destinationNodeMinimumValue;
 
-  public int WalkedSteps { get; private set; }
+  public long WalkedSteps { get; private set; }
   private int currentPositionNodeValue;
 
   public Camel(int startingNodeValue, Dictionary<int, (int, int)> networkMap)
