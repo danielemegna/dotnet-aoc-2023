@@ -39,6 +39,26 @@ public class DocumentsParserTest
     Assert.Equal(expectedNetwork, actual.NetworkMap);
   }
 
+  [Fact]
+  public void ParseThirdProvidedExample()
+  {
+    Documents actual = DocumentsParser.Parse(SolverTest.THIRD_PROVIDED_EXAMPLE_INPUT_LINES);
+
+    Move[] expectedMoves = [Move.LEFT, Move.RIGHT];
+    Dictionary<int, (int, int)> expectedNetwork = new() {
+        { 0,      (10000,  232323) },
+        { 10000,  (232323, 250000) },
+        { 250000, (10000,  232323) },
+        { 101,    (10101,  232323) },
+        { 10101,  (20101,  20101)  },
+        { 20101,  (250101, 250101) },
+        { 250101, (10101,  10101)  },
+        { 232323, (232323, 232323) }
+      };
+    Assert.Equal(expectedMoves, actual.Moves);
+    Assert.Equal(expectedNetwork, actual.NetworkMap);
+  }
+
   public class NodeNameToInt()
   {
 
