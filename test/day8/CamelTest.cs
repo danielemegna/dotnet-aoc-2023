@@ -37,4 +37,20 @@ public class CamelTest
     Assert.True(camel.IsDestinationReached());
   }
 
+  [Fact]
+  public void GetTheTwoWalkedStepsToReachDestinationWithMoves()
+  {
+    var camel = new Camel(0, aNetwork);
+    var actual = camel.WalkedStepsToReachDestinationWith([Move.LEFT, Move.RIGHT]);
+    Assert.Equal(2, actual);
+  }
+
+  [Fact]
+  public void GetTheThreeWalkedStepsToReachDestinationWithMoves()
+  {
+    var camel = new Camel(101, aNetwork);
+    var actual = camel.WalkedStepsToReachDestinationWith([Move.LEFT, Move.RIGHT]);
+    Assert.Equal(3, actual);
+  }
+
 }

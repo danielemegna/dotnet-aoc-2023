@@ -35,6 +35,18 @@ public class Camel
     WalkedSteps++;
   }
 
+  public long WalkedStepsToReachDestinationWith(Move[] moves)
+  {
+    var movesIndex = 0;
+    do
+    {
+      Move(moves[movesIndex % moves.Length]);
+      movesIndex++;
+    } while (!IsDestinationReached());
+
+    return WalkedSteps;
+  }
+
   public bool IsDestinationReached()
   {
     return currentPositionNodeValue >= destinationNodeMinimumValue;
