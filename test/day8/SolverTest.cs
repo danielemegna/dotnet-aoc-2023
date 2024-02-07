@@ -89,12 +89,12 @@ public class SolverTest
       Assert.Equal(6, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day8/input.txt");
       var actual = solver.StepsToReachDestinationWithEveryGhost(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(14631604759649, actual);
     }
   }
 

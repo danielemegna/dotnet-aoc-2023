@@ -19,24 +19,18 @@ public class Solver
     var camels = networkMap
       .Select(networkNode => networkNode.Key)
       .Where(nodeIntValue => nodeIntValue < startingNodeMaximumValue)
-      .Select(startingNodeValue => new Camel(startingNodeValue, networkMap))
-      .ToArray();
+      .Select(startingNodeValue => new Camel(startingNodeValue, networkMap));
 
-    var movesIndex = 0;
-    while (true)
-    {  
-      if (movesIndex == moves.Length)
-        movesIndex = 0;
+    return camels
+      .Select(camel => camel.WalkedStepsToReachDestinationWith(moves))
+      .Aggregate(LeastCommonMultiple);
+  }
 
-      var moveToPerform = moves[movesIndex];
-      //camels.AsParallel().ForAll(c => c.Move(moveToPerform));
-      foreach (var c in camels) { c.Move(moveToPerform); }
-      movesIndex++;
+  private static long LeastCommonMultiple(long a, long b) => a * b / GreatestCommonDivisor(a, b);
 
-      if (camels.All(c => c.IsDestinationReached()))
-        break;
-    };
-
-    return camels.First().WalkedSteps;
+  private static long GreatestCommonDivisor(long a, long b)
+  {
+    if (b == 0) return a;
+    return GreatestCommonDivisor(b, a % b);
   }
 }
