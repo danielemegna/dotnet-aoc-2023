@@ -49,7 +49,8 @@ public class GardenMap
     return (leftConnection, rightConnection);
   }
 
-  private char MapValueAt(Coordinate c) => map[c.Y][c.X];
+  private char MapValueAt(Coordinate c) =>
+    map.ElementAtOrDefault(c.Y)?.ElementAtOrDefault(c.X) ?? 'x';
 
   public override bool Equals(object? other)
   {

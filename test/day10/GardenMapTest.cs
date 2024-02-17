@@ -80,7 +80,17 @@ public class GardenMapTest
       Assert.Equal((leftExpected, rightExpected), actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
+    public void SouthAndWestConnectionsAtTheEdgeOfTheMap()
+    {
+      var actual = gardenMap.ConnectionsFor(new(4, 2));
+
+      Coordinate leftExpected = new(3, 2);
+      Coordinate rightExpected = new(4, 3);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
+
+    [Fact]
     public void SouthAndEastConnectionsAtTheEdgeOfTheMap()
     {
       var actual = gardenMap.ConnectionsFor(new(0, 2));
