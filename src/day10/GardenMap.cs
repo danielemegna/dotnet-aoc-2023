@@ -15,8 +15,27 @@ public class GardenMap
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
-    throw new NotImplementedException();
+    var eastCoordinate = new Coordinate(c.X + 1, c.Y);
+    var westCoordinate = new Coordinate(c.X - 1, c.Y);
+    var southCoordinate = new Coordinate(c.X, c.Y + 1);
+    var nordCoordinate = new Coordinate(c.X, c.Y - 1);
+
+    Coordinate? leftConnection = null;
+    Coordinate? rightConnection = null;
+
+    if (arr(['-', '7', 'J']).Contains(MapValueAt(eastCoordinate)))
+      rightConnection = eastCoordinate;
+
+    if (arr(['|', 'L', 'J']).Contains(MapValueAt(southCoordinate)))
+      leftConnection = southCoordinate;
+
+    if (leftConnection == null || rightConnection == null)
+      throw new SystemException($"Cannot find connection for coordinate {c}");
+
+    return (leftConnection, rightConnection);
   }
+
+  private char MapValueAt(Coordinate c) => map[c.Y][c.X];
 
   public override bool Equals(object? other)
   {
@@ -37,4 +56,6 @@ public class GardenMap
 
   public override int GetHashCode() =>
     StructuralComparisons.StructuralEqualityComparer.GetHashCode(map);
+
+  private static char[] arr(char[] value) => value;
 }

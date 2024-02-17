@@ -22,18 +22,28 @@ public class GardenMapTest
 
   public class ConnectionsForCoordinates
   {
-    [Fact(Skip = "WIP")]
-    public void BorderMapWithBottomAndRightConnections()
-    {
-      var map = new GardenMap([
-        ['.','.','F','7','.'],
-        ['.','F','J','|','.'],
-        ['S','J','.','L','7'],
-        ['|','F','-','-','J'],
-        ['L','J','.','.','.']
-      ]);
+    private GardenMap gardenMap = new([
+      ['.','.','F','7','.'],
+      ['.','F','J','|','.'],
+      ['S','J','.','L','7'],
+      ['|','F','-','-','J'],
+      ['L','J','.','.','.']
+    ]);
 
-      var actual = map.ConnectionsFor(new(0, 2));
+    [Fact]
+    public void MiddleMapWithSouthAndEastConnections()
+    {
+      var actual = gardenMap.ConnectionsFor(new(1, 1));
+
+      Coordinate leftExpected = new(1, 2);
+      Coordinate rightExpected = new(2, 1);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void BorderMapWithSouthAndEastConnections()
+    {
+      var actual = gardenMap.ConnectionsFor(new(0, 2));
 
       Coordinate leftExpected = new(0, 3);
       Coordinate rightExpected = new(1, 2);
