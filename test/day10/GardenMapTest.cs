@@ -2,24 +2,28 @@ namespace aoc2023.day10;
 
 using Xunit;
 
-public class GardenMapTest {
+public class GardenMapTest
+{
 
-    [Fact]
-    public void BuildFromArrayOfStrings() {
-      var actual = GardenMap.From(SolverTest.COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+  [Fact]
+  public void BuildFromArrayOfStrings()
+  {
+    var actual = GardenMap.From(SolverTest.COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
 
-      var expected = new GardenMap([
-        ['.','.','F','7','.'],
-        ['.','F','J','|','.'],
-        ['S','J','.','L','7'],
-        ['|','F','-','-','J'],
-        ['L','J','.','.','.']
-      ]);
-      Assert.Equal(expected, actual);
-    }
+    var expected = new GardenMap([
+      ['.','.','F','7','.'],
+      ['.','F','J','|','.'],
+      ['S','J','.','L','7'],
+      ['|','F','-','-','J'],
+      ['L','J','.','.','.']
+    ]);
+    Assert.Equal(expected, actual);
+  }
 
+  public class ConnectionsForCoordinates
+  {
     [Fact(Skip = "WIP")]
-    public void ConnectionsForPoint()
+    public void BorderMapWithBottomAndRightConnections()
     {
       var map = new GardenMap([
         ['.','.','F','7','.'],
@@ -35,43 +39,44 @@ public class GardenMapTest {
       Coordinate rightExpected = new(1, 2);
       Assert.Equal((leftExpected, rightExpected), actual);
     }
+  }
 
-    [Fact]
-    public void Equality()
-    {
-      var first = new GardenMap([
-        ['.','.','.','.','.'],
-        ['.','S','-','7','.'],
-        ['.','|','.','|','.'],
-        ['.','L','-','J','.'],
-        ['.','.','.','.','.']
-      ]);
+  [Fact]
+  public void Equality()
+  {
+    var first = new GardenMap([
+      ['.','.','.','.','.'],
+      ['.','S','-','7','.'],
+      ['.','|','.','|','.'],
+      ['.','L','-','J','.'],
+      ['.','.','.','.','.']
+    ]);
 
-      var second = new GardenMap([
-        ['.','.','.','.','.'],
-        ['.','S','-','7','.'],
-        ['.','|','.','|','.'],
-        ['.','L','-','J','.'],
-        ['.','.','.','.','.']
-      ]);
-      
-      var third = new GardenMap([
-        ['.','.'],
-        ['.','S'],
-      ]);
+    var second = new GardenMap([
+      ['.','.','.','.','.'],
+      ['.','S','-','7','.'],
+      ['.','|','.','|','.'],
+      ['.','L','-','J','.'],
+      ['.','.','.','.','.']
+    ]);
 
-      Assert.Equal(first, first);
-      Assert.Same(first, first);
+    var third = new GardenMap([
+      ['.','.'],
+      ['.','S'],
+    ]);
 
-      Assert.Equal(first, second);
-      Assert.Equal(second, first);
-      Assert.False(first == second);
-      Assert.NotSame(first, second);
-      Assert.Equal(first.GetHashCode(), second.GetHashCode());
+    Assert.Equal(first, first);
+    Assert.Same(first, first);
 
-      Assert.NotEqual(first, third);
-      Assert.NotEqual(third, second);
-      Assert.NotEqual(first.GetHashCode(), third.GetHashCode());
-    }
+    Assert.Equal(first, second);
+    Assert.Equal(second, first);
+    Assert.False(first == second);
+    Assert.NotSame(first, second);
+    Assert.Equal(first.GetHashCode(), second.GetHashCode());
+
+    Assert.NotEqual(first, third);
+    Assert.NotEqual(third, second);
+    Assert.NotEqual(first.GetHashCode(), third.GetHashCode());
+  }
 
 }
