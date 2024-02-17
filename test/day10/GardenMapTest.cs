@@ -4,6 +4,20 @@ using Xunit;
 
 public class GardenMapTest {
 
+    [Fact]
+    public void BuildFromArrayOfStrings() {
+      var actual = GardenMap.From(SolverTest.COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+
+      var expected = new GardenMap([
+        ['.','.','F','7','.'],
+        ['.','F','J','|','.'],
+        ['S','J','.','L','7'],
+        ['|','F','-','-','J'],
+        ['L','J','.','.','.']
+      ]);
+      Assert.Equal(expected, actual);
+    }
+
     [Fact(Skip = "WIP")]
     public void ConnectionsForPoint()
     {

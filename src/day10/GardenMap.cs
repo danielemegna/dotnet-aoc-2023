@@ -5,10 +5,12 @@ using System.Collections;
 public class GardenMap
 {
   private readonly char[][] map;
+  internal GardenMap(char[][] map) => this.map = map;
 
-  internal GardenMap(char[][] map)
+  public static GardenMap From(string[] inputLines)
   {
-    this.map = map;
+    char[][] matrixOfChars = inputLines.Select(line => line.ToCharArray()).ToArray();
+    return new GardenMap(matrixOfChars);
   }
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
@@ -23,8 +25,7 @@ public class GardenMap
     if (other.GetType() != typeof(GardenMap)) return false;
     var otherCasted = (GardenMap)other;
 
-    if(map.Length != otherCasted.map.Length) return false;
-
+    if (map.Length != otherCasted.map.Length) return false;
     for (int i = 0; i < map.Length; i++)
     {
       if (!map[i].SequenceEqual(otherCasted.map[i]))
