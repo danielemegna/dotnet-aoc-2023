@@ -20,6 +20,21 @@ public class GardenMapTest
     Assert.Equal(expected, actual);
   }
 
+  [Fact]
+  public void GetStartingPositionCoordinate() {
+    var gardenMap = new GardenMap([
+      ['.','.','F','7','.'],
+      ['.','F','J','|','.'],
+      ['S','J','.','L','7'],
+      ['|','F','-','-','J'],
+      ['L','J','.','.','.']
+    ]);
+
+    var actual = gardenMap.StartingPosition();
+
+    Assert.Equal(new Coordinate(0, 2), actual);
+  }
+
   public class ConnectionsForCoordinates
   {
     private GardenMap gardenMap = new([

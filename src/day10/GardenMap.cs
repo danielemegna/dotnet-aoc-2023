@@ -13,6 +13,19 @@ public class GardenMap
     return new GardenMap(matrixOfChars);
   }
 
+  public Coordinate StartingPosition()
+  {
+    var startingY = map
+      .Select((line, lineIndex) => (line, lineIndex))
+      .Where(tuple => tuple.line.Contains('S'))
+      .First()
+      .lineIndex;
+
+    var startingX = Array.IndexOf(map[startingY], 'S');
+
+    return new Coordinate(startingX, startingY);
+  }
+
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
     var eastCoordinate = new Coordinate(c.X + 1, c.Y);
@@ -73,4 +86,5 @@ public class GardenMap
     StructuralComparisons.StructuralEqualityComparer.GetHashCode(map);
 
   private static char[] arr(char[] value) => value;
+
 }
