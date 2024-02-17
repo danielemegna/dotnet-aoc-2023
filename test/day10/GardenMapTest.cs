@@ -31,7 +31,27 @@ public class GardenMapTest
     ]);
 
     [Fact]
-    public void MiddleMapWithSouthAndEastConnections()
+    public void WestAndEastConnections()
+    {
+      var actual = gardenMap.ConnectionsFor(new(2, 3));
+
+      Coordinate leftExpected = new(1, 3);
+      Coordinate rightExpected = new(3, 3);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
+
+    [Fact]
+    public void NortAndSouthConnections()
+    {
+      var actual = gardenMap.ConnectionsFor(new(3, 1));
+
+      Coordinate leftExpected = new(3, 0);
+      Coordinate rightExpected = new(3, 2);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
+
+    [Fact]
+    public void SouthAndEastConnections()
     {
       var actual = gardenMap.ConnectionsFor(new(1, 1));
 
@@ -40,8 +60,28 @@ public class GardenMapTest
       Assert.Equal((leftExpected, rightExpected), actual);
     }
 
+    [Fact]
+    public void NordAndWestConnections()
+    {
+      var actual = gardenMap.ConnectionsFor(new(2, 1));
+
+      Coordinate leftExpected = new(1, 1);
+      Coordinate rightExpected = new(2, 0);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
+
+    [Fact]
+    public void NordAndEastConnections()
+    {
+      var actual = gardenMap.ConnectionsFor(new(3, 2));
+
+      Coordinate leftExpected = new(3, 1);
+      Coordinate rightExpected = new(4, 2);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
+
     [Fact(Skip = "WIP")]
-    public void BorderMapWithSouthAndEastConnections()
+    public void SouthAndEastConnectionsAtTheEdgeOfTheMap()
     {
       var actual = gardenMap.ConnectionsFor(new(0, 2));
 
