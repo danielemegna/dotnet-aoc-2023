@@ -26,7 +26,7 @@ public class GardenMap
     return new Coordinate(startingX, startingY);
   }
 
-  public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
+  public (Coordinate?, Coordinate?) ConnectionsFor(Coordinate c)
   {
     var eastCoordinate = new Coordinate(c.X + 1, c.Y);
     var westCoordinate = new Coordinate(c.X - 1, c.Y);
@@ -54,10 +54,8 @@ public class GardenMap
       else rightConnection = southCoordinate;
     }
 
-    if (leftConnection == null || rightConnection == null)
-      throw new SystemException(
-        $"Cannot find connection for coordinate {c}: left [{leftConnection}], right: [{rightConnection}]"
-      );
+    if (leftConnection == null && rightConnection == null)
+      throw new SystemException($"Cannot find any connection for coordinate {c}");
 
     return (leftConnection, rightConnection);
   }
