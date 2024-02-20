@@ -5,51 +5,48 @@ using Xunit;
 public class GardenMapTest
 {
 
+  public static readonly GardenMap simpleMap = new GardenMap([
+    ['.','.','.','.','.'],
+    ['.','S','-','7','.'],
+    ['.','|','.','|','.'],
+    ['.','L','-','J','.'],
+    ['.','.','.','.','.']
+  ]);
+
+  public static readonly GardenMap complexMap = new GardenMap([
+    ['.','.','F','7','.'],
+    ['.','F','J','|','.'],
+    ['S','J','.','L','7'],
+    ['|','F','-','-','J'],
+    ['L','J','.','.','.']
+  ]);
+
   [Fact]
   public void BuildFromArrayOfStrings()
   {
-    var actual = GardenMap.From(SolverTest.COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+    var actual = GardenMap.From(SolverTest.SIMPLE_PROVIDED_EXAMPLE_INPUT_LINES);
+    Assert.Equal(simpleMap, actual);
 
-    var expected = new GardenMap([
-      ['.','.','F','7','.'],
-      ['.','F','J','|','.'],
-      ['S','J','.','L','7'],
-      ['|','F','-','-','J'],
-      ['L','J','.','.','.']
-    ]);
-    Assert.Equal(expected, actual);
+    actual = GardenMap.From(SolverTest.COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+    Assert.Equal(complexMap, actual);
   }
 
   [Fact]
   public void GetStartingPositionCoordinate()
   {
-    var gardenMap = new GardenMap([
-      ['.','.','F','7','.'],
-      ['.','F','J','|','.'],
-      ['S','J','.','L','7'],
-      ['|','F','-','-','J'],
-      ['L','J','.','.','.']
-    ]);
+    var actual = simpleMap.StartingPosition();
+    Assert.Equal(new Coordinate(1, 1), actual);
 
-    var actual = gardenMap.StartingPosition();
-
+    actual = complexMap.StartingPosition();
     Assert.Equal(new Coordinate(0, 2), actual);
   }
 
   public class ConnectionsForCoordinates
   {
-    private GardenMap gardenMap = new([
-      ['.','.','F','7','.'],
-      ['.','F','J','|','.'],
-      ['S','J','.','L','7'],
-      ['|','F','-','-','J'],
-      ['L','J','.','.','.']
-    ]);
-
     [Fact]
     public void WestAndEastConnections()
     {
-      var actual = gardenMap.ConnectionsFor(new(2, 3));
+      var actual = complexMap.ConnectionsFor(new(2, 3));
 
       Coordinate leftExpected = new(1, 3);
       Coordinate rightExpected = new(3, 3);
@@ -59,7 +56,7 @@ public class GardenMapTest
     [Fact]
     public void NortAndSouthConnections()
     {
-      var actual = gardenMap.ConnectionsFor(new(3, 1));
+      var actual = complexMap.ConnectionsFor(new(3, 1));
 
       Coordinate leftExpected = new(3, 0);
       Coordinate rightExpected = new(3, 2);
@@ -69,7 +66,7 @@ public class GardenMapTest
     [Fact]
     public void SouthAndEastConnections()
     {
-      var actual = gardenMap.ConnectionsFor(new(1, 1));
+      var actual = complexMap.ConnectionsFor(new(1, 1));
 
       Coordinate leftExpected = new(1, 2);
       Coordinate rightExpected = new(2, 1);
@@ -79,7 +76,7 @@ public class GardenMapTest
     [Fact]
     public void NordAndWestConnections()
     {
-      var actual = gardenMap.ConnectionsFor(new(2, 1));
+      var actual = complexMap.ConnectionsFor(new(2, 1));
 
       Coordinate leftExpected = new(1, 1);
       Coordinate rightExpected = new(2, 0);
@@ -89,7 +86,7 @@ public class GardenMapTest
     [Fact]
     public void NordAndEastConnections()
     {
-      var actual = gardenMap.ConnectionsFor(new(3, 2));
+      var actual = complexMap.ConnectionsFor(new(3, 2));
 
       Coordinate leftExpected = new(3, 1);
       Coordinate rightExpected = new(4, 2);
@@ -99,7 +96,7 @@ public class GardenMapTest
     [Fact]
     public void SouthAndWestConnectionsAtTheEdgeOfTheMap()
     {
-      var actual = gardenMap.ConnectionsFor(new(4, 2));
+      var actual = complexMap.ConnectionsFor(new(4, 2));
 
       Coordinate leftExpected = new(3, 2);
       Coordinate rightExpected = new(4, 3);
@@ -109,7 +106,7 @@ public class GardenMapTest
     [Fact]
     public void SouthAndEastConnectionsAtTheEdgeOfTheMap()
     {
-      var actual = gardenMap.ConnectionsFor(new(0, 2));
+      var actual = complexMap.ConnectionsFor(new(0, 2));
 
       Coordinate leftExpected = new(0, 3);
       Coordinate rightExpected = new(1, 2);
@@ -119,25 +116,17 @@ public class GardenMapTest
     [Fact]
     public void ConnectionsToStartingPointAreNull()
     {
-      var actual = gardenMap.ConnectionsFor(new(1, 2));
-      Assert.Equal((new Coordinate(1, 1), null), actual);
-
-      actual = gardenMap.ConnectionsFor(new(0, 3));
-      Assert.Equal((new Coordinate(0, 4), null), actual);
-
-      GardenMap simpleMap = new([
-        ['.','.','.','.','.'],
-        ['.','S','-','7','.'],
-        ['.','|','.','|','.'],
-        ['.','L','-','J','.'],
-        ['.','.','.','.','.']
-      ]);
-
-      actual = simpleMap.ConnectionsFor(new(1, 2));
+      var actual = simpleMap.ConnectionsFor(new(1, 2));
       Assert.Equal((new Coordinate(1, 3), null), actual);
 
       actual = simpleMap.ConnectionsFor(new(2, 1));
       Assert.Equal((null, new Coordinate(3, 1)), actual);
+
+      actual = complexMap.ConnectionsFor(new(1, 2));
+      Assert.Equal((new Coordinate(1, 1), null), actual);
+
+      actual = complexMap.ConnectionsFor(new(0, 3));
+      Assert.Equal((new Coordinate(0, 4), null), actual);
     }
 
   }
@@ -145,14 +134,7 @@ public class GardenMapTest
   [Fact]
   public void Equality()
   {
-    var first = new GardenMap([
-      ['.','.','.','.','.'],
-      ['.','S','-','7','.'],
-      ['.','|','.','|','.'],
-      ['.','L','-','J','.'],
-      ['.','.','.','.','.']
-    ]);
-
+    var first = simpleMap;
     var second = new GardenMap([
       ['.','.','.','.','.'],
       ['.','S','-','7','.'],
@@ -160,11 +142,7 @@ public class GardenMapTest
       ['.','L','-','J','.'],
       ['.','.','.','.','.']
     ]);
-
-    var third = new GardenMap([
-      ['.','.'],
-      ['.','S'],
-    ]);
+    var third = complexMap;
 
     Assert.Equal(first, first);
     Assert.Same(first, first);
