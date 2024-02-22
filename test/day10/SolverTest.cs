@@ -26,26 +26,26 @@ public class SolverTest
   public class FirstPartTest : SolverTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheSimpleProvidedExample()
     {
       var actual = solver.FarthestPointFromStartDistance(SIMPLE_PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(4, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheComplexProvidedExample()
     {
       var actual = solver.FarthestPointFromStartDistance(COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(8, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day10/input.txt");
       var actual = solver.FarthestPointFromStartDistance(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(6690, actual);
     }
 
   }
