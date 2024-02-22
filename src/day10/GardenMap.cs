@@ -67,7 +67,7 @@ public class GardenMap
     }
 
     if (leftConnection == null && rightConnection == null)
-      throw new SystemException($"Cannot find any connection for coordinate {c}");
+      throw new SystemException($"Cannot find any connection for {c}");
 
     return (leftConnection, rightConnection);
   }
