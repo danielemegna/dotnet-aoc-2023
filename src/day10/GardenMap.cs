@@ -36,22 +36,34 @@ public class GardenMap
     Coordinate? leftConnection = null;
     Coordinate? rightConnection = null;
 
-    if (arr(['-', '7', 'J']).Contains(MapValueAt(eastCoordinate)))
-      rightConnection = eastCoordinate;
-
-    if (arr(['-', 'L', 'F']).Contains(MapValueAt(westCoordinate)))
-      leftConnection = westCoordinate;
-
-    if (arr(['|', '7', 'F']).Contains(MapValueAt(nordCoordinate)))
+    if (arr(['S', '-', 'F', 'L']).Contains(MapValueAt(c)))
     {
-      if (leftConnection == null) leftConnection = nordCoordinate;
-      else rightConnection = nordCoordinate;
+      if (arr(['-', '7', 'J']).Contains(MapValueAt(eastCoordinate)))
+        rightConnection = eastCoordinate;
     }
 
-    if (arr(['|', 'L', 'J']).Contains(MapValueAt(southCoordinate)))
+    if (arr(['S', '-', 'J', '7']).Contains(MapValueAt(c)))
     {
-      if (leftConnection == null) leftConnection = southCoordinate;
-      else rightConnection = southCoordinate;
+      if (arr(['-', 'L', 'F']).Contains(MapValueAt(westCoordinate)))
+        leftConnection = westCoordinate;
+    }
+
+    if (arr(['S', '|', 'J', 'L']).Contains(MapValueAt(c)))
+    {
+      if (arr(['|', '7', 'F']).Contains(MapValueAt(nordCoordinate)))
+      {
+        if (leftConnection == null) leftConnection = nordCoordinate;
+        else rightConnection = nordCoordinate;
+      }
+    }
+
+    if (arr(['S', '|', 'F', '7']).Contains(MapValueAt(c)))
+    {
+      if (arr(['|', 'L', 'J']).Contains(MapValueAt(southCoordinate)))
+      {
+        if (leftConnection == null) leftConnection = southCoordinate;
+        else rightConnection = southCoordinate;
+      }
     }
 
     if (leftConnection == null && rightConnection == null)

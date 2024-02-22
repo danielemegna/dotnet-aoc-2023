@@ -129,6 +129,21 @@ public class GardenMapTest
       Assert.Equal((new Coordinate(0, 4), null), actual);
     }
 
+    [Fact]
+    public void GetOnlyCompatibleConnections()
+    {
+      var map = new GardenMap([
+        ['.','|','.'],
+        ['.','F','7'],
+        ['.','L','J'],
+      ]);
+
+      var actual = map.ConnectionsFor(new(1,1));
+
+      Coordinate leftExpected = new(1, 2);
+      Coordinate rightExpected = new(2, 1);
+      Assert.Equal((leftExpected, rightExpected), actual);
+    }
   }
 
   [Fact]
