@@ -9,16 +9,34 @@ public class HistorySequence(params int[] numbers)
     return GuessNextWith(numbers.ToList());
   }
 
+  public int GuessPrevious()
+  {
+    return GuessPreviousWith(numbers.ToList());
+  }
+
   private int GuessNextWith(List<int> sequence)
   {
     if (sequence.First() == sequence.Last())
       return sequence[0];
 
     List<int> list = [];
-    for (int i = 0; i < sequence.Count-1; i++)
+    for (int i = 0; i < sequence.Count - 1; i++)
     {
-      list.Add(sequence[i+1] - sequence[i]);
+      list.Add(sequence[i + 1] - sequence[i]);
     }
     return sequence.Last() + GuessNextWith(list);
+  }
+
+  private int GuessPreviousWith(List<int> sequence)
+  {
+    if (sequence.First() == sequence.Last())
+      return sequence[0];
+
+    List<int> list = [];
+    for (int i = 0; i < sequence.Count - 1; i++)
+    {
+      list.Add(sequence[i + 1] - sequence[i]);
+    }
+    return sequence.First() - GuessPreviousWith(list);
   }
 }
