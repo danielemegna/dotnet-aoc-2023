@@ -10,7 +10,16 @@ public class Solver
       .Sum();
   }
 
-  private HistorySequence HistorySequenceFrom(string sequenceString) {
+  public int SumOfPreviousHistoryValues(string[] inputLines)
+  {
+    return inputLines
+      .Select(HistorySequenceFrom)
+      .Select(s => s.GuessPrevious())
+      .Sum();
+  }
+
+  private HistorySequence HistorySequenceFrom(string sequenceString)
+  {
     var numbers = sequenceString.Split(" ").Select(int.Parse);
     return new HistorySequence(numbers.ToArray());
   }

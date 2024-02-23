@@ -32,4 +32,24 @@ public class SolverTest
 
   }
 
+  public class SecondPartTest : SolverTest
+  {
+
+    [Fact]
+    public void SolveTheFirstProvidedExample()
+    {
+      var actual = solver.SumOfPreviousHistoryValues(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(-3 + 0 + 5, actual);
+    }
+
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day9/input.txt");
+      var actual = solver.SumOfPreviousHistoryValues(input);
+      Assert.Equal(1097, actual);
+    }
+
+  }
+
 }
