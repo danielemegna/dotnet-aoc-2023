@@ -1,22 +1,24 @@
 namespace aoc2023.day9;
 
-internal class HistorySequence
+public class HistorySequence(params int[] numbers)
 {
-  private readonly int[] numbers;
-
-  public HistorySequence(params int[] numbers)
-  {
-    this.numbers = numbers;
-  }
+  private readonly int[] numbers = numbers;
 
   public int GuessNext()
   {
-    List<int> list = new List<int>();
-    for (int i = 0; i < numbers.Length-1; i++)
-    {
-      list.Add(numbers[i] - numbers[i+1]);
-    }
+    return GuessNextWith(numbers.ToList());
+  }
 
-    return numbers[0];
+  private int GuessNextWith(List<int> sequence)
+  {
+    if (sequence.First() == sequence.Last())
+      return sequence[0];
+
+    List<int> list = new List<int>();
+    for (int i = 0; i < sequence.Count-1; i++)
+    {
+      list.Add(sequence[i+1] - sequence[i]);
+    }
+    return sequence.Last() + GuessNextWith(list);
   }
 }
