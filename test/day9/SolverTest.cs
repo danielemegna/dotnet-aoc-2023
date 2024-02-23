@@ -22,12 +22,12 @@ public class SolverTest
       Assert.Equal(18 + 28 + 68, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day9/input.txt");
       var actual = solver.SumOfNextHistoryValues(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(2008960228, actual);
     }
 
   }
