@@ -14,7 +14,7 @@ public class HistorySequence(params int[] numbers)
     if (sequence.First() == sequence.Last())
       return sequence[0];
 
-    List<int> list = new List<int>();
+    List<int> list = [];
     for (int i = 0; i < sequence.Count-1; i++)
     {
       list.Add(sequence[i+1] - sequence[i]);
