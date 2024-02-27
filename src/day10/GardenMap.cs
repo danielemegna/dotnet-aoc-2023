@@ -26,7 +26,28 @@ public class GardenMap
     return new Coordinate(startingX, startingY);
   }
 
-  public (Coordinate?, Coordinate?) ConnectionsFor(Coordinate c)
+  public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
+  {
+    var coordinateValue = MapValueAt(c);
+    var eastCoordinate = new Coordinate(c.X + 1, c.Y);
+    var westCoordinate = new Coordinate(c.X - 1, c.Y);
+    var southCoordinate = new Coordinate(c.X, c.Y + 1);
+    var nordCoordinate = new Coordinate(c.X, c.Y - 1);
+
+    return coordinateValue switch
+    {
+      '-' => (westCoordinate, eastCoordinate),
+      'J' => (westCoordinate, nordCoordinate),
+      '7' => (westCoordinate, southCoordinate),
+      'L' => (nordCoordinate, eastCoordinate),
+      'F' => (southCoordinate, eastCoordinate),
+      '|' => (nordCoordinate, southCoordinate),
+      'S' => ConnectionsForStartingPoint(c),
+       _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
+    };
+  }
+
+  private (Coordinate, Coordinate) ConnectionsForStartingPoint(Coordinate c)
   {
     var eastCoordinate = new Coordinate(c.X + 1, c.Y);
     var westCoordinate = new Coordinate(c.X - 1, c.Y);
@@ -36,38 +57,26 @@ public class GardenMap
     Coordinate? leftConnection = null;
     Coordinate? rightConnection = null;
 
-    if (arr(['S', '-', 'F', 'L']).Contains(MapValueAt(c)))
+    if (arr(['-', '7', 'J']).Contains(MapValueAt(eastCoordinate)))
+      rightConnection = eastCoordinate;
+
+    if (arr(['-', 'L', 'F']).Contains(MapValueAt(westCoordinate)))
+      leftConnection = westCoordinate;
+
+    if (arr(['|', '7', 'F']).Contains(MapValueAt(nordCoordinate)))
     {
-      if (arr(['-', '7', 'J']).Contains(MapValueAt(eastCoordinate)))
-        rightConnection = eastCoordinate;
+      if (leftConnection == null) leftConnection = nordCoordinate;
+      else rightConnection = nordCoordinate;
     }
 
-    if (arr(['S', '-', 'J', '7']).Contains(MapValueAt(c)))
+    if (arr(['|', 'L', 'J']).Contains(MapValueAt(southCoordinate)))
     {
-      if (arr(['-', 'L', 'F']).Contains(MapValueAt(westCoordinate)))
-        leftConnection = westCoordinate;
+      if (leftConnection == null) leftConnection = southCoordinate;
+      else rightConnection = southCoordinate;
     }
 
-    if (arr(['S', '|', 'J', 'L']).Contains(MapValueAt(c)))
-    {
-      if (arr(['|', '7', 'F']).Contains(MapValueAt(nordCoordinate)))
-      {
-        if (leftConnection == null) leftConnection = nordCoordinate;
-        else rightConnection = nordCoordinate;
-      }
-    }
-
-    if (arr(['S', '|', 'F', '7']).Contains(MapValueAt(c)))
-    {
-      if (arr(['|', 'L', 'J']).Contains(MapValueAt(southCoordinate)))
-      {
-        if (leftConnection == null) leftConnection = southCoordinate;
-        else rightConnection = southCoordinate;
-      }
-    }
-
-    if (leftConnection == null && rightConnection == null)
-      throw new SystemException($"Cannot find any connection for {c}");
+    if (leftConnection == null || rightConnection == null)
+      throw new SystemException($"Cannot find connection for starting point {c}");
 
     return (leftConnection, rightConnection);
   }

@@ -114,19 +114,19 @@ public class GardenMapTest
     }
 
     [Fact]
-    public void ConnectionsToStartingPointAreNull()
+    public void ToStartingPoint()
     {
       var actual = simpleMap.ConnectionsFor(new(1, 2));
-      Assert.Equal((new Coordinate(1, 3), null), actual);
+      Assert.Equal((new Coordinate(1, 1), new Coordinate(1, 3)), actual);
 
       actual = simpleMap.ConnectionsFor(new(2, 1));
-      Assert.Equal((null, new Coordinate(3, 1)), actual);
+      Assert.Equal((new Coordinate(1, 1), new Coordinate(3, 1)), actual);
 
       actual = complexMap.ConnectionsFor(new(1, 2));
-      Assert.Equal((new Coordinate(1, 1), null), actual);
+      Assert.Equal((new Coordinate(0, 2), new Coordinate(1, 1)), actual);
 
       actual = complexMap.ConnectionsFor(new(0, 3));
-      Assert.Equal((new Coordinate(0, 4), null), actual);
+      Assert.Equal((new Coordinate(0, 2), new Coordinate(0, 4)), actual);
     }
 
     [Fact]
@@ -138,7 +138,7 @@ public class GardenMapTest
         ['.','L','J'],
       ]);
 
-      var actual = map.ConnectionsFor(new(1,1));
+      var actual = map.ConnectionsFor(new(1, 1));
 
       Coordinate leftExpected = new(1, 2);
       Coordinate rightExpected = new(2, 1);

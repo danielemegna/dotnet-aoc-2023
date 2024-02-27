@@ -7,21 +7,22 @@ class Solver
   public int FarthestPointFromStartDistance(string[] inputLines)
   {
     var gardenMap = GardenMap.From(inputLines);
-    var start = gardenMap.StartingPosition();
     int stepsCounter = 0;
 
+    var start = gardenMap.StartingPosition();
     var (left, right) = gardenMap.ConnectionsFor(start);
-    visitedCoordinates.Add(left!);
-    visitedCoordinates.Add(right!);
+    visitedCoordinates.Add(start);
+    visitedCoordinates.Add(left);
+    visitedCoordinates.Add(right);
     stepsCounter++;
 
     while (left != right)
     {
-      left = NotVisitedConnectionFor(left!, gardenMap);
-      right = NotVisitedConnectionFor(right!, gardenMap);
+      left = NotVisitedConnectionFor(left, gardenMap);
+      right = NotVisitedConnectionFor(right, gardenMap);
 
-      visitedCoordinates.Add(left!);
-      visitedCoordinates.Add(right!);
+      visitedCoordinates.Add(left);
+      visitedCoordinates.Add(right);
       stepsCounter++;
     }
 
@@ -32,13 +33,10 @@ class Solver
   {
     var (left, right) = gardenMap.ConnectionsFor(coordinate);
 
-    if(left == null) return right!;
-    if(right == null) return left!;
+    if (visitedCoordinates.Contains(left))
+      return right;
 
-    if (visitedCoordinates.Contains(left!))
-      return right!;
-
-    return left!;
+    return left;
   }
 
 }
