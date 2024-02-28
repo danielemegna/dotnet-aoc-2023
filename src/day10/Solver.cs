@@ -9,7 +9,7 @@ class Solver
     var gardenMap = GardenMap.From(inputLines);
     int stepsCounter = 0;
 
-    var start = gardenMap.StartingPosition();
+    var start = gardenMap.StartingPosition;
     var (left, right) = gardenMap.ConnectionsFor(start);
     visitedCoordinates.Add(start);
     visitedCoordinates.Add(left);

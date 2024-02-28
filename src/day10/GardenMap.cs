@@ -5,7 +5,13 @@ using System.Collections;
 public class GardenMap
 {
   private readonly char[][] map;
-  internal GardenMap(char[][] map) => this.map = map;
+  public Coordinate StartingPosition { get; }
+
+  internal GardenMap(char[][] map)
+  {
+    this.map = map;
+    this.StartingPosition = FindStartingPositionIn(map);
+  }
 
   public static GardenMap From(string[] inputLines)
   {
@@ -13,7 +19,7 @@ public class GardenMap
     return new GardenMap(matrixOfChars);
   }
 
-  public Coordinate StartingPosition()
+  private static Coordinate FindStartingPositionIn(char[][] map)
   {
     var startingY = map
       .Select((line, lineIndex) => (line, lineIndex))
@@ -43,7 +49,7 @@ public class GardenMap
       'F' => (southCoordinate, eastCoordinate),
       '|' => (nordCoordinate, southCoordinate),
       'S' => ConnectionsForStartingPoint(c),
-       _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
+      _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
     };
   }
 

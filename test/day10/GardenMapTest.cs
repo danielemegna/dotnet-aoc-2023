@@ -34,10 +34,10 @@ public class GardenMapTest
   [Fact]
   public void GetStartingPositionCoordinate()
   {
-    var actual = simpleMap.StartingPosition();
+    var actual = simpleMap.StartingPosition;
     Assert.Equal(new Coordinate(1, 1), actual);
 
-    actual = complexMap.StartingPosition();
+    actual = complexMap.StartingPosition;
     Assert.Equal(new Coordinate(0, 2), actual);
   }
 
@@ -135,7 +135,7 @@ public class GardenMapTest
       var map = new GardenMap([
         ['.','|','.'],
         ['.','F','7'],
-        ['.','L','J'],
+        ['.','L','S'],
       ]);
 
       var actual = map.ConnectionsFor(new(1, 1));
