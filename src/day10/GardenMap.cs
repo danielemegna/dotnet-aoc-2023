@@ -6,11 +6,13 @@ public class GardenMap
 {
   private readonly char[][] map;
   public Coordinate StartingPosition { get; }
+  public int LoopLength { get; }
 
   internal GardenMap(char[][] map)
   {
     this.map = map;
-    this.StartingPosition = FindStartingPositionIn(map);
+    this.StartingPosition = FindStartingPosition();
+    this.LoopLength = CalculateLoopLength();
   }
 
   public static GardenMap From(string[] inputLines)
@@ -19,17 +21,52 @@ public class GardenMap
     return new GardenMap(matrixOfChars);
   }
 
-  private static Coordinate FindStartingPositionIn(char[][] map)
+  private Coordinate FindStartingPosition()
   {
-    var startingY = map
+    var startingY = this.map
       .Select((line, lineIndex) => (line, lineIndex))
       .Where(tuple => tuple.line.Contains('S'))
       .First()
       .lineIndex;
 
-    var startingX = Array.IndexOf(map[startingY], 'S');
+    var startingX = Array.IndexOf(this.map[startingY], 'S');
 
     return new Coordinate(startingX, startingY);
+  }
+
+  private int CalculateLoopLength()
+  {
+    int loopLength = 0;
+    ISet<Coordinate> visitedCoordinates = new HashSet<Coordinate>();
+
+    var start = this.StartingPosition;
+    var (left, right) = this.ConnectionsFor(start);
+    visitedCoordinates.Add(start);
+    visitedCoordinates.Add(left);
+    visitedCoordinates.Add(right);
+    loopLength += 2;
+
+    while (left != right)
+    {
+      left = NotVisitedConnectionFor(left, visitedCoordinates);
+      right = NotVisitedConnectionFor(right, visitedCoordinates);
+
+      visitedCoordinates.Add(left);
+      visitedCoordinates.Add(right);
+      loopLength += 2;
+    }
+
+    return loopLength;
+  }
+
+  private Coordinate NotVisitedConnectionFor(Coordinate coordinate, ISet<Coordinate> visitedCoordinates)
+  {
+    var (left, right) = this.ConnectionsFor(coordinate);
+
+    if (visitedCoordinates.Contains(left))
+      return right;
+
+    return left;
   }
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)

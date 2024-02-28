@@ -147,6 +147,12 @@ public class GardenMapTest
   }
 
   [Fact]
+  public void GetLoopLength() {
+    Assert.Equal(8, simpleMap.LoopLength);
+    Assert.Equal(16, complexMap.LoopLength);
+  }
+
+  [Fact]
   public void Equality()
   {
     var first = simpleMap;
