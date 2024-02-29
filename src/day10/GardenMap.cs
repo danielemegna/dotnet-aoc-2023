@@ -37,36 +37,19 @@ public class GardenMap
   private int CalculateLoopLength()
   {
     int loopLength = 0;
-    ISet<Coordinate> visitedCoordinates = new HashSet<Coordinate>();
+    Coordinate? previousPosition = null;
+    Coordinate currentPosition = this.StartingPosition;
 
-    var start = this.StartingPosition;
-    var (left, right) = this.ConnectionsFor(start);
-    visitedCoordinates.Add(start);
-    visitedCoordinates.Add(left);
-    visitedCoordinates.Add(right);
-    loopLength += 2;
-
-    while (left != right)
+    do
     {
-      left = NotVisitedConnectionFor(left, visitedCoordinates);
-      right = NotVisitedConnectionFor(right, visitedCoordinates);
-
-      visitedCoordinates.Add(left);
-      visitedCoordinates.Add(right);
-      loopLength += 2;
-    }
+      var (left, right) = this.ConnectionsFor(currentPosition);
+      var newPosition = left == previousPosition ? right : left;
+      previousPosition = currentPosition;
+      currentPosition = newPosition;
+      loopLength++;
+    } while (currentPosition != this.StartingPosition);
 
     return loopLength;
-  }
-
-  private Coordinate NotVisitedConnectionFor(Coordinate coordinate, ISet<Coordinate> visitedCoordinates)
-  {
-    var (left, right) = this.ConnectionsFor(coordinate);
-
-    if (visitedCoordinates.Contains(left))
-      return right;
-
-    return left;
   }
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)

@@ -147,7 +147,8 @@ public class GardenMapTest
   }
 
   [Fact]
-  public void GetLoopLength() {
+  public void GetLoopLength()
+  {
     Assert.Equal(8, simpleMap.LoopLength);
     Assert.Equal(16, complexMap.LoopLength);
   }
