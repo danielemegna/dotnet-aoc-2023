@@ -5,8 +5,10 @@ using System.Collections;
 public class GardenMap
 {
   private readonly char[][] map;
+
   public Coordinate StartingPosition { get; }
   public int LoopLength { get; }
+  public (Coordinate, Coordinate, Coordinate, Coordinate) LoopBoundaries { get; }
 
   internal GardenMap(char[][] map)
   {
