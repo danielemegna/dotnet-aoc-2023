@@ -153,14 +153,17 @@ public class GardenMapTest
     Assert.Equal(16, complexMap.LoopLength);
   }
 
-  [Fact(Skip = "WIP")]
+  [Fact]
   public void GetLoopBoundaries()
   {
-    (Coordinate, Coordinate, Coordinate, Coordinate) expected = (
-      new Coordinate(1, 1), new Coordinate(3, 1),
-      new Coordinate(1, 3), new Coordinate(3, 3)
+    Assert.Equal(
+      (new Coordinate(1, 1), new Coordinate(3, 3)),
+      simpleMap.LoopBoundaries
     );
-    Assert.Equal(expected, simpleMap.LoopBoundaries);
+    Assert.Equal(
+      (new Coordinate(0, 0), new Coordinate(4, 4)),
+      complexMap.LoopBoundaries
+    );
   }
 
   [Fact]

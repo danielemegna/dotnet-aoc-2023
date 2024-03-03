@@ -8,13 +8,16 @@ public class GardenMap
 
   public Coordinate StartingPosition { get; }
   public int LoopLength { get; }
-  public (Coordinate, Coordinate, Coordinate, Coordinate) LoopBoundaries { get; }
+  public (Coordinate, Coordinate) LoopBoundaries { get; }
 
   internal GardenMap(char[][] map)
   {
     this.map = map;
-    this.StartingPosition = FindStartingPosition();
-    this.LoopLength = CalculateLoopLength();
+    (
+      this.StartingPosition,
+      this.LoopLength,
+      this.LoopBoundaries
+    ) = LoopDetailsFromMap();
   }
 
   public static GardenMap From(string[] inputLines)
@@ -23,7 +26,7 @@ public class GardenMap
     return new GardenMap(matrixOfChars);
   }
 
-  private Coordinate FindStartingPosition()
+  private Coordinate FindStartingPosition() // TODO put at the bottom or make static
   {
     var startingY = this.map
       .Select((line, lineIndex) => (line, lineIndex))
@@ -36,11 +39,15 @@ public class GardenMap
     return new Coordinate(startingX, startingY);
   }
 
-  private int CalculateLoopLength()
+  private (Coordinate, int, (Coordinate, Coordinate)) LoopDetailsFromMap() // TODO put at the bottom or make static
   {
+    Coordinate startCoordinate = FindStartingPosition();
+
     int loopLength = 0;
+    var (minX, minY) = startCoordinate;
+    var (maxX, maxY) = startCoordinate;
     Coordinate? previousPosition = null;
-    Coordinate currentPosition = this.StartingPosition;
+    Coordinate currentPosition = startCoordinate;
 
     do
     {
@@ -48,10 +55,17 @@ public class GardenMap
       var newPosition = left == previousPosition ? right : left;
       previousPosition = currentPosition;
       currentPosition = newPosition;
-      loopLength++;
-    } while (currentPosition != this.StartingPosition);
 
-    return loopLength;
+      if (currentPosition.X < minX) minX = currentPosition.X;
+      if (currentPosition.X > maxX) maxX = currentPosition.X;
+      if (currentPosition.Y < minY) minY = currentPosition.Y;
+      if (currentPosition.Y > maxY) maxY = currentPosition.Y;
+
+      loopLength++;
+    } while (currentPosition != startCoordinate);
+
+    var loopBoundaries = (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
+    return (startCoordinate, loopLength, loopBoundaries);
   }
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
