@@ -32,12 +32,12 @@ public class GardenMapTest
   }
 
   [Fact]
-  public void GetStartingPositionCoordinate()
+  public void GetLoopStartCoordinate()
   {
-    var actual = simpleMap.StartingPosition;
+    var actual = simpleMap.LoopStartCoordinate;
     Assert.Equal(new Coordinate(1, 1), actual);
 
-    actual = complexMap.StartingPosition;
+    actual = complexMap.LoopStartCoordinate;
     Assert.Equal(new Coordinate(0, 2), actual);
   }
 

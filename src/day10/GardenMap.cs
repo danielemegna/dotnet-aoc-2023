@@ -6,7 +6,7 @@ public class GardenMap
 {
   private readonly char[][] map;
 
-  public Coordinate StartingPosition { get; }
+  public Coordinate LoopStartCoordinate { get; }
   public int LoopLength { get; }
   public (Coordinate, Coordinate) LoopBoundaries { get; }
 
@@ -14,7 +14,7 @@ public class GardenMap
   {
     this.map = map;
     (
-      this.StartingPosition,
+      this.LoopStartCoordinate,
       this.LoopLength,
       this.LoopBoundaries
     ) = LoopDetailsFromMap();
@@ -26,7 +26,7 @@ public class GardenMap
     return new GardenMap(matrixOfChars);
   }
 
-  private Coordinate FindStartingPosition() // TODO put at the bottom or make static
+  private Coordinate FindLoopStartCoordinate() // TODO put at the bottom or make static
   {
     var startingY = this.map
       .Select((line, lineIndex) => (line, lineIndex))
@@ -41,7 +41,7 @@ public class GardenMap
 
   private (Coordinate, int, (Coordinate, Coordinate)) LoopDetailsFromMap() // TODO put at the bottom or make static
   {
-    Coordinate startCoordinate = FindStartingPosition();
+    Coordinate startCoordinate = FindLoopStartCoordinate();
 
     int loopLength = 0;
     var (minX, minY) = startCoordinate;
@@ -84,12 +84,12 @@ public class GardenMap
       'L' => (nordCoordinate, eastCoordinate),
       'F' => (southCoordinate, eastCoordinate),
       '|' => (nordCoordinate, southCoordinate),
-      'S' => ConnectionsForStartingPoint(c),
+      'S' => ConnectionsForStartCoordinate(c),
       _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
     };
   }
 
-  private (Coordinate, Coordinate) ConnectionsForStartingPoint(Coordinate c)
+  private (Coordinate, Coordinate) ConnectionsForStartCoordinate(Coordinate c)
   {
     var eastCoordinate = new Coordinate(c.X + 1, c.Y);
     var westCoordinate = new Coordinate(c.X - 1, c.Y);
