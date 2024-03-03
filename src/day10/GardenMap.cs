@@ -39,17 +39,17 @@ public class GardenMap
       'L' => (nordCoordinate, eastCoordinate),
       'F' => (southCoordinate, eastCoordinate),
       '|' => (nordCoordinate, southCoordinate),
-      'S' => ConnectionsForStartCoordinate(c),
+      'S' => ConnectionsForLoopStart(),
       _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
     };
   }
 
-  private (Coordinate, Coordinate) ConnectionsForStartCoordinate(Coordinate c)
+  private (Coordinate, Coordinate) ConnectionsForLoopStart()
   {
-    var eastCoordinate = new Coordinate(c.X + 1, c.Y);
-    var westCoordinate = new Coordinate(c.X - 1, c.Y);
-    var southCoordinate = new Coordinate(c.X, c.Y + 1);
-    var nordCoordinate = new Coordinate(c.X, c.Y - 1);
+    var eastCoordinate = new Coordinate(this.LoopStartCoordinate.X + 1, this.LoopStartCoordinate.Y);
+    var westCoordinate = new Coordinate(this.LoopStartCoordinate.X - 1, this.LoopStartCoordinate.Y);
+    var southCoordinate = new Coordinate(this.LoopStartCoordinate.X, this.LoopStartCoordinate.Y + 1);
+    var nordCoordinate = new Coordinate(this.LoopStartCoordinate.X, this.LoopStartCoordinate.Y - 1);
 
     Coordinate? leftConnection = null;
     Coordinate? rightConnection = null;
@@ -73,7 +73,7 @@ public class GardenMap
     }
 
     if (leftConnection == null || rightConnection == null)
-      throw new SystemException($"Cannot find connection for starting point {c}");
+      throw new SystemException($"Cannot find connection for starting point {this.LoopStartCoordinate}");
 
     return (leftConnection, rightConnection);
   }
