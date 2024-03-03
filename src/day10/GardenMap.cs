@@ -25,6 +25,9 @@ public class GardenMap
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
+    if(c == this.LoopStartCoordinate)
+      return ConnectionsForLoopStart();
+
     var coordinateValue = MapValueAt(c);
     var eastCoordinate = new Coordinate(c.X + 1, c.Y);
     var westCoordinate = new Coordinate(c.X - 1, c.Y);
@@ -39,7 +42,6 @@ public class GardenMap
       'L' => (nordCoordinate, eastCoordinate),
       'F' => (southCoordinate, eastCoordinate),
       '|' => (nordCoordinate, southCoordinate),
-      'S' => ConnectionsForLoopStart(),
       _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
     };
   }
