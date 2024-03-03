@@ -10,62 +10,17 @@ public class GardenMap
   public int LoopLength { get; }
   public (Coordinate, Coordinate) LoopBoundaries { get; }
 
-  internal GardenMap(char[][] map)
-  {
-    this.map = map;
-    (
-      this.LoopStartCoordinate,
-      this.LoopLength,
-      this.LoopBoundaries
-    ) = LoopDetailsFromMap();
-  }
-
   public static GardenMap From(string[] inputLines)
   {
     char[][] matrixOfChars = inputLines.Select(line => line.ToCharArray()).ToArray();
     return new GardenMap(matrixOfChars);
   }
 
-  private Coordinate FindLoopStartCoordinate() // TODO put at the bottom or make static
+  internal GardenMap(char[][] map)
   {
-    var startingY = this.map
-      .Select((line, lineIndex) => (line, lineIndex))
-      .Where(tuple => tuple.line.Contains('S'))
-      .First()
-      .lineIndex;
-
-    var startingX = Array.IndexOf(this.map[startingY], 'S');
-
-    return new Coordinate(startingX, startingY);
-  }
-
-  private (Coordinate, int, (Coordinate, Coordinate)) LoopDetailsFromMap() // TODO put at the bottom or make static
-  {
-    Coordinate startCoordinate = FindLoopStartCoordinate();
-
-    int loopLength = 0;
-    var (minX, minY) = startCoordinate;
-    var (maxX, maxY) = startCoordinate;
-    Coordinate? previousPosition = null;
-    Coordinate currentPosition = startCoordinate;
-
-    do
-    {
-      var (left, right) = this.ConnectionsFor(currentPosition);
-      var newPosition = left == previousPosition ? right : left;
-      previousPosition = currentPosition;
-      currentPosition = newPosition;
-
-      if (currentPosition.X < minX) minX = currentPosition.X;
-      if (currentPosition.X > maxX) maxX = currentPosition.X;
-      if (currentPosition.Y < minY) minY = currentPosition.Y;
-      if (currentPosition.Y > maxY) maxY = currentPosition.Y;
-
-      loopLength++;
-    } while (currentPosition != startCoordinate);
-
-    var loopBoundaries = (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
-    return (startCoordinate, loopLength, loopBoundaries);
+    this.map = map;
+    this.LoopStartCoordinate = FindLoopStartCoordinate();
+    (this.LoopLength, this.LoopBoundaries) = LoopLengthAndBoundaries();
   }
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
@@ -121,6 +76,46 @@ public class GardenMap
       throw new SystemException($"Cannot find connection for starting point {c}");
 
     return (leftConnection, rightConnection);
+  }
+
+  private Coordinate FindLoopStartCoordinate()
+  {
+    var startingY = this.map
+      .Select((line, lineIndex) => (line, lineIndex))
+      .Where(tuple => tuple.line.Contains('S'))
+      .First()
+      .lineIndex;
+
+    var startingX = Array.IndexOf(this.map[startingY], 'S');
+
+    return new Coordinate(startingX, startingY);
+  }
+
+  private (int, (Coordinate, Coordinate)) LoopLengthAndBoundaries()
+  {
+    int loopLength = 0;
+    var (minX, minY) = this.LoopStartCoordinate;
+    var (maxX, maxY) = this.LoopStartCoordinate;
+
+    Coordinate? previousPosition = null;
+    Coordinate currentPosition = this.LoopStartCoordinate;
+    do
+    {
+      var (left, right) = this.ConnectionsFor(currentPosition);
+      var newPosition = left == previousPosition ? right : left;
+      previousPosition = currentPosition;
+      currentPosition = newPosition;
+
+      if (currentPosition.X < minX) minX = currentPosition.X;
+      if (currentPosition.X > maxX) maxX = currentPosition.X;
+      if (currentPosition.Y < minY) minY = currentPosition.Y;
+      if (currentPosition.Y > maxY) maxY = currentPosition.Y;
+
+      loopLength++;
+    } while (currentPosition != this.LoopStartCoordinate);
+
+    var loopBoundaries = (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
+    return (loopLength, loopBoundaries);
   }
 
   private char MapValueAt(Coordinate c) =>
