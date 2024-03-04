@@ -5,6 +5,7 @@ using System.Collections;
 public class GardenMap
 {
   private readonly char[][] map;
+  private readonly (Coordinate, Coordinate) loopStartConnections;
 
   public Coordinate LoopStartCoordinate { get; }
   public int LoopLength { get; }
@@ -20,6 +21,7 @@ public class GardenMap
   {
     this.map = map;
     this.LoopStartCoordinate = FindLoopStartCoordinate();
+    this.loopStartConnections = FindConnectionsForLoopStart();
     (this.LoopLength, this.LoopBoundaries) = LoopLengthAndBoundaries();
   }
 
@@ -29,7 +31,7 @@ public class GardenMap
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
     if(c == this.LoopStartCoordinate)
-      return ConnectionsForLoopStart();
+      return this.loopStartConnections;
 
     var coordinateValue = MapValueAt(c);
     var eastCoordinate = new Coordinate(c.X + 1, c.Y);
@@ -49,7 +51,20 @@ public class GardenMap
     };
   }
 
-  private (Coordinate, Coordinate) ConnectionsForLoopStart()
+  private Coordinate FindLoopStartCoordinate()
+  {
+    var startingY = this.map
+      .Select((line, lineIndex) => (line, lineIndex))
+      .Where(tuple => tuple.line.Contains('S'))
+      .First()
+      .lineIndex;
+
+    var startingX = Array.IndexOf(this.map[startingY], 'S');
+
+    return new Coordinate(startingX, startingY);
+  }
+
+  private (Coordinate, Coordinate) FindConnectionsForLoopStart()
   {
     var eastCoordinate = new Coordinate(this.LoopStartCoordinate.X + 1, this.LoopStartCoordinate.Y);
     var westCoordinate = new Coordinate(this.LoopStartCoordinate.X - 1, this.LoopStartCoordinate.Y);
@@ -81,19 +96,6 @@ public class GardenMap
       throw new SystemException($"Cannot find connection for starting point {this.LoopStartCoordinate}");
 
     return (leftConnection, rightConnection);
-  }
-
-  private Coordinate FindLoopStartCoordinate()
-  {
-    var startingY = this.map
-      .Select((line, lineIndex) => (line, lineIndex))
-      .Where(tuple => tuple.line.Contains('S'))
-      .First()
-      .lineIndex;
-
-    var startingX = Array.IndexOf(this.map[startingY], 'S');
-
-    return new Coordinate(startingX, startingY);
   }
 
   private (int, (Coordinate, Coordinate)) LoopLengthAndBoundaries()
