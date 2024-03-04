@@ -32,6 +32,17 @@ public class GardenMapTest
   }
 
   [Fact]
+  public void GetMapValueAtCoordinate()
+  {
+    Assert.Equal('.', complexMap.MapValueAt(new(0, 0)));
+    Assert.Equal('S', complexMap.MapValueAt(new(0, 2)));
+    Assert.Equal('J', complexMap.MapValueAt(new(1, 2)));
+    Assert.Equal('F', complexMap.MapValueAt(new(2, 0)));
+    Assert.Equal('x', complexMap.MapValueAt(new(-1, -1)));
+    Assert.Equal('x', complexMap.MapValueAt(new(99, 99)));
+  }
+
+  [Fact]
   public void GetLoopStartCoordinate()
   {
     var actual = simpleMap.LoopStartCoordinate;

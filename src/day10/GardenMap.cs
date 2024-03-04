@@ -23,6 +23,9 @@ public class GardenMap
     (this.LoopLength, this.LoopBoundaries) = LoopLengthAndBoundaries();
   }
 
+  public char MapValueAt(Coordinate c) =>
+    map.ElementAtOrDefault(c.Y)?.ElementAtOrDefault(c.X) ?? 'x';
+
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
     if(c == this.LoopStartCoordinate)
@@ -119,9 +122,6 @@ public class GardenMap
     var loopBoundaries = (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
     return (loopLength, loopBoundaries);
   }
-
-  private char MapValueAt(Coordinate c) =>
-    map.ElementAtOrDefault(c.Y)?.ElementAtOrDefault(c.X) ?? 'x';
 
   public override bool Equals(object? other)
   {
