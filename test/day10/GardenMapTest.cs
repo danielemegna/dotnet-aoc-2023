@@ -105,7 +105,7 @@ public class GardenMapTest
     }
 
     [Fact]
-    public void SouthAndWestConnectionsAtTheEdgeOfTheMap()
+    public void SouthAndWestAtTheEdgeOfTheMap()
     {
       var actual = complexMap.ConnectionsFor(new(4, 2));
 
@@ -115,17 +115,26 @@ public class GardenMapTest
     }
 
     [Fact]
-    public void SouthAndEastConnectionsAtTheEdgeOfTheMap()
+    public void NordAndSouthAtTheEdgeOfTheMap()
     {
-      var actual = complexMap.ConnectionsFor(new(0, 2));
+      var actual = complexMap.ConnectionsFor(new(0, 3));
 
-      Coordinate leftExpected = new(0, 3);
-      Coordinate rightExpected = new(1, 2);
+      Coordinate leftExpected = new(0, 2);
+      Coordinate rightExpected = new(0, 4);
       Assert.Equal((leftExpected, rightExpected), actual);
     }
 
     [Fact]
-    public void ToStartingPoint()
+    public void StartCoordinateConnections()
+    {
+      var actual = simpleMap.ConnectionsFor(new(1, 1));
+      Assert.Equal((new Coordinate(1, 2), new Coordinate(2, 1)), actual);
+      actual = complexMap.ConnectionsFor(new(0, 2));
+      Assert.Equal((new Coordinate(0, 3), new Coordinate(1, 2)), actual);
+    }
+
+    [Fact]
+    public void NearStartCoordinate()
     {
       var actual = simpleMap.ConnectionsFor(new(1, 2));
       Assert.Equal((new Coordinate(1, 1), new Coordinate(1, 3)), actual);
