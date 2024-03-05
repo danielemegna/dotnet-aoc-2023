@@ -9,9 +9,22 @@ public class GardenMap
   private readonly (Coordinate, Coordinate) loopStartConnections;
   private readonly ISet<Coordinate> loopCoordinates;
 
-  //calculate this two from loopCoordinates
-  public int LoopLength { get; }
-  public (Coordinate, Coordinate) LoopBoundaries { get; }
+  public int LoopLength => this.loopCoordinates.Count;
+  public (Coordinate, Coordinate) LoopBoundaries
+  {
+    get
+    {
+      var allX = this.loopCoordinates.Select(c => c.X);
+      var minX = allX.Min();
+      var maxX = allX.Max();
+
+      var allY = this.loopCoordinates.Select(c => c.Y);
+      var minY = allY.Min();
+      var maxY = allY.Max();
+
+      return (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
+    }
+  }
 
   public static GardenMap From(string[] inputLines)
   {
@@ -24,7 +37,6 @@ public class GardenMap
     this.map = map;
     this.loopStartCoordinate = FindLoopStartCoordinate();
     this.loopStartConnections = FindConnectionsForLoopStart();
-    (this.LoopLength, this.LoopBoundaries) = LoopLengthAndBoundaries();
     this.loopCoordinates = FindLoopCoordinates();
   }
 
@@ -122,33 +134,6 @@ public class GardenMap
     } while (currentPosition != this.loopStartCoordinate);
 
     return result;
-  }
-
-  private (int, (Coordinate, Coordinate)) LoopLengthAndBoundaries()
-  {
-    int loopLength = 0;
-    var (minX, minY) = this.loopStartCoordinate;
-    var (maxX, maxY) = this.loopStartCoordinate;
-
-    Coordinate? previousPosition = null;
-    Coordinate currentPosition = this.loopStartCoordinate;
-    do
-    {
-      var (left, right) = this.ConnectionsFor(currentPosition);
-      var newPosition = left == previousPosition ? right : left;
-      previousPosition = currentPosition;
-      currentPosition = newPosition;
-
-      if (currentPosition.X < minX) minX = currentPosition.X;
-      if (currentPosition.X > maxX) maxX = currentPosition.X;
-      if (currentPosition.Y < minY) minY = currentPosition.Y;
-      if (currentPosition.Y > maxY) maxY = currentPosition.Y;
-
-      loopLength++;
-    } while (currentPosition != this.loopStartCoordinate);
-
-    var loopBoundaries = (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
-    return (loopLength, loopBoundaries);
   }
 
   public override bool Equals(object? other)
