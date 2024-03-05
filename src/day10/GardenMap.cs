@@ -118,18 +118,18 @@ public class GardenMap
 
   private ISet<Coordinate> FindLoopCoordinates()
   {
-    var result = new HashSet<Coordinate>();
-    Coordinate? previousPosition = null;
-    Coordinate currentPosition = this.loopStartCoordinate;
+    var (left, right) = this.loopStartConnections;
+    var result = new HashSet<Coordinate>() { this.loopStartCoordinate, left, right };
+
     do
     {
-      result.Add(currentPosition);
-
-      var (left, right) = this.ConnectionsFor(currentPosition);
-      var newPosition = left == previousPosition ? right : left;
-      previousPosition = currentPosition;
-      currentPosition = newPosition;
-    } while (currentPosition != this.loopStartCoordinate);
+      var (lLeft, lRight) = this.ConnectionsFor(left);
+      var (rLeft, rRight) = this.ConnectionsFor(right);
+      left = result.Contains(lLeft) ? lRight : lLeft;
+      right = result.Contains(rLeft) ? rRight : rLeft;
+      result.Add(left);
+      result.Add(right);
+    } while (left != right);
 
     return result;
   }
