@@ -156,6 +156,46 @@ public class GardenMapTest
     }
   }
 
+  public class CheckCoordinateIsPartOfTheLoop()
+  {
+
+    [Fact]
+    public void OutsideTheLoopIsNotPartOfTheLoop()
+    {
+      Assert.False(simpleMap.IsPartOfTheLoop(new(0, 0)));
+      Assert.False(simpleMap.IsPartOfTheLoop(new(1, 0)));
+      Assert.False(simpleMap.IsPartOfTheLoop(new(2, 0)));
+      Assert.False(simpleMap.IsPartOfTheLoop(new(4, 2)));
+
+      Assert.False(complexMap.IsPartOfTheLoop(new(0, 0)));
+      Assert.False(complexMap.IsPartOfTheLoop(new(2, 4)));
+      Assert.False(complexMap.IsPartOfTheLoop(new(4, 0)));
+      Assert.False(complexMap.IsPartOfTheLoop(new(4, 4)));
+    }
+
+    [Fact]
+    public void InsideTheLoopIsNotPartOfTheLoop()
+    {
+      Assert.False(simpleMap.IsPartOfTheLoop(new(2, 2)));
+      Assert.False(complexMap.IsPartOfTheLoop(new(2, 2)));
+    }
+
+    [Fact]
+    public void LoopBoundariesArePartOfTheLoop()
+    {
+      Assert.True(simpleMap.IsPartOfTheLoop(new(1, 1)));
+      Assert.True(simpleMap.IsPartOfTheLoop(new(2, 1)));
+      Assert.True(simpleMap.IsPartOfTheLoop(new(3, 2)));
+      Assert.True(simpleMap.IsPartOfTheLoop(new(3, 3)));
+
+      Assert.True(complexMap.IsPartOfTheLoop(new(0, 4)));
+      Assert.True(complexMap.IsPartOfTheLoop(new(1, 1)));
+      Assert.True(complexMap.IsPartOfTheLoop(new(2, 1)));
+      Assert.True(complexMap.IsPartOfTheLoop(new(3, 0)));
+      Assert.True(complexMap.IsPartOfTheLoop(new(4, 2)));
+    }
+  }
+
   [Fact]
   public void GetLoopLength()
   {
