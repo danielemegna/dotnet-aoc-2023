@@ -41,7 +41,10 @@ public class GardenMap
   }
 
   public char MapValueAt(Coordinate c) =>
-    map.ElementAtOrDefault(c.Y)?.ElementAtOrDefault(c.X) ?? 'x';
+    this.map.ElementAtOrDefault(c.Y)?.ElementAtOrDefault(c.X) ?? 'x';
+
+  public bool IsPartOfTheLoop(Coordinate coordinate) =>
+    this.loopCoordinates.Contains(coordinate);
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
@@ -64,11 +67,6 @@ public class GardenMap
       '|' => (nordCoordinate, southCoordinate),
       _ => throw new SystemException($"Cannot find connections for {c} = '{coordinateValue}'"),
     };
-  }
-
-  public bool IsPartOfTheLoop(Coordinate coordinate)
-  {
-    return this.loopCoordinates.Contains(coordinate);
   }
 
   private Coordinate FindLoopStartCoordinate()
