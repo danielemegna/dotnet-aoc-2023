@@ -53,21 +53,26 @@ public class RayCastingGun
     {
       Coordinate currentCoordinate = new(coordinate.X, y);
 
-      if (gardenMap.IsPartOfTheLoop(currentCoordinate)) {
+      if (gardenMap.IsPartOfTheLoop(currentCoordinate))
+      {
         char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
-        if(currentCoordinateValue == '-')
+        if (currentCoordinateValue == '-')
           boundariesCount++;
 
-        if(currentCoordinateValue == '|')
+        if (currentCoordinateValue == '|')
           continue;
 
-        if(currentCoordinateValue == 'F')
+        if (currentCoordinateValue == 'F' || currentCoordinateValue == '7')
+        {
           previousOpenValue = currentCoordinateValue;
-
-        if(currentCoordinateValue == 'J') {
-          if(previousOpenValue == 'F')
-            boundariesCount++;
+          continue;
         }
+
+        if (currentCoordinateValue == 'J' && previousOpenValue == 'F')
+          boundariesCount++;
+
+        if (currentCoordinateValue == 'L' && previousOpenValue == '7')
+          boundariesCount++;
 
       }
     }

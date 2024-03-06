@@ -79,13 +79,13 @@ public class RayCastingGunTest
       Assert.False(gun.IsInsideTheLoop(new Coordinate(9, 4)));
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void CheckGroundInsideTheLoop()
     {
       Assert.True(gun.IsInsideTheLoop(new Coordinate(10, 4)));
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void CheckPipeInsideTheLoop()
     {
       Assert.True(gun.IsInsideTheLoop(new Coordinate(12, 5)));
