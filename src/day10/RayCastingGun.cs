@@ -48,12 +48,28 @@ public class RayCastingGun
       return false;
 
     int boundariesCount = 0;
+    char? previousOpenValue = null;
     for (int y = yMinimumValue; y < coordinate.Y; y++)
     {
       Coordinate currentCoordinate = new(coordinate.X, y);
 
-      if (gardenMap.IsPartOfTheLoop(currentCoordinate))
-        boundariesCount++;
+      if (gardenMap.IsPartOfTheLoop(currentCoordinate)) {
+        char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
+        if(currentCoordinateValue == '-')
+          boundariesCount++;
+
+        if(currentCoordinateValue == '|')
+          continue;
+
+        if(currentCoordinateValue == 'F')
+          previousOpenValue = currentCoordinateValue;
+
+        if(currentCoordinateValue == 'J') {
+          if(previousOpenValue == 'F')
+            boundariesCount++;
+        }
+
+      }
     }
 
     return boundariesCount % 2 == 1;
