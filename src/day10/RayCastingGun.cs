@@ -25,17 +25,14 @@ public class RayCastingGun
   {
     var result = new HashSet<Coordinate>();
 
-    var (
-      (xMinimumValue, yMinimumValue),
-      (xMaximumValue, yMaximumValue)
-    ) = gardenMap.LoopBoundaries;
+    var (northWestBoundary, southEastBoundary) = gardenMap.LoopBoundaries;
 
-    for (int x = xMinimumValue; x <= xMaximumValue; x++)
+    for (int x = northWestBoundary.X; x <= southEastBoundary.X; x++)
     {
-      for (int y = yMinimumValue; y <= yMaximumValue; y++)
+      for (int y = northWestBoundary.Y; y <= southEastBoundary.Y; y++)
       {
         Coordinate currentCoordinate = new(x, y);
-        var isInsideTheLoop = ScanCoordinate(currentCoordinate, yMinimumValue);
+        var isInsideTheLoop = ScanCoordinate(currentCoordinate, northWestBoundary);
         if (isInsideTheLoop)
           result.Add(currentCoordinate);
       }
@@ -44,14 +41,14 @@ public class RayCastingGun
     return result;
   }
 
-  private bool ScanCoordinate(Coordinate coordinate, int yMinimumValue)
+  private bool ScanCoordinate(Coordinate coordinate, Coordinate northWestBoundary)
   {
     if (gardenMap.IsPartOfTheLoop(coordinate))
       return false;
 
     int boundariesCount = 0;
     char? previousOpenValue = null;
-    for (int y = yMinimumValue; y < coordinate.Y; y++)
+    for (int y = northWestBoundary.Y; y < coordinate.Y; y++)
     {
       Coordinate currentCoordinate = new(coordinate.X, y);
 
