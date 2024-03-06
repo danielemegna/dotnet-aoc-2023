@@ -60,4 +60,39 @@ public class RayCastingGunTest
 
   }
 
+  public class WithVeryComplexMap
+  {
+    private RayCastingGun gun = new(
+      GardenMap.From(SolverTest.VERY_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES)
+    );
+
+    [Fact]
+    public void CheckGroundOutsideTheLoop()
+    {
+      Assert.False(gun.IsInsideTheLoop(new Coordinate(1, 8)));
+      Assert.False(gun.IsInsideTheLoop(new Coordinate(18, 10)));
+    }
+
+    [Fact]
+    public void CheckPipePartOfTheLoopBoundary()
+    {
+      Assert.False(gun.IsInsideTheLoop(new Coordinate(9, 4)));
+    }
+
+    [Fact(Skip = "WIP")]
+    public void CheckGroundInsideTheLoop()
+    {
+      Assert.True(gun.IsInsideTheLoop(new Coordinate(10, 4)));
+    }
+
+    [Fact(Skip = "WIP")]
+    public void CheckPipeInsideTheLoop()
+    {
+      Assert.True(gun.IsInsideTheLoop(new Coordinate(12, 5)));
+      Assert.True(gun.IsInsideTheLoop(new Coordinate(13, 4)));
+      Assert.True(gun.IsInsideTheLoop(new Coordinate(14, 3)));
+    }
+
+  }
+
 }
