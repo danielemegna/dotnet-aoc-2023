@@ -34,6 +34,12 @@ public class RayCastingGunTest
       Assert.False(gun.IsInsideTheLoop(new Coordinate(99, 99)));
     }
 
+    [Fact]
+    public void InsideTheLoopCoordinateCount()
+    {
+      Assert.Equal(1, gun.InsideTheLoopCoordinateCount());
+    }
+
   }
 
   public class WithComplexMap
@@ -56,6 +62,25 @@ public class RayCastingGunTest
     public void CheckInsideTheLoop()
     {
       Assert.True(gun.IsInsideTheLoop(new Coordinate(2, 2)));
+    }
+
+    [Fact]
+    public void InsideTheLoopCoordinateCount()
+    {
+      Assert.Equal(1, gun.InsideTheLoopCoordinateCount());
+    }
+  }
+
+  public class WithLargerComplexMap
+  {
+    private RayCastingGun gun = new(
+      GardenMap.From(SolverTest.LARGER_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES)
+    );
+
+    [Fact(Skip = "WIP")]
+    public void InsideTheLoopCoordinateCount()
+    {
+      Assert.Equal(8, gun.InsideTheLoopCoordinateCount());
     }
 
   }
@@ -91,6 +116,12 @@ public class RayCastingGunTest
       Assert.True(gun.IsInsideTheLoop(new Coordinate(12, 5)));
       Assert.True(gun.IsInsideTheLoop(new Coordinate(13, 4)));
       Assert.True(gun.IsInsideTheLoop(new Coordinate(14, 3)));
+    }
+
+    [Fact(Skip = "WIP")]
+    public void InsideTheLoopCoordinateCount()
+    {
+      Assert.Equal(10, gun.InsideTheLoopCoordinateCount());
     }
 
   }

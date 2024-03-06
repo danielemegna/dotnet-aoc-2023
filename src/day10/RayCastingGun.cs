@@ -1,6 +1,3 @@
-
-
-
 namespace aoc2023.day10;
 
 public class RayCastingGun
@@ -17,6 +14,11 @@ public class RayCastingGun
   public bool IsInsideTheLoop(Coordinate coordinate)
   {
     return insideTheLoopCoordinates.Contains(coordinate);
+  }
+
+  public int InsideTheLoopCoordinateCount()
+  {
+    return insideTheLoopCoordinates.Count;
   }
 
   private ISet<Coordinate> ScanInsideTheLoopCoordinates()
