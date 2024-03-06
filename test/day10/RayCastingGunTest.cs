@@ -21,7 +21,7 @@ public class RayCastingGunTest
       Assert.False(gun.IsInsideTheLoop(new Coordinate(2, 3)));
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void CheckInsideTheLoop()
     {
       Assert.True(gun.IsInsideTheLoop(new Coordinate(2, 2)));
@@ -66,7 +66,7 @@ public class RayCastingGunTest
       GardenMap.From(SolverTest.VERY_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES)
     );
 
-    [Fact]
+    [Fact(Skip = "WIP")]
     public void CheckGroundOutsideTheLoop()
     {
       Assert.False(gun.IsInsideTheLoop(new Coordinate(1, 8)));
