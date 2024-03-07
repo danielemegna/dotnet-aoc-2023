@@ -76,4 +76,38 @@ public class SolverTest
 
   }
 
+  public class SecondPartTest : SolverTest
+  {
+    [Fact]
+    public void SolveWithFirstPartProvidedExample()
+    {
+      var actual = solver.CountAreasInsideTheLoop(SIMPLE_PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(1, actual);
+      actual = solver.CountAreasInsideTheLoop(COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(1, actual);
+    }
+
+    [Fact]
+    public void SolveWithLargerComplexProvidedExample()
+    {
+      var actual = solver.CountAreasInsideTheLoop(LARGER_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(8, actual);
+    }
+
+    [Fact]
+    public void SolveWithVeryComplexProvidedExample()
+    {
+      var actual = solver.CountAreasInsideTheLoop(VERY_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(10, actual);
+    }
+
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day10/input.txt");
+      var actual = solver.CountAreasInsideTheLoop(input);
+      Assert.Equal(525, actual);
+    }
+  }
+
 }

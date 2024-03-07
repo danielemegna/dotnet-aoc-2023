@@ -9,4 +9,10 @@ class Solver
     return gardenMap.LoopLength / 2;
   }
 
+  public int CountAreasInsideTheLoop(string[] inputLines)
+  {
+    var gardenMap = GardenMap.From(inputLines);
+    var rayCastingGun = new RayCastingGun(gardenMap);
+    return rayCastingGun.InsideTheLoopCoordinateCount();
+  }
 }
