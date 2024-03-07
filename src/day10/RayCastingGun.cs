@@ -41,16 +41,59 @@ public class RayCastingGun
     return result;
   }
 
-  private bool ScanCoordinate(Coordinate coordinate, Coordinate northWestBoundary)
+  private bool ScanCoordinate(Coordinate coordinateToScan, Coordinate northWestBoundary)
   {
-    if (gardenMap.IsPartOfTheLoop(coordinate))
+    if (gardenMap.IsPartOfTheLoop(coordinateToScan))
       return false;
 
+    if(gardenMap.LoopStartCoordinate.X == coordinateToScan.X)
+      return HorizontalRayShot(coordinateToScan, northWestBoundary.X);
+
+    return VerticalRayShot(coordinateToScan, northWestBoundary.Y);
+  }
+
+  private bool HorizontalRayShot(Coordinate coordinateToScan, int xMinimumValue)
+  {
     int boundariesCount = 0;
     char? previousOpenValue = null;
-    for (int y = northWestBoundary.Y; y < coordinate.Y; y++)
+    for (int x = xMinimumValue; x < coordinateToScan.X; x++)
     {
-      Coordinate currentCoordinate = new(coordinate.X, y);
+      Coordinate currentCoordinate = new(x, coordinateToScan.Y);
+
+      if (gardenMap.IsPartOfTheLoop(currentCoordinate))
+      {
+        char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
+        if (currentCoordinateValue == '|')
+          boundariesCount++;
+
+        if (currentCoordinateValue == '-')
+          continue;
+
+        if (currentCoordinateValue == 'F' || currentCoordinateValue == 'L')
+        {
+          previousOpenValue = currentCoordinateValue;
+          continue;
+        }
+
+        if (currentCoordinateValue == 'J' && previousOpenValue == 'F')
+          boundariesCount++;
+
+        if (currentCoordinateValue == '7' && previousOpenValue == 'L')
+          boundariesCount++;
+
+      }
+    }
+
+    return boundariesCount % 2 == 1;
+  }
+
+  private bool VerticalRayShot(Coordinate coordinateToScan, int yMinimumValue)
+  {
+    int boundariesCount = 0;
+    char? previousOpenValue = null;
+    for (int y = yMinimumValue; y < coordinateToScan.Y; y++)
+    {
+      Coordinate currentCoordinate = new(coordinateToScan.X, y);
 
       if (gardenMap.IsPartOfTheLoop(currentCoordinate))
       {

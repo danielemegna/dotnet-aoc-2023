@@ -77,7 +77,7 @@ public class RayCastingGunTest
       GardenMap.From(SolverTest.LARGER_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES)
     );
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void InsideTheLoopCoordinateCount()
     {
       Assert.Equal(8, gun.InsideTheLoopCoordinateCount());
@@ -118,7 +118,7 @@ public class RayCastingGunTest
       Assert.True(gun.IsInsideTheLoop(new Coordinate(14, 3)));
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void InsideTheLoopCoordinateCount()
     {
       Assert.Equal(10, gun.InsideTheLoopCoordinateCount());
