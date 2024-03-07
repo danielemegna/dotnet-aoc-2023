@@ -5,10 +5,10 @@ using System.Collections;
 public class GardenMap
 {
   private readonly char[][] map;
-  private readonly Coordinate loopStartCoordinate;
   private readonly (Coordinate, Coordinate) loopStartConnections;
   private readonly ISet<Coordinate> loopCoordinates;
 
+  public Coordinate LoopStartCoordinate { get; }
   public int LoopLength => this.loopCoordinates.Count;
   public (Coordinate, Coordinate) LoopBoundaries
   {
@@ -35,7 +35,7 @@ public class GardenMap
   internal GardenMap(char[][] map)
   {
     this.map = map;
-    this.loopStartCoordinate = FindLoopStartCoordinate();
+    this.LoopStartCoordinate = FindLoopStartCoordinate();
     this.loopStartConnections = FindConnectionsForLoopStart();
     this.loopCoordinates = FindLoopCoordinates();
   }
@@ -48,7 +48,7 @@ public class GardenMap
 
   public (Coordinate, Coordinate) ConnectionsFor(Coordinate c)
   {
-    if (c == this.loopStartCoordinate)
+    if (c == this.LoopStartCoordinate)
       return this.loopStartConnections;
 
     var coordinateValue = MapValueAt(c);
@@ -84,10 +84,10 @@ public class GardenMap
 
   private (Coordinate, Coordinate) FindConnectionsForLoopStart()
   {
-    var eastCoordinate = new Coordinate(this.loopStartCoordinate.X + 1, this.loopStartCoordinate.Y);
-    var westCoordinate = new Coordinate(this.loopStartCoordinate.X - 1, this.loopStartCoordinate.Y);
-    var southCoordinate = new Coordinate(this.loopStartCoordinate.X, this.loopStartCoordinate.Y + 1);
-    var nordCoordinate = new Coordinate(this.loopStartCoordinate.X, this.loopStartCoordinate.Y - 1);
+    var eastCoordinate = new Coordinate(this.LoopStartCoordinate.X + 1, this.LoopStartCoordinate.Y);
+    var westCoordinate = new Coordinate(this.LoopStartCoordinate.X - 1, this.LoopStartCoordinate.Y);
+    var southCoordinate = new Coordinate(this.LoopStartCoordinate.X, this.LoopStartCoordinate.Y + 1);
+    var nordCoordinate = new Coordinate(this.LoopStartCoordinate.X, this.LoopStartCoordinate.Y - 1);
 
     Coordinate? leftConnection = null;
     Coordinate? rightConnection = null;
@@ -111,7 +111,7 @@ public class GardenMap
     }
 
     if (leftConnection == null || rightConnection == null)
-      throw new SystemException($"Cannot find connection for starting point {this.loopStartCoordinate}");
+      throw new SystemException($"Cannot find connection for starting point {this.LoopStartCoordinate}");
 
     return (leftConnection, rightConnection);
   }
@@ -119,7 +119,7 @@ public class GardenMap
   private ISet<Coordinate> FindLoopCoordinates()
   {
     var (left, right) = this.loopStartConnections;
-    var result = new HashSet<Coordinate>() { this.loopStartCoordinate, left, right };
+    var result = new HashSet<Coordinate>() { this.LoopStartCoordinate, left, right };
 
     do
     {

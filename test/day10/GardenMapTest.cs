@@ -42,6 +42,15 @@ public class GardenMapTest
     Assert.Equal('x', complexMap.MapValueAt(new(99, 99)));
   }
 
+  [Fact]
+  public void GetLoopStartCoordinate()
+  {
+    Assert.Equal(new(1, 1), simpleMap.LoopStartCoordinate);
+    Assert.Equal(new(0, 2), complexMap.LoopStartCoordinate);
+    GardenMap largerMap = GardenMap.From(SolverTest.LARGER_COMPLEX_PROVIDED_EXAMPLE_INPUT_LINES);
+    Assert.Equal(new(12, 4), largerMap.LoopStartCoordinate);
+  }
+
   public class ConnectionsForCoordinates
   {
     [Fact]
