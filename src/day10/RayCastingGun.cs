@@ -36,25 +36,15 @@ public class RayCastingGun
     if (gardenMap.IsPartOfTheLoop(coordinateToScan))
       return false;
 
-    var doVerticalRayCasting = gardenMap.LoopStartCoordinate.X != coordinateToScan.X;
-
-    char crossingLoopValue = doVerticalRayCasting ? '-' : '|';
-    (char, char) firstPair = ('F', 'J');
-    (char, char) secondPair = doVerticalRayCasting ? ('7', 'L') : ('L', '7');
-
-    var (northWestLoopBoundary, _) = gardenMap.LoopBoundaries;
-    Coordinate startCoordinate = doVerticalRayCasting ?
-      new(coordinateToScan.X, northWestLoopBoundary.Y) :
-      new(northWestLoopBoundary.X, coordinateToScan.Y);
+    var castConfiguration = RayCastingConfiguration.GetFor(coordinateToScan, gardenMap);
+    var castingStartCoordinate = castConfiguration.CastingStartCoordinate();
 
     int boundariesCount = 0;
-    char? previousOpenValue = null;
+    char? openingCrossingvalue = null;
     for (
-      var currentCoordinate = startCoordinate;
+      var currentCoordinate = castingStartCoordinate;
       currentCoordinate != coordinateToScan;
-      currentCoordinate = doVerticalRayCasting ?
-        currentCoordinate with { Y = currentCoordinate.Y + 1 } :
-        currentCoordinate with { X = currentCoordinate.X + 1 }
+      currentCoordinate = castConfiguration.GetNextCoordinate(currentCoordinate)
     )
     {
       if (!gardenMap.IsPartOfTheLoop(currentCoordinate))
@@ -62,23 +52,17 @@ public class RayCastingGun
 
       char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
 
-      if (currentCoordinateValue == crossingLoopValue)
+      if (castConfiguration.IsCrossingLoopBoundaryValue(currentCoordinateValue))
         boundariesCount++;
 
-      if (currentCoordinateValue == firstPair.Item1 || currentCoordinateValue == secondPair.Item1)
+      if (castConfiguration.IsOpeningACrossing(currentCoordinateValue))
       {
-        previousOpenValue = currentCoordinateValue;
+        openingCrossingvalue = currentCoordinateValue;
         continue;
       }
 
-      if (
-        previousOpenValue == firstPair.Item1 && currentCoordinateValue == firstPair.Item2 ||
-        previousOpenValue == secondPair.Item1 && currentCoordinateValue == secondPair.Item2
-      )
-      {
+      if (castConfiguration.IsCompletingACrossing(openingCrossingvalue, currentCoordinateValue))
         boundariesCount++;
-      }
-
     }
 
     return boundariesCount % 2 == 1;
