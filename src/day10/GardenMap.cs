@@ -10,21 +10,7 @@ public class GardenMap
 
   public Coordinate LoopStartCoordinate { get; }
   public int LoopLength => this.loopCoordinates.Count;
-  public (Coordinate, Coordinate) LoopBoundaries
-  {
-    get
-    {
-      var allX = this.loopCoordinates.Select(c => c.X);
-      var minX = allX.Min();
-      var maxX = allX.Max();
-
-      var allY = this.loopCoordinates.Select(c => c.Y);
-      var minY = allY.Min();
-      var maxY = allY.Max();
-
-      return (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
-    }
-  }
+  public (Coordinate, Coordinate) LoopBoundaries { get; }
 
   public static GardenMap From(string[] inputLines)
   {
@@ -38,6 +24,7 @@ public class GardenMap
     this.LoopStartCoordinate = FindLoopStartCoordinate();
     this.loopStartConnections = FindConnectionsForLoopStart();
     this.loopCoordinates = FindLoopCoordinates();
+    this.LoopBoundaries = CalculateLoopBoundaries();
   }
 
   public char MapValueAt(Coordinate c) =>
@@ -132,6 +119,19 @@ public class GardenMap
     } while (left != right);
 
     return result;
+  }
+
+  private (Coordinate, Coordinate) CalculateLoopBoundaries()
+  {
+    var allX = this.loopCoordinates.Select(c => c.X);
+    var minX = allX.Min();
+    var maxX = allX.Max();
+
+    var allY = this.loopCoordinates.Select(c => c.Y);
+    var minY = allY.Min();
+    var maxY = allY.Max();
+
+    return (new Coordinate(minX, minY), new Coordinate(maxX, maxY));
   }
 
   public override bool Equals(object? other)
