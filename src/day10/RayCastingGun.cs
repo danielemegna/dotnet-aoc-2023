@@ -11,15 +11,11 @@ public class RayCastingGun
     this.insideTheLoopCoordinates = ScanInsideTheLoopCoordinates();
   }
 
-  public bool IsInsideTheLoop(Coordinate coordinate)
-  {
-    return insideTheLoopCoordinates.Contains(coordinate);
-  }
+  public bool IsInsideTheLoop(Coordinate coordinate) =>
+    insideTheLoopCoordinates.Contains(coordinate);
 
-  public int InsideTheLoopCoordinateCount()
-  {
-    return insideTheLoopCoordinates.Count;
-  }
+  public int InsideTheLoopCoordinateCount() =>
+    insideTheLoopCoordinates.Count;
 
   private ISet<Coordinate> ScanInsideTheLoopCoordinates()
   {
@@ -46,77 +42,47 @@ public class RayCastingGun
     if (gardenMap.IsPartOfTheLoop(coordinateToScan))
       return false;
 
-    if(gardenMap.LoopStartCoordinate.X == coordinateToScan.X)
-      return HorizontalRayShot(coordinateToScan, northWestBoundary.X);
+    var doVerticalRayScan = gardenMap.LoopStartCoordinate.X != coordinateToScan.X;
 
-    return VerticalRayShot(coordinateToScan, northWestBoundary.Y);
-  }
+    char crossingLoopValue = doVerticalRayScan ? '-' : '|';
+    (char, char) firstPair = ('F', 'J');
+    (char, char) secondPair = doVerticalRayScan ? ('7', 'L') : ('L', '7');
+    Coordinate startCoordinate = doVerticalRayScan ?
+      new(coordinateToScan.X, northWestBoundary.Y) :
+      new(northWestBoundary.X, coordinateToScan.Y);
 
-  private bool HorizontalRayShot(Coordinate coordinateToScan, int xMinimumValue)
-  {
     int boundariesCount = 0;
     char? previousOpenValue = null;
-    for (int x = xMinimumValue; x < coordinateToScan.X; x++)
+    for (
+      var currentCoordinate = startCoordinate;
+      currentCoordinate != coordinateToScan;
+      currentCoordinate = doVerticalRayScan ?
+        currentCoordinate with { Y = currentCoordinate.Y + 1 } :
+        currentCoordinate with { X = currentCoordinate.X + 1 }
+    )
     {
-      Coordinate currentCoordinate = new(x, coordinateToScan.Y);
+      if (!gardenMap.IsPartOfTheLoop(currentCoordinate))
+        continue;
 
-      if (gardenMap.IsPartOfTheLoop(currentCoordinate))
+      char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
+
+      if (currentCoordinateValue == crossingLoopValue)
+        boundariesCount++;
+
+      if (currentCoordinateValue == firstPair.Item1 || currentCoordinateValue == secondPair.Item1)
       {
-        char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
-        if (currentCoordinateValue == '|')
-          boundariesCount++;
-
-        if (currentCoordinateValue == '-')
-          continue;
-
-        if (currentCoordinateValue == 'F' || currentCoordinateValue == 'L')
-        {
-          previousOpenValue = currentCoordinateValue;
-          continue;
-        }
-
-        if (currentCoordinateValue == 'J' && previousOpenValue == 'F')
-          boundariesCount++;
-
-        if (currentCoordinateValue == '7' && previousOpenValue == 'L')
-          boundariesCount++;
-
+        previousOpenValue = currentCoordinateValue;
+        continue;
       }
-    }
 
-    return boundariesCount % 2 == 1;
-  }
-
-  private bool VerticalRayShot(Coordinate coordinateToScan, int yMinimumValue)
-  {
-    int boundariesCount = 0;
-    char? previousOpenValue = null;
-    for (int y = yMinimumValue; y < coordinateToScan.Y; y++)
-    {
-      Coordinate currentCoordinate = new(coordinateToScan.X, y);
-
-      if (gardenMap.IsPartOfTheLoop(currentCoordinate))
+      if (
+        previousOpenValue == firstPair.Item1 && currentCoordinateValue == firstPair.Item2 ||
+        previousOpenValue == secondPair.Item1 && currentCoordinateValue == secondPair.Item2
+      )
       {
-        char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
-        if (currentCoordinateValue == '-')
-          boundariesCount++;
-
-        if (currentCoordinateValue == '|')
-          continue;
-
-        if (currentCoordinateValue == 'F' || currentCoordinateValue == '7')
-        {
-          previousOpenValue = currentCoordinateValue;
-          continue;
-        }
-
-        if (currentCoordinateValue == 'J' && previousOpenValue == 'F')
-          boundariesCount++;
-
-        if (currentCoordinateValue == 'L' && previousOpenValue == '7')
-          boundariesCount++;
-
+        boundariesCount++;
       }
+
     }
 
     return boundariesCount % 2 == 1;
