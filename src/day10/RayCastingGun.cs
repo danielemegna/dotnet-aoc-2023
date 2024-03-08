@@ -36,14 +36,14 @@ public class RayCastingGun
     if (gardenMap.IsPartOfTheLoop(coordinateToScan))
       return false;
 
-    var doVerticalRayScan = gardenMap.LoopStartCoordinate.X != coordinateToScan.X;
+    var doVerticalRayCasting = gardenMap.LoopStartCoordinate.X != coordinateToScan.X;
 
-    char crossingLoopValue = doVerticalRayScan ? '-' : '|';
+    char crossingLoopValue = doVerticalRayCasting ? '-' : '|';
     (char, char) firstPair = ('F', 'J');
-    (char, char) secondPair = doVerticalRayScan ? ('7', 'L') : ('L', '7');
+    (char, char) secondPair = doVerticalRayCasting ? ('7', 'L') : ('L', '7');
 
     var (northWestLoopBoundary, _) = gardenMap.LoopBoundaries;
-    Coordinate startCoordinate = doVerticalRayScan ?
+    Coordinate startCoordinate = doVerticalRayCasting ?
       new(coordinateToScan.X, northWestLoopBoundary.Y) :
       new(northWestLoopBoundary.X, coordinateToScan.Y);
 
@@ -52,7 +52,7 @@ public class RayCastingGun
     for (
       var currentCoordinate = startCoordinate;
       currentCoordinate != coordinateToScan;
-      currentCoordinate = doVerticalRayScan ?
+      currentCoordinate = doVerticalRayCasting ?
         currentCoordinate with { Y = currentCoordinate.Y + 1 } :
         currentCoordinate with { X = currentCoordinate.X + 1 }
     )
