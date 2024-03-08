@@ -20,7 +20,6 @@ public class RayCastingGun
   private ISet<Coordinate> ScanInsideTheLoopCoordinates()
   {
     var (northWestLoopBoundary, southEastLoopBoundary) = gardenMap.LoopBoundaries;
-
     var scanAreaCoordinates = Range(northWestLoopBoundary.X, southEastLoopBoundary.X)
       .SelectMany(x =>
         Range(northWestLoopBoundary.Y, southEastLoopBoundary.Y)
@@ -28,11 +27,11 @@ public class RayCastingGun
       );
 
     return scanAreaCoordinates
-      .Where(c => IsInsideTheLoop(c, northWestLoopBoundary))
+      .Where(CheckIfInsideTheLoopWithRayCasting)
       .ToHashSet();
   }
 
-  private bool IsInsideTheLoop(Coordinate coordinateToScan, Coordinate northWestLoopBoundary)
+  private bool CheckIfInsideTheLoopWithRayCasting(Coordinate coordinateToScan)
   {
     if (gardenMap.IsPartOfTheLoop(coordinateToScan))
       return false;
@@ -42,6 +41,8 @@ public class RayCastingGun
     char crossingLoopValue = doVerticalRayScan ? '-' : '|';
     (char, char) firstPair = ('F', 'J');
     (char, char) secondPair = doVerticalRayScan ? ('7', 'L') : ('L', '7');
+
+    var (northWestLoopBoundary, _) = gardenMap.LoopBoundaries;
     Coordinate startCoordinate = doVerticalRayScan ?
       new(coordinateToScan.X, northWestLoopBoundary.Y) :
       new(northWestLoopBoundary.X, coordinateToScan.Y);
