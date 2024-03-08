@@ -19,20 +19,17 @@ public class RayCastingGun
 
   private ISet<Coordinate> ScanInsideTheLoopCoordinates()
   {
-    var result = new HashSet<Coordinate>();
     var (northWestLoopBoundary, southEastLoopBoundary) = gardenMap.LoopBoundaries;
 
-    for (int x = northWestLoopBoundary.X; x <= southEastLoopBoundary.X; x++)
-    {
-      for (int y = northWestLoopBoundary.Y; y <= southEastLoopBoundary.Y; y++)
-      {
-        Coordinate currentCoordinate = new(x, y);
-        if (IsInsideTheLoop(currentCoordinate, northWestLoopBoundary))
-          result.Add(currentCoordinate);
-      }
-    }
+    var scanAreaCoordinates = Range(northWestLoopBoundary.X, southEastLoopBoundary.X)
+      .SelectMany(x =>
+        Range(northWestLoopBoundary.Y, southEastLoopBoundary.Y)
+          .Select(y => new Coordinate(x, y))
+      );
 
-    return result;
+    return scanAreaCoordinates
+      .Where(c => IsInsideTheLoop(c, northWestLoopBoundary))
+      .ToHashSet();
   }
 
   private bool IsInsideTheLoop(Coordinate coordinateToScan, Coordinate northWestLoopBoundary)
@@ -85,4 +82,7 @@ public class RayCastingGun
 
     return boundariesCount % 2 == 1;
   }
+
+  private static IEnumerable<int> Range(int from, int to)
+    => Enumerable.Range(from, to - from + 1);
 }
