@@ -79,19 +79,19 @@ public class GardenMap
     Coordinate? leftConnection = null;
     Coordinate? rightConnection = null;
 
-    if (arr(['-', '7', 'J']).Contains(MapValueAt(eastCoordinate)))
+    if (arr('-', '7', 'J').Contains(MapValueAt(eastCoordinate)))
       rightConnection = eastCoordinate;
 
-    if (arr(['-', 'L', 'F']).Contains(MapValueAt(westCoordinate)))
+    if (arr('-', 'L', 'F').Contains(MapValueAt(westCoordinate)))
       leftConnection = westCoordinate;
 
-    if (arr(['|', '7', 'F']).Contains(MapValueAt(nordCoordinate)))
+    if (arr('|', '7', 'F').Contains(MapValueAt(nordCoordinate)))
     {
       if (leftConnection == null) leftConnection = nordCoordinate;
       else rightConnection = nordCoordinate;
     }
 
-    if (arr(['|', 'L', 'J']).Contains(MapValueAt(southCoordinate)))
+    if (arr('|', 'L', 'J').Contains(MapValueAt(southCoordinate)))
     {
       if (leftConnection == null) leftConnection = southCoordinate;
       else rightConnection = southCoordinate;
@@ -154,6 +154,6 @@ public class GardenMap
   public override int GetHashCode() =>
     StructuralComparisons.StructuralEqualityComparer.GetHashCode(map);
 
-  private static char[] arr(char[] value) => value;
+  private static char[] arr(params char[] value) => value;
 
 }
