@@ -39,7 +39,7 @@ public class RayCastingGun
     var castConfiguration = RayCastingConfiguration.GetFor(coordinateToScan, gardenMap);
     var castingStartCoordinate = castConfiguration.CastingStartCoordinate();
 
-    int boundariesCount = 0;
+    bool isInsideTheLoop = false;
     char? openingCrossingvalue = null;
     for (
       var currentCoordinate = castingStartCoordinate;
@@ -53,7 +53,10 @@ public class RayCastingGun
       char currentCoordinateValue = gardenMap.MapValueAt(currentCoordinate);
 
       if (castConfiguration.IsCrossingLoopBoundaryValue(currentCoordinateValue))
-        boundariesCount++;
+      {
+        isInsideTheLoop = !isInsideTheLoop;
+        continue;
+      }
 
       if (castConfiguration.IsOpeningACrossing(currentCoordinateValue))
       {
@@ -62,10 +65,10 @@ public class RayCastingGun
       }
 
       if (castConfiguration.IsCompletingACrossing(openingCrossingvalue, currentCoordinateValue))
-        boundariesCount++;
+        isInsideTheLoop = !isInsideTheLoop;
     }
 
-    return boundariesCount % 2 == 1;
+    return isInsideTheLoop;
   }
 
   private static IEnumerable<int> Range(int from, int to)
