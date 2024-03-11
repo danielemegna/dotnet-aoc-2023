@@ -2,12 +2,26 @@
 
 Solutions for [2023 Advent Of Code challenges](https://adventofcode.com/2023) in C#
 
+Challenge solutions are in tests as assertions:
+
+```c#
+[Fact]
+public void SolveWithFile()
+{
+  var input = File.ReadAllLines("day4/input.txt");
+  var actual = solver.SomethingToSolve(input);
+  Assert.Equal(20667, actual);
+}
+```
+----
+
 ### Docker-only dev setup
 
 Use temporary container with current directory volume:
 
 ```
 $ docker run --rm -it -v $PWD:/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 bash
+# dotnet build aoc2023.csproj
 # dotnet test --logger "console;verbosity=normal" aoc2023.csproj
 # dotnet test --logger "console;verbosity=normal" aoc2023.csproj --filter aoc2023.day2
 ```
