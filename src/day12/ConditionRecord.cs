@@ -1,4 +1,3 @@
-
 namespace aoc2023.day12;
 
 public class ConditionRecord
@@ -7,15 +6,7 @@ public class ConditionRecord
   private readonly int[] damagedSpringsGroups;
 
   public ConditionRecord(string springsStates, int[] damagedSpringsGroups)
-  : this(
-    springsStates
-      .ToCharArray()
-      .Select<char, bool?>(
-        c => c switch { '.' => true, '#' => false, _ => null }
-      ).ToArray(),
-    damagedSpringsGroups
-  )
-  { }
+  : this(SpringStatesToBoolean(springsStates), damagedSpringsGroups) { }
 
   public ConditionRecord(bool?[] springsStates, int[] damagedSpringsGroups)
   {
@@ -26,5 +17,14 @@ public class ConditionRecord
   public int PossibileArrangementsCount()
   {
     return 1;
+  }
+
+  private static bool?[] SpringStatesToBoolean(string springsStates)
+  {
+    return springsStates
+      .ToCharArray()
+      .Select<char, bool?>(
+        c => c switch { '.' => true, '#' => false, _ => null }
+      ).ToArray();
   }
 }
