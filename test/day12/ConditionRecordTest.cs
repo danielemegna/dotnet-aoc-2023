@@ -46,7 +46,8 @@ public class ConditionRecordTest
 
   }
 
-  public class DamagedSpringsGroupCompatibilityCheck {
+  public class DamagedSpringsGroupCompatibilityCheck
+  {
 
     [Fact]
     public void NotCompatibleWithSimpleSingleGroup()
@@ -61,7 +62,27 @@ public class ConditionRecordTest
     public void CompatibleWithSimpleSingleGroup()
     {
       var record = new ConditionRecord("", [2]);
-      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##"));
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup("##"));
+    }
+
+    [Fact]
+    public void NotCompatibleWithTwoGroupsOfOnes()
+    {
+      var record = new ConditionRecord("", [1, 1]);
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("###"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".##"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("#.."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("..#"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("..."));
+    }
+
+    [Fact]
+    public void CompatibleWithTwoGroupsOfOnes()
+    {
+      var record = new ConditionRecord("", [1, 1]);
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup("#.#"));
     }
   }
 

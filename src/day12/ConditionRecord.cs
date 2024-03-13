@@ -23,11 +23,12 @@ public class ConditionRecord
   {
     var booleanSpringsStates = SpringStatesToBoolean(springsStates);
 
-    List<int> readDamagedSpringsGroups = [];
+
+    Queue<int> groupsToCheck = new Queue<int>(damagedSpringsGroups);
     int currentDamagedSpringGroupValue = 0;
     foreach (bool? state in booleanSpringsStates)
     {
-      if (!state.HasValue)
+      if (!state.HasValue)  // maybe we should return true or null here
         throw new SystemException("Cannot check compatibility for uncompleted springs states array");
 
       if (!state.Value)
@@ -36,14 +37,27 @@ public class ConditionRecord
         continue;
       }
 
-      if(currentDamagedSpringGroupValue > 0) {
-        readDamagedSpringsGroups.Add(currentDamagedSpringGroupValue);
+      if (currentDamagedSpringGroupValue > 0)
+      {
+        if (groupsToCheck.Count == 0)
+          return false;
+        if (groupsToCheck.Dequeue() != currentDamagedSpringGroupValue)
+          return false;
+
         currentDamagedSpringGroupValue = 0;
-        // TODO optimize with break on incompatibility
       }
     }
 
-    return readDamagedSpringsGroups.ToArray() == this.damagedSpringsGroups;
+    if (currentDamagedSpringGroupValue > 0)
+    {
+      if (groupsToCheck.Count == 0)
+        return false;
+      if (groupsToCheck.Dequeue() != currentDamagedSpringGroupValue)
+        return false;
+
+    }
+
+    return groupsToCheck.Count == 0;
   }
 
   private static bool?[] SpringStatesToBoolean(string springsStates)
