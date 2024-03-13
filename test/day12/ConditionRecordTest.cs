@@ -4,6 +4,7 @@ using Xunit;
 
 public class ConditionRecordTest
 {
+
   public class PossibileArrangementsCount
   {
 
@@ -83,6 +84,56 @@ public class ConditionRecordTest
     {
       var record = new ConditionRecord("", [1, 1]);
       Assert.True(record.IsCompatibleWithDamagedSpringsGroup("#.#"));
+    }
+
+    [Fact]
+    public void NotCompatibleWithThreeGroups() {
+      var record = new ConditionRecord("", [1, 1, 3]);
+
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".............."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("...........##."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("..........###."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".....##...###."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#........###."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("..#..##...###."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".##..#....###."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#....#....##."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".##........##."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#...#..###..#"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#...#.###..#."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##############"));
+    }
+
+    [Fact]
+    public void CompatibleWithThreeGroups() {
+      var record = new ConditionRecord("", [1, 1, 3]);
+
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup(".#...#....###."));
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup(".#....#...###."));
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup("..#..#....###."));
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup("..#...#...###."));
+    }
+
+    [Fact]
+    public void NotCompatibleWithFourGroups()
+    {
+      var record = new ConditionRecord("", [1, 3, 1, 6]);
+
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#.#.#.#.#.#.#."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#.#.#.#.#.#.##"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##.#.#.#.#.#.##"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#.#.#.#.######"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("######.#.###.#."));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##.###.#.######"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#.###.#..#####"));
+    }
+
+    [Fact]
+    public void CompatibleWithFourGroups()
+    {
+      var record = new ConditionRecord("", [1, 3, 1, 6]);
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup(".#.###.#.######"));
+      Assert.True(record.IsCompatibleWithDamagedSpringsGroup("#.###..#.######"));
     }
   }
 
