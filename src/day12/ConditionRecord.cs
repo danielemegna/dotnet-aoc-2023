@@ -19,16 +19,25 @@ public class ConditionRecord
     return 1;
   }
 
-  internal bool IsCompatibleWithDamagedSpringsGroup(string springsStatesToCheckString)
+  internal bool? IsCompatibleWithDamagedSpringsGroup(string springsStatesToCheckString)
   {
     var springsStatesToCheck = SpringStatesToBoolean(springsStatesToCheckString);
-    Queue<int> damagedSpringsGroupsToHave = new Queue<int>(damagedSpringsGroups);
+    var damagedSpringsGroupsToHave = new Queue<int>(damagedSpringsGroups);
 
     int currentDamagedSpringGroupValue = 0;
     foreach (bool? state in springsStatesToCheck)
     {
-      if (!state.HasValue)  // maybe we should return true or null here
-        throw new SystemException("Cannot check compatibility for uncompleted springs states array");
+      if (!state.HasValue)
+      {
+        if (currentDamagedSpringGroupValue > 0)
+        {
+          if (damagedSpringsGroupsToHave.Count == 0)
+            return false;
+          if (damagedSpringsGroupsToHave.Dequeue() < currentDamagedSpringGroupValue)
+            return false;
+        }
+        return null;
+      }
 
       if (!state.Value)
       {

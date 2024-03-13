@@ -135,6 +135,30 @@ public class ConditionRecordTest
       Assert.True(record.IsCompatibleWithDamagedSpringsGroup(".#.###.#.######"));
       Assert.True(record.IsCompatibleWithDamagedSpringsGroup("#.###..#.######"));
     }
+
+    [Fact]
+    public void UncompletedSpringsStatesShouldReturnFalseIfNotCompatibleBeforeTheUncompletePart()
+    {
+      var record = new ConditionRecord("", [1, 3, 1, 6]);
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##.#?#?#?#?#?#?"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("##?#?#?#?#?#?#?"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".###?#?#?#?#?#?"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#.#.#?#?#?#?#?"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup("######?#.#.#.#?"));
+      Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".#.#####.#?#?#?"));
+    }
+
+    [Fact]
+    public void UncompletedSpringsStatesShouldReturnNullIfCompatibleUntilTheUncompletePart()
+    {
+      var record = new ConditionRecord("", [1, 3, 1, 6]);
+      Assert.Null(record.IsCompatibleWithDamagedSpringsGroup("?#?#?#?#?#?#?#?"));
+      Assert.Null(record.IsCompatibleWithDamagedSpringsGroup(".#?#?#?#?#?#?#?"));
+      Assert.Null(record.IsCompatibleWithDamagedSpringsGroup(".#.###?#?#?#?#?"));
+      Assert.Null(record.IsCompatibleWithDamagedSpringsGroup(".#.###.#?#?#?#?"));
+      Assert.Null(record.IsCompatibleWithDamagedSpringsGroup(".#.###.#.#####?"));
+    }
+
   }
 
 }
