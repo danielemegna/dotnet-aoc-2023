@@ -15,7 +15,7 @@ public class ConditionRecordTest
       Assert.Equal(1, record.PossibileArrangementsCount());
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void FourPossibileArrangements()
     {
       var record = new ConditionRecord(".??..??...?##.", [1, 1, 3]);
@@ -31,14 +31,14 @@ public class ConditionRecordTest
       Assert.Equal(1, record.PossibileArrangementsCount());
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void MoreComplexFourPossibileArrangements()
     {
       var record = new ConditionRecord("????.######..#####.", [1, 6, 5]);
       Assert.Equal(4, record.PossibileArrangementsCount());
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void TenPossibileArrangements()
     {
       var record = new ConditionRecord("?###????????", [3, 2, 1]);

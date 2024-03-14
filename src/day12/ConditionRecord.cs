@@ -16,12 +16,39 @@ public class ConditionRecord
 
   public int PossibileArrangementsCount()
   {
-    return 1;
+    return CountPossibleArragementsFor(springsStates);
+  }
+
+  private int CountPossibleArragementsFor(bool?[] incompleteSpringsStates)
+  {
+    int possibleCombinations = 0;
+
+    var firstUnknownStateIndex = Array.IndexOf(incompleteSpringsStates, null);
+    if (firstUnknownStateIndex == -1)
+      return 1;
+
+    bool?[] copyTrue = (bool?[])incompleteSpringsStates.Clone();
+    copyTrue[firstUnknownStateIndex] = true;
+    bool?[] copyFalse = (bool?[])incompleteSpringsStates.Clone();
+    copyFalse[firstUnknownStateIndex] = false;
+
+    if (IsCompatibleWithDamagedSpringsGroup(copyTrue) != false)
+      possibleCombinations += CountPossibleArragementsFor(copyTrue);
+
+    if (IsCompatibleWithDamagedSpringsGroup(copyFalse) != false)
+      possibleCombinations += CountPossibleArragementsFor(copyFalse);
+
+    return possibleCombinations;
   }
 
   internal bool? IsCompatibleWithDamagedSpringsGroup(string springsStatesToCheckString)
   {
     var springsStatesToCheck = SpringStatesToBoolean(springsStatesToCheckString);
+    return IsCompatibleWithDamagedSpringsGroup(springsStatesToCheck);
+  }
+
+  private bool? IsCompatibleWithDamagedSpringsGroup(bool?[] springsStatesToCheck)
+  {
     var damagedSpringsGroupsToHave = new Queue<int>(damagedSpringsGroups);
 
     int currentDamagedSpringGroupValue = 0;
