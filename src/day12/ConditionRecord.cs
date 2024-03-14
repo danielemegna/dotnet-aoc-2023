@@ -19,26 +19,19 @@ public class ConditionRecord
     return CountPossibleArragementsFor(springsStates);
   }
 
-  private int CountPossibleArragementsFor(bool?[] incompleteSpringsStates)
+  private int CountPossibleArragementsFor(bool?[] springsStatesToCheck)
   {
-    int possibleCombinations = 0;
+    var compatibilityCheck = IsCompatibleWithDamagedSpringsGroup(springsStatesToCheck);
+    if(compatibilityCheck.HasValue)
+      return compatibilityCheck.Value ? 1 : 0;
 
-    var firstUnknownStateIndex = Array.IndexOf(incompleteSpringsStates, null);
-    if (firstUnknownStateIndex == -1)
-      return 1;
-
-    bool?[] copyTrue = (bool?[])incompleteSpringsStates.Clone();
+    var firstUnknownStateIndex = Array.IndexOf(springsStatesToCheck, null);
+    bool?[] copyTrue = (bool?[])springsStatesToCheck.Clone();
+    bool?[] copyFalse = (bool?[])springsStatesToCheck.Clone();
     copyTrue[firstUnknownStateIndex] = true;
-    bool?[] copyFalse = (bool?[])incompleteSpringsStates.Clone();
     copyFalse[firstUnknownStateIndex] = false;
 
-    if (IsCompatibleWithDamagedSpringsGroup(copyTrue) != false)
-      possibleCombinations += CountPossibleArragementsFor(copyTrue);
-
-    if (IsCompatibleWithDamagedSpringsGroup(copyFalse) != false)
-      possibleCombinations += CountPossibleArragementsFor(copyFalse);
-
-    return possibleCombinations;
+    return CountPossibleArragementsFor(copyTrue) + CountPossibleArragementsFor(copyFalse);
   }
 
   internal bool? IsCompatibleWithDamagedSpringsGroup(string springsStatesToCheckString)
