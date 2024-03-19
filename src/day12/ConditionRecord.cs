@@ -6,11 +6,8 @@ public class ConditionRecord
   private readonly int[] damagedSpringsGroups;
 
   public ConditionRecord(string springsStates, int[] damagedSpringsGroups)
-  : this(SpringStatesToBoolean(springsStates), damagedSpringsGroups) { }
-
-  public ConditionRecord(bool?[] springsStates, int[] damagedSpringsGroups)
   {
-    this.springsStates = springsStates;
+    this.springsStates = SpringStatesToBoolean(springsStates);
     this.damagedSpringsGroups = damagedSpringsGroups;
   }
 
@@ -22,7 +19,7 @@ public class ConditionRecord
   private int CountPossibleArragementsFor(bool?[] springsStatesToCheck)
   {
     var compatibilityCheck = IsCompatibleWithDamagedSpringsGroup(springsStatesToCheck);
-    if(compatibilityCheck.HasValue)
+    if (compatibilityCheck.HasValue)
       return compatibilityCheck.Value ? 1 : 0;
 
     var firstUnknownStateIndex = Array.IndexOf(springsStatesToCheck, null);
