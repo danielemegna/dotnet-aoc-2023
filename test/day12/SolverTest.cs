@@ -25,12 +25,12 @@ public class SolverTest
       Assert.Equal(1 + 4 + 1 + 1 + 4 + 10, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day12/input.txt");
       var actual = solver.SumOfPossibleArrangements(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(7260, actual);
     }
 
   }
