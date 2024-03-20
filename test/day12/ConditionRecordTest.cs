@@ -75,6 +75,16 @@ public class ConditionRecordTest
       Assert.Equal(2500, record.PossibileArrangementsCount());
     }
 
+    [Fact]
+    public void TonsOfPossibileArrangements()
+    {
+      var record = new ConditionRecord(
+        "?###??????????###??????????###??????????###??????????###????????",
+        [3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1, 3, 2, 1]
+      );
+      Assert.Equal(506250, record.PossibileArrangementsCount());
+    }
+
   }
 
   public class DamagedSpringsGroupCompatibilityCheck
