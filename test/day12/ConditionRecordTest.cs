@@ -45,6 +45,36 @@ public class ConditionRecordTest
       Assert.Equal(10, record.PossibileArrangementsCount());
     }
 
+    [Fact]
+    public void LongerWithManyPossibileArrangements()
+    {
+      var record = new ConditionRecord(
+        "????.#...#...?????.#...#...?????.#...#...?????.#...#...?????.#...#...",
+        [4, 1, 1, 4, 1, 1, 4, 1, 1, 4, 1, 1, 4, 1, 1]
+      );
+      Assert.Equal(16, record.PossibileArrangementsCount());
+    }
+
+    [Fact]
+    public void LongerOnePossibileArrangements()
+    {
+      var record = new ConditionRecord(
+        "???.###????.###????.###????.###????.###",
+        [1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3, 1, 1, 3]
+      );
+      Assert.Equal(1, record.PossibileArrangementsCount());
+    }
+
+    [Fact]
+    public void LotOfPossibileArrangements()
+    {
+      var record = new ConditionRecord(
+        "????.######..#####.?????.######..#####.?????.######..#####.?????.######..#####.?????.######..#####.",
+        [1, 6, 5, 1, 6, 5, 1, 6, 5, 1, 6, 5, 1, 6, 5]
+      );
+      Assert.Equal(2500, record.PossibileArrangementsCount());
+    }
+
   }
 
   public class DamagedSpringsGroupCompatibilityCheck
@@ -87,7 +117,8 @@ public class ConditionRecordTest
     }
 
     [Fact]
-    public void NotCompatibleWithThreeGroups() {
+    public void NotCompatibleWithThreeGroups()
+    {
       var record = new ConditionRecord("", [1, 1, 3]);
 
       Assert.False(record.IsCompatibleWithDamagedSpringsGroup(".............."));
@@ -105,7 +136,8 @@ public class ConditionRecordTest
     }
 
     [Fact]
-    public void CompatibleWithThreeGroups() {
+    public void CompatibleWithThreeGroups()
+    {
       var record = new ConditionRecord("", [1, 1, 3]);
 
       Assert.True(record.IsCompatibleWithDamagedSpringsGroup(".#...#....###."));
