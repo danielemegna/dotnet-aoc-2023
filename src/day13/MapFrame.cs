@@ -16,8 +16,7 @@ class MapFrame
 
   private static int? DetectVerticalMirror(string[] inputLines)
   {
-    var columnsCount = inputLines[0].Length;
-    var transposedMap = Enumerable.Range(0, columnsCount)
+    var transposedMap = Enumerable.Range(0, inputLines[0].Length)
       .Select(index => string.Join("", inputLines.Select(line => line[index])))
       .ToArray();
 
@@ -26,24 +25,22 @@ class MapFrame
 
   private static int? DetectHorizontalMirror(string[] inputLines)
   {
-    int topIndex = 0;
-    int bottomIndex = inputLines.Length - 1;
+    int topCursor = 0;
+    int bottomCursor = inputLines.Length - 1;
 
-    do
+    while (topCursor < bottomCursor)
     {
-
-      if (inputLines[topIndex] == inputLines[bottomIndex])
+      if (inputLines[topCursor] != inputLines[bottomCursor])
       {
-        if (topIndex == bottomIndex - 1) return bottomIndex;
-        bottomIndex--;
-        topIndex++;
+        topCursor++;
+        bottomCursor = inputLines.Length - 1;
         continue;
       }
 
-      bottomIndex = inputLines.Length - 1;
-      topIndex++;
+      if (topCursor == bottomCursor - 1) return bottomCursor;
+      topCursor++;
+      bottomCursor--;
     }
-    while (topIndex < bottomIndex);
 
     return null;
   }
