@@ -25,7 +25,7 @@ public class MapFrameTest
     "#....#..#"
   ];
 
-  [Fact(Skip = "WIP")]
+  [Fact]
   public void FirstProvidedExampleHasVerticalMirror()
   {
     var mapFrame = MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES);

@@ -8,7 +8,18 @@ class MapFrame
   public static MapFrame From(string[] inputLines)
   {
     var hasHorizontalMirror = DetectHorizontalMirror(inputLines);
-    return new MapFrame(hasHorizontalMirror);
+    var hasVerticalMirror = DetectVerticalMirror(inputLines);
+    return new MapFrame(hasHorizontalMirror, hasVerticalMirror);
+  }
+
+  private static bool DetectVerticalMirror(string[] inputLines)
+  {
+    var columnsCount = inputLines[0].Length;
+    var transposedMap = Enumerable.Range(0, columnsCount)
+      .Select(index => string.Join("", inputLines.Select(line => line[index])))
+      .ToArray();
+
+    return DetectHorizontalMirror(transposedMap);
   }
 
   private static bool DetectHorizontalMirror(string[] inputLines)
@@ -35,10 +46,10 @@ class MapFrame
     return false;
   }
 
-  public MapFrame(bool hasHorizontalMirror)
+  public MapFrame(bool hasHorizontalMirror, bool hasVerticalMirror)
   {
     this.HasHorizontalMirror = hasHorizontalMirror;
-    this.HasVerticalMirror = false;
+    this.HasVerticalMirror = hasVerticalMirror;
   }
 
 }
