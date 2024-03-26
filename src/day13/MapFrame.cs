@@ -38,14 +38,18 @@ class MapFrame(
 
   private static int? DetectHorizontalMirror(string[] inputLines)
   {
+    int lastLineIndex = inputLines.Length - 1;
+
     int topCursor = 0;
-    int bottomCursor = inputLines.Length - 1;
+    int bottomCursor = lastLineIndex;
     while (topCursor < bottomCursor)
     {
       if (inputLines[topCursor] != inputLines[bottomCursor])
       {
-        topCursor++;
-        bottomCursor = inputLines.Length - 1;
+        if (bottomCursor != lastLineIndex)
+          bottomCursor = lastLineIndex;
+        else
+          topCursor++;
         continue;
       }
 
@@ -56,13 +60,15 @@ class MapFrame(
 
     // TODO find a better way to double scan mirrors and remove duplication
     topCursor = 0;
-    bottomCursor = inputLines.Length - 1;
+    bottomCursor = lastLineIndex;
     while (topCursor < bottomCursor)
     {
       if (inputLines[topCursor] != inputLines[bottomCursor])
       {
-        bottomCursor--;
-        topCursor = 0;
+        if (topCursor != 0)
+          topCursor = 0;
+        else
+          bottomCursor--;
         continue;
       }
 
