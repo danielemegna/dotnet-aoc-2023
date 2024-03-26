@@ -27,7 +27,6 @@ class MapFrame
   {
     int topCursor = 0;
     int bottomCursor = inputLines.Length - 1;
-
     while (topCursor < bottomCursor)
     {
       if (inputLines[topCursor] != inputLines[bottomCursor])
@@ -40,6 +39,23 @@ class MapFrame
       if (topCursor == bottomCursor - 1) return bottomCursor;
       topCursor++;
       bottomCursor--;
+    }
+
+    // TODO find a better way to double scan mirrors and remove duplication
+    topCursor = 0;
+    bottomCursor = inputLines.Length - 1;
+    while (topCursor < bottomCursor)
+    {
+      if (inputLines[topCursor] != inputLines[bottomCursor])
+      {
+        bottomCursor--;
+        topCursor = 0;
+        continue;
+      }
+
+      if (topCursor == bottomCursor - 1) return bottomCursor;
+      bottomCursor--;
+      topCursor++;
     }
 
     return null;

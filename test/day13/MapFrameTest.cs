@@ -25,6 +25,17 @@ public class MapFrameTest
     "#....#..#"
   ];
 
+  public static readonly string[] ANOTHER_MAP_INPUT_LINES = [
+    ".##..###",
+    "####.##.",
+    "####.##.",
+    ".##..###",
+    "....#.##",
+    "...##..#",
+    "..#.#..#",
+    "#......#",
+  ];
+
   [Fact]
   public void FirstProvidedExampleHasVerticalMirror()
   {
@@ -56,5 +67,16 @@ public class MapFrameTest
     Assert.False(mapFrame.HasVerticalMirror);
     Assert.Null(mapFrame.VerticalMirrorPosition);
   }
+
+  [Fact]
+  public void AnotherMapHasHorizontalMirrorInTheFirstHalf()
+  {
+    var mapFrame = MapFrame.From(ANOTHER_MAP_INPUT_LINES);
+    Assert.True(mapFrame.HasHorizontalMirror);
+    Assert.False(mapFrame.HasVerticalMirror);
+    Assert.Equal(2, mapFrame.HorizontalMirrorPosition);
+    Assert.Null(mapFrame.VerticalMirrorPosition);
+  }
+
 
 }
