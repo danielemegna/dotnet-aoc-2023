@@ -78,5 +78,20 @@ public class MapFrameTest
     Assert.Null(mapFrame.VerticalMirrorPosition);
   }
 
+  [Fact]
+  public void GetMapWidth()
+  {
+    Assert.Equal(9, MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES).Width);
+    Assert.Equal(9, MapFrame.From(SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES).Width);
+    Assert.Equal(8, MapFrame.From(ANOTHER_MAP_INPUT_LINES).Width);
+  }
+
+  [Fact]
+  public void GetMapHeight()
+  {
+    Assert.Equal(7, MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES).Height);
+    Assert.Equal(7, MapFrame.From(SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES).Height);
+    Assert.Equal(8, MapFrame.From(ANOTHER_MAP_INPUT_LINES).Height);
+  }
 
 }
