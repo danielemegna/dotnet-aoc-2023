@@ -2,17 +2,19 @@ namespace aoc2023.day13;
 
 class MapFrame
 {
-  public bool HasHorizontalMirror { get; }
-  public bool HasVerticalMirror { get; }
+  public int? HorizontalMirrorPosition { get; }
+  public int? VerticalMirrorPosition { get; }
+  public bool HasHorizontalMirror => this.HorizontalMirrorPosition != null;
+  public bool HasVerticalMirror => this.VerticalMirrorPosition != null;
 
   public static MapFrame From(string[] inputLines)
   {
-    var hasHorizontalMirror = DetectHorizontalMirror(inputLines);
-    var hasVerticalMirror = DetectVerticalMirror(inputLines);
-    return new MapFrame(hasHorizontalMirror, hasVerticalMirror);
+    var horizontalMirrorPosition = DetectHorizontalMirror(inputLines);
+    var verticalMirrorPosition = DetectVerticalMirror(inputLines);
+    return new MapFrame(horizontalMirrorPosition, verticalMirrorPosition);
   }
 
-  private static bool DetectVerticalMirror(string[] inputLines)
+  private static int? DetectVerticalMirror(string[] inputLines)
   {
     var columnsCount = inputLines[0].Length;
     var transposedMap = Enumerable.Range(0, columnsCount)
@@ -22,7 +24,7 @@ class MapFrame
     return DetectHorizontalMirror(transposedMap);
   }
 
-  private static bool DetectHorizontalMirror(string[] inputLines)
+  private static int? DetectHorizontalMirror(string[] inputLines)
   {
     int topIndex = 0;
     int bottomIndex = inputLines.Length - 1;
@@ -32,7 +34,7 @@ class MapFrame
 
       if (inputLines[topIndex] == inputLines[bottomIndex])
       {
-        if (topIndex == bottomIndex - 1) return true;
+        if (topIndex == bottomIndex - 1) return bottomIndex;
         bottomIndex--;
         topIndex++;
         continue;
@@ -43,13 +45,13 @@ class MapFrame
     }
     while (topIndex < bottomIndex);
 
-    return false;
+    return null;
   }
 
-  public MapFrame(bool hasHorizontalMirror, bool hasVerticalMirror)
+  public MapFrame(int? horizontalMirrorPosition, int? verticalMirrorPosition)
   {
-    this.HasHorizontalMirror = hasHorizontalMirror;
-    this.HasVerticalMirror = hasVerticalMirror;
+    this.HorizontalMirrorPosition = horizontalMirrorPosition;
+    this.VerticalMirrorPosition = verticalMirrorPosition;
   }
 
 }

@@ -30,6 +30,7 @@ public class MapFrameTest
   {
     var mapFrame = MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
     Assert.True(mapFrame.HasVerticalMirror);
+    Assert.Equal(5, mapFrame.VerticalMirrorPosition);
   }
 
   [Fact]
@@ -37,6 +38,7 @@ public class MapFrameTest
   {
     var mapFrame = MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
     Assert.False(mapFrame.HasHorizontalMirror);
+    Assert.Null(mapFrame.HorizontalMirrorPosition);
   }
 
   [Fact]
@@ -44,6 +46,7 @@ public class MapFrameTest
   {
     var mapFrame = MapFrame.From(SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
     Assert.True(mapFrame.HasHorizontalMirror);
+    Assert.Equal(4, mapFrame.HorizontalMirrorPosition);
   }
 
   [Fact]
@@ -51,6 +54,7 @@ public class MapFrameTest
   {
     var mapFrame = MapFrame.From(SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
     Assert.False(mapFrame.HasVerticalMirror);
+    Assert.Null(mapFrame.VerticalMirrorPosition);
   }
 
 }
