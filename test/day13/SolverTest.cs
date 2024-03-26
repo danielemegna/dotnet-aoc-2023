@@ -34,12 +34,12 @@ public class SolverTest
       Assert.Equal(5 + (4 * 100), actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day13/input.txt");
       var actual = solver.SummarizePatternNotes(input);
-      Assert.Equal(1232, actual);
+      Assert.Equal(34889, actual);
     }
 
   }
