@@ -27,7 +27,7 @@ public class SolverTest
   public class FirstPartTest : SolverTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveTheProvidedExample()
     {
       var actual = solver.SummarizePatternNotes(PROVIDED_EXAMPLE_INPUT_LINES);
