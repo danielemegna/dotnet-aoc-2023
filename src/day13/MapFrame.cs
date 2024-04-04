@@ -1,30 +1,23 @@
 namespace aoc2023.day13;
 
-class MapFrame(
-  int height,
-  int width,
-  int? horizontalMirrorPosition,
-  int? verticalMirrorPosition
-)
+class MapFrame
 {
-  public int Height { get; } = height;
-  public int Width { get; } = width;
-  public int? HorizontalMirrorPosition { get; } = horizontalMirrorPosition;
-  public int? VerticalMirrorPosition { get; } = verticalMirrorPosition;
+  public string[] SourceMap { get; }
+  public int? HorizontalMirrorPosition { get; }
+  public int? VerticalMirrorPosition { get; }
 
+  public int Height => SourceMap.Length;
+  public int Width => SourceMap[0].Length;
   public bool HasHorizontalMirror => this.HorizontalMirrorPosition != null;
   public bool HasVerticalMirror => this.VerticalMirrorPosition != null;
 
-  public static MapFrame From(string[] inputLines)
+  public static MapFrame From(string[] inputLines) => new(inputLines);
+
+  private MapFrame(string[] sourceMap)
   {
-    var horizontalMirrorPosition = DetectHorizontalMirror(inputLines);
-    var verticalMirrorPosition = DetectVerticalMirror(inputLines);
-    return new MapFrame(
-      inputLines.Length,
-      inputLines[0].Length,
-      horizontalMirrorPosition,
-      verticalMirrorPosition
-    );
+    this.SourceMap = sourceMap;
+    this.HorizontalMirrorPosition = DetectHorizontalMirror(sourceMap);
+    this.VerticalMirrorPosition = DetectVerticalMirror(sourceMap);
   }
 
   private static int? DetectVerticalMirror(string[] inputLines)

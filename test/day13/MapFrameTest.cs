@@ -132,6 +132,23 @@ public class MapFrameTest
       Assert.Equal(15, MapFrame.From(COMPLEX_MAP_INPUT_LINES).Height);
     }
 
+    [Fact]
+    public void GetBackSourceMap()
+    {
+      Assert.Equal(
+        FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES,
+        MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES).SourceMap
+      );
+      Assert.Equal(
+        SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES,
+        MapFrame.From(SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES).SourceMap
+      );
+      Assert.Equal(
+        COMPLEX_MAP_INPUT_LINES,
+        MapFrame.From(COMPLEX_MAP_INPUT_LINES).SourceMap
+      );
+    }
+
   }
 
 }
