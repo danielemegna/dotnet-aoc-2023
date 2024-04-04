@@ -29,48 +29,51 @@ class MapFrame
     return DetectHorizontalMirror(transposedMap);
   }
 
-  private static int? DetectHorizontalMirror(string[] inputLines)
+  private static int? DoubleCursorScan(string[] inputLines, ScanMode scanMode)
   {
     int lastLineIndex = inputLines.Length - 1;
-
     int topCursor = 0;
     int bottomCursor = lastLineIndex;
-    while (topCursor < bottomCursor)
+
+    do
     {
-      if (inputLines[topCursor] != inputLines[bottomCursor])
+      if (inputLines[topCursor] == inputLines[bottomCursor])
       {
-        if (bottomCursor != lastLineIndex)
-          bottomCursor = lastLineIndex;
-        else
-          topCursor++;
+        if (topCursor == bottomCursor - 1) return bottomCursor;
+        topCursor++;
+        bottomCursor--;
         continue;
       }
 
-      if (topCursor == bottomCursor - 1) return bottomCursor;
-      topCursor++;
-      bottomCursor--;
-    }
-
-    // TODO find a better way to double scan mirrors and remove duplication
-    topCursor = 0;
-    bottomCursor = lastLineIndex;
-    while (topCursor < bottomCursor)
-    {
-      if (inputLines[topCursor] != inputLines[bottomCursor])
+      switch (scanMode)
       {
-        if (topCursor != 0)
-          topCursor = 0;
-        else
+        case ScanMode.FIRST_HALF:
+          if (topCursor != 0){
+            topCursor = 0;
+            continue;
+          }
           bottomCursor--;
-        continue;
-      }
+          continue;
 
-      if (topCursor == bottomCursor - 1) return bottomCursor;
-      bottomCursor--;
-      topCursor++;
-    }
+        case ScanMode.SECOND_HALF:
+          if (bottomCursor != lastLineIndex) {
+            bottomCursor = lastLineIndex;
+            continue;
+          }
+          topCursor++;
+          continue;
+      }
+    } while (topCursor < bottomCursor);
 
     return null;
   }
 
+  private static int? DetectHorizontalMirror(string[] inputLines)
+  {
+    return
+      DoubleCursorScan(inputLines, ScanMode.FIRST_HALF) ??
+      DoubleCursorScan(inputLines, ScanMode.SECOND_HALF);
+  }
+
+  private enum ScanMode { FIRST_HALF, SECOND_HALF }
 }
