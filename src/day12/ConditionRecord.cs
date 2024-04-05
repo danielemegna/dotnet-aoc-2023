@@ -44,46 +44,44 @@ public class ConditionRecord
     int currentDamagedSpringGroupValue = 0;
     foreach (bool? state in springsStatesToCheck)
     {
-      if (!state.HasValue)
+      if (IsStateUnknown(state))
       {
-        if (currentDamagedSpringGroupValue > 0)
-        {
-          if (damagedSpringsGroupsToHave.Count == 0)
-            return false;
-          if (damagedSpringsGroupsToHave.Dequeue() < currentDamagedSpringGroupValue)
-            return false;
-        }
+        if (
+          damagedSpringsGroupsToHave.Count > 0 &&
+          currentDamagedSpringGroupValue > damagedSpringsGroupsToHave.Dequeue()
+        )
+          return false;
         return null;
       }
 
-      if (!state.Value)
+      if (IsDamaged(state))
       {
+        if (damagedSpringsGroupsToHave.Count == 0)
+          return false;
         currentDamagedSpringGroupValue++;
         continue;
       }
 
+      // is operational
       if (currentDamagedSpringGroupValue > 0)
       {
-        if (damagedSpringsGroupsToHave.Count == 0)
+        if (currentDamagedSpringGroupValue != damagedSpringsGroupsToHave.Dequeue())
           return false;
-        if (damagedSpringsGroupsToHave.Dequeue() != currentDamagedSpringGroupValue)
-          return false;
-
         currentDamagedSpringGroupValue = 0;
       }
     }
 
     if (currentDamagedSpringGroupValue > 0)
     {
-      if (damagedSpringsGroupsToHave.Count == 0)
+      if (currentDamagedSpringGroupValue != damagedSpringsGroupsToHave.Dequeue())
         return false;
-      if (damagedSpringsGroupsToHave.Dequeue() != currentDamagedSpringGroupValue)
-        return false;
-
     }
 
     return damagedSpringsGroupsToHave.Count == 0;
   }
+
+  private static bool IsDamaged(bool? state) => (!state) ?? false;
+  private static bool IsStateUnknown(bool? state) => !state.HasValue;
 
   private static bool?[] SpringStatesToBoolean(string springsStates)
   {
