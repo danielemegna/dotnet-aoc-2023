@@ -66,6 +66,23 @@ public class ConditionRecordTest
     }
 
     [Fact]
+    public void OnlyThreePossibleArrangments()
+    {
+      var record = new ConditionRecord("?.##???#???#??#.??", [2, 8, 1]);
+      Assert.Equal(3, record.PossibileArrangementsCount());
+    }
+
+    [Fact]
+    public void ManyPossibileArrangements()
+    {
+      var record = new ConditionRecord(
+        "?.##???#???#??#.????.##???#???#??#.????.##???#???#??#.????.##???#???#??#.????.##???#???#??#.??",
+        [2, 8, 1, 2, 8, 1, 2, 8, 1, 2, 8, 1, 2, 8, 1]
+      );
+      Assert.Equal(1875, record.PossibileArrangementsCount());
+    }
+
+    [Fact]
     public void LotOfPossibileArrangements()
     {
       var record = new ConditionRecord(
