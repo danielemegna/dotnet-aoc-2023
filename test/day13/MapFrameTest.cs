@@ -151,4 +151,25 @@ public class MapFrameTest
 
   }
 
+  [Fact]
+  public void Equality()
+  {
+    var first = MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
+    var anotherCopyOfFirst = MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
+    var second = MapFrame.From(SECOND_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
+
+    Assert.Equal(first, first);
+    Assert.Same(first, first);
+
+    Assert.Equal(first, anotherCopyOfFirst);
+    Assert.Equal(anotherCopyOfFirst, first);
+    Assert.False(first == anotherCopyOfFirst);
+    Assert.NotSame(first, anotherCopyOfFirst);
+    Assert.Equal(first.GetHashCode(), anotherCopyOfFirst.GetHashCode());
+
+    Assert.NotEqual(first, second);
+    Assert.NotEqual(second, anotherCopyOfFirst);
+    Assert.NotEqual(first.GetHashCode(), second.GetHashCode());
+  }
+
 }

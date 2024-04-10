@@ -1,5 +1,7 @@
 namespace aoc2023.day13;
 
+using System.Collections;
+
 class MapFrame
 {
   public string[] SourceMap { get; }
@@ -74,6 +76,19 @@ class MapFrame
       DoubleCursorScan(inputLines, ScanMode.FIRST_HALF) ??
       DoubleCursorScan(inputLines, ScanMode.SECOND_HALF);
   }
+
+  public override bool Equals(object? other)
+  {
+    if (this == other) return true;
+    if (other is null) return false;
+    if (other.GetType() != typeof(MapFrame)) return false;
+    var otherCasted = (MapFrame)other;
+
+    return SourceMap.SequenceEqual(otherCasted.SourceMap);
+  }
+
+  public override int GetHashCode() =>
+    StructuralComparisons.StructuralEqualityComparer.GetHashCode(SourceMap);
 
   private enum ScanMode { FIRST_HALF, SECOND_HALF }
 }
