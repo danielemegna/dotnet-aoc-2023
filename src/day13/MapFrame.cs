@@ -31,6 +31,13 @@ class MapFrame
     return DetectHorizontalMirror(transposedMap);
   }
 
+  private static int? DetectHorizontalMirror(string[] inputLines)
+  {
+    return
+      DoubleCursorScan(inputLines, ScanMode.FIRST_HALF) ??
+      DoubleCursorScan(inputLines, ScanMode.SECOND_HALF);
+  }
+
   private static int? DoubleCursorScan(string[] inputLines, ScanMode scanMode)
   {
     int lastLineIndex = inputLines.Length - 1;
@@ -50,7 +57,8 @@ class MapFrame
       switch (scanMode)
       {
         case ScanMode.FIRST_HALF:
-          if (topCursor != 0){
+          if (topCursor != 0)
+          {
             topCursor = 0;
             continue;
           }
@@ -58,7 +66,8 @@ class MapFrame
           continue;
 
         case ScanMode.SECOND_HALF:
-          if (bottomCursor != lastLineIndex) {
+          if (bottomCursor != lastLineIndex)
+          {
             bottomCursor = lastLineIndex;
             continue;
           }
@@ -68,13 +77,6 @@ class MapFrame
     } while (topCursor < bottomCursor);
 
     return null;
-  }
-
-  private static int? DetectHorizontalMirror(string[] inputLines)
-  {
-    return
-      DoubleCursorScan(inputLines, ScanMode.FIRST_HALF) ??
-      DoubleCursorScan(inputLines, ScanMode.SECOND_HALF);
   }
 
   public override bool Equals(object? other)
