@@ -40,6 +40,19 @@ class RocksMap
 
         return objects.Length - y;
     }
+
+    public int TotalLoadOnNorth()
+    {
+        int totalLoad = 0;
+        for (int y = 0; y < objects.Length; y++)
+        {
+            for (int x = 0; x < objects[y].Length; x++)
+            {
+                totalLoad += LoadOnNorthAt(x, y);
+            }
+        }
+        return totalLoad;
+    }
 }
 
 public enum MapObject { EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK }

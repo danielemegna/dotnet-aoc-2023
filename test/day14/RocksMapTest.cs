@@ -46,4 +46,24 @@ public class RocksMapTest
     Assert.Equal(1, map.LoadOnNorthAt(x: 1, y: 9));
   }
 
+  [Fact]
+  public void GetTotalLoadOnNorth()
+  {
+    string[] tiltedRocksMapInputLines = [
+      "OOOO.#.O..",
+      "OO..#....#",
+      "OO..O##..O",
+      "O..#.OO...",
+      "........#.",
+      "..#....#.#",
+      "..O..#.O.O",
+      "..O.......",
+      "#....###..",
+      "#....#...."
+    ];
+
+    var tiltedRocksMap = RocksMap.From(tiltedRocksMapInputLines);
+    Assert.Equal(136, tiltedRocksMap.TotalLoadOnNorth());
+  }
+
 }
