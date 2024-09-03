@@ -31,6 +31,15 @@ class RocksMap
     {
         return objects[y][x];
     }
+
+    public int LoadOnNorthAt(int x, int y)
+    {
+        var mapObject = At(x, y);
+        if (mapObject != MapObject.ROUND_ROCK)
+            return 0;
+
+        return objects.Length - y;
+    }
 }
 
 public enum MapObject { EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK }
