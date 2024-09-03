@@ -27,12 +27,12 @@ class RocksMap
         return new RocksMap(mapOfObjects);
     }
 
-    public MapObject At(int x, int y)
+    internal MapObject At(int x, int y)
     {
         return objects[y][x];
     }
 
-    public int LoadOnNorthAt(int x, int y)
+    internal int LoadOnNorthAt(int x, int y)
     {
         var mapObject = At(x, y);
         if (mapObject != MapObject.ROUND_ROCK)
