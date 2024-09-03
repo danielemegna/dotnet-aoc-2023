@@ -1,5 +1,6 @@
 namespace aoc2023.day13;
 
+using System;
 using System.Collections;
 
 class MapFrame
@@ -77,6 +78,11 @@ class MapFrame
     } while (topCursor < bottomCursor);
 
     return null;
+  }
+
+  public MapFrame FixSmudge()
+  {
+    throw new NotImplementedException();
   }
 
   public override bool Equals(object? other)

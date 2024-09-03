@@ -151,6 +151,21 @@ public class MapFrameTest
 
   }
 
+  public class FixSmudge
+  {
+
+    [Fact(Skip = "WIP")]
+    public void First()
+    {
+      var mapFrame = MapFrame.From(FIRST_MAP_PROVIDED_EXAMPLE_INPUT_LINES);
+      var newMapFrame = mapFrame.FixSmudge();
+      Assert.True(newMapFrame.HasHorizontalMirror);
+      Assert.Equal(5, newMapFrame.HorizontalMirrorPosition);
+      //Assert.True(newMapFrame.HasVerticalMirror);
+    }
+
+  }
+
   [Fact]
   public void Equality()
   {
