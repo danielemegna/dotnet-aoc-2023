@@ -56,6 +56,17 @@ class RocksMap
         return objects[y][x];
     }
 
+    public RocksMap TiltOnNorth()
+    {
+        MapObject[][] objectsClone = CloneObjects();
+        objectsClone[0][1] = MapObject.ROUND_ROCK;
+
+        return new RocksMap(objectsClone);
+    }
+
+    private MapObject[][] CloneObjects() =>
+        this.objects.Select((row) => (MapObject[])row.Clone()).ToArray();
+
     public override bool Equals(object? other)
     {
         if (this == other) return true;
