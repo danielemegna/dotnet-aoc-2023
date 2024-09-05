@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace aoc2023.day14;
 
 class RocksMap
@@ -53,6 +55,19 @@ class RocksMap
         }
         return totalLoad;
     }
+
+    public override bool Equals(object? other)
+    {
+        if (this == other) return true;
+        if (other is null) return false;
+        if (other.GetType() != typeof(RocksMap)) return false;
+        var otherCasted = (RocksMap)other;
+
+        return StructuralComparisons.StructuralEqualityComparer.Equals(objects, otherCasted.objects);
+    }
+
+    public override int GetHashCode() =>
+      StructuralComparisons.StructuralEqualityComparer.GetHashCode(objects);
 }
 
 public enum MapObject { EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK }

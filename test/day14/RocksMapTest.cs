@@ -70,4 +70,24 @@ public class RocksMapTest
     Assert.Equal(136, tiltedRocksMap.TotalLoadOnNorth());
   }
 
+  [Fact]
+  public void Equality()
+  {
+    var anotherCopyOfMap = RocksMap.From(SolverTest.PROVIDED_EXAMPLE_INPUT_LINES);
+    var anotherMap = RocksMap.From(ANOTHER_MAP_ALREADY_TILTED);
+
+    Assert.Equal(map, map);
+    Assert.Same(map, map);
+
+    Assert.Equal(map, anotherCopyOfMap);
+    Assert.Equal(anotherCopyOfMap, map);
+    Assert.False(map == anotherCopyOfMap);
+    Assert.NotSame(map, anotherCopyOfMap);
+    Assert.Equal(map.GetHashCode(), anotherCopyOfMap.GetHashCode());
+
+    Assert.NotEqual(map, anotherMap);
+    Assert.NotEqual(anotherMap, anotherCopyOfMap);
+    Assert.NotEqual(map.GetHashCode(), anotherMap.GetHashCode());
+  }
+
 }
