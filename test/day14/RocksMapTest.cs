@@ -5,6 +5,19 @@ using Xunit;
 public class RocksMapTest
 {
 
+  public static readonly string[] ANOTHER_MAP_ALREADY_TILTED = [
+    "OOOO.#.O..",
+    "OO..#....#",
+    "OO..O##..O",
+    "O..#.OO...",
+    "........#.",
+    "..#....#.#",
+    "..O..#.O.O",
+    "..O.......",
+    "#....###..",
+    "#....#...."
+  ];
+
   private readonly RocksMap map = RocksMap.From(SolverTest.PROVIDED_EXAMPLE_INPUT_LINES);
 
   [Fact]
@@ -49,20 +62,11 @@ public class RocksMapTest
   [Fact]
   public void GetTotalLoadOnNorth()
   {
-    string[] tiltedRocksMapInputLines = [
-      "OOOO.#.O..",
-      "OO..#....#",
-      "OO..O##..O",
-      "O..#.OO...",
-      "........#.",
-      "..#....#.#",
-      "..O..#.O.O",
-      "..O.......",
-      "#....###..",
-      "#....#...."
-    ];
-
-    var tiltedRocksMap = RocksMap.From(tiltedRocksMapInputLines);
+    Assert.Equal(
+      10 + (9 * 3) + (7 * 4) + (6 * 2) + (5 * 2) + (4 * 3) + (3 * 1) + (1 * 2),
+      map.TotalLoadOnNorth()
+    );
+    var tiltedRocksMap = RocksMap.From(ANOTHER_MAP_ALREADY_TILTED);
     Assert.Equal(136, tiltedRocksMap.TotalLoadOnNorth());
   }
 
