@@ -29,20 +29,6 @@ class RocksMap
         return new RocksMap(mapOfObjects);
     }
 
-    internal MapObject At(int x, int y)
-    {
-        return objects[y][x];
-    }
-
-    internal int LoadOnNorthAt(int x, int y)
-    {
-        var mapObject = At(x, y);
-        if (mapObject != MapObject.ROUND_ROCK)
-            return 0;
-
-        return objects.Length - y;
-    }
-
     public int TotalLoadOnNorth()
     {
         int totalLoad = 0;
@@ -54,6 +40,20 @@ class RocksMap
             }
         }
         return totalLoad;
+    }
+
+    internal int LoadOnNorthAt(int x, int y)
+    {
+        var mapObject = At(x, y);
+        if (mapObject != MapObject.ROUND_ROCK)
+            return 0;
+
+        return objects.Length - y;
+    }
+
+    internal MapObject At(int x, int y)
+    {
+        return objects[y][x];
     }
 
     public override bool Equals(object? other)
