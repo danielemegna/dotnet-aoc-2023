@@ -5,7 +5,7 @@ using Xunit;
 public class RocksMapTest
 {
 
-  public static readonly string[] ANOTHER_MAP_ALREADY_TILTED = [
+  public static readonly string[] PROVIDED_EXAMPLE_NORTH_TILTED_INPUT_LINES = [
     "OOOO.#.O..",
     "OO..#....#",
     "OO..O##..O",
@@ -66,7 +66,7 @@ public class RocksMapTest
       10 + (9 * 3) + (7 * 4) + (6 * 2) + (5 * 2) + (4 * 3) + (3 * 1) + (1 * 2),
       map.TotalLoadOnNorth()
     );
-    var tiltedRocksMap = RocksMap.From(ANOTHER_MAP_ALREADY_TILTED);
+    var tiltedRocksMap = RocksMap.From(PROVIDED_EXAMPLE_NORTH_TILTED_INPUT_LINES);
     Assert.Equal(136, tiltedRocksMap.TotalLoadOnNorth());
   }
 
@@ -74,7 +74,7 @@ public class RocksMapTest
   public void Equality()
   {
     var anotherCopyOfMap = RocksMap.From(SolverTest.PROVIDED_EXAMPLE_INPUT_LINES);
-    var anotherMap = RocksMap.From(ANOTHER_MAP_ALREADY_TILTED);
+    var anotherMap = RocksMap.From(PROVIDED_EXAMPLE_NORTH_TILTED_INPUT_LINES);
 
     Assert.Equal(map, map);
     Assert.Same(map, map);
