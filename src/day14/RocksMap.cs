@@ -6,7 +6,7 @@ class RocksMap
 {
     private readonly MapObject[][] objects;
 
-    public RocksMap(MapObject[][] objects)
+    private RocksMap(MapObject[][] objects)
     {
         this.objects = objects;
     }
