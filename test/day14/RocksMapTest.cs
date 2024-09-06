@@ -145,7 +145,28 @@ public class RocksMapTest
     Assert.Equal(tilted, expected);
   }
 
-  [Fact(Skip = "WIP")]
+  [Fact]
+  public void TiltOnNorthBiggerMapWithGreaterMovements()
+  {
+    var simpleMap = RocksMap.From([
+      "...#",
+      "....",
+      "O.O.",
+      ".O.O",
+    ]);
+
+    var tilted = simpleMap.TiltOnNorth();
+
+    var expected = RocksMap.From([
+      "OOO#",
+      "...O",
+      "....",
+      "....",
+    ]);
+    Assert.Equal(tilted, expected);
+  }
+
+  [Fact]
   public void TiltOnNorthTheProvidedMapExample()
   {
     var tilted = map.TiltOnNorth();

@@ -69,13 +69,17 @@ class RocksMap
                 if (currentObject != MapObject.ROUND_ROCK)
                     continue;
 
-                var aboveRow = objectsClone[y - 1];
-                var aboveObject = aboveRow[x];
-                if (aboveObject != MapObject.EMPTY_SPACE)
-                    continue;
+                for (int k = y; k > 0; k--)
+                {
+                    var processingRow = objectsClone[k];
+                    var aboveRow = objectsClone[k - 1];
+                    var aboveObject = aboveRow[x];
+                    if (aboveObject != MapObject.EMPTY_SPACE)
+                        break;
 
-                aboveRow[x] = MapObject.ROUND_ROCK;
-                currentRow[x] = MapObject.EMPTY_SPACE;
+                    processingRow[x] = MapObject.EMPTY_SPACE;
+                    aboveRow[x] = MapObject.ROUND_ROCK;
+                }
             }
         }
 
