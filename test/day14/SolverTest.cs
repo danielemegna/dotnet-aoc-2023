@@ -29,12 +29,12 @@ public class SolverTest
       Assert.Equal(136, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day14/input.txt");
       var actual = solver.TotalLoadOnNorthTilting(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(107053, actual);
     }
 
   }
