@@ -91,23 +91,45 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void TiltOnNorth()
+  public void TiltOnNorthASimple2x2Map()
+  {
+    var simpleMap = RocksMap.From([
+      ".O",
+      "O.",
+    ]);
+
+    var tilted = simpleMap.TiltOnNorth();
+
+    var expected = RocksMap.From([
+      "OO",
+      "..",
+    ]);
+    Assert.Equal(tilted, expected);
+  }
+
+  [Fact]
+  public void TiltOnNorthLargerMapHandlingCubeRocks()
+  {
+    var simpleMap = RocksMap.From([
+      "..#.",
+      "#OO#",
+    ]);
+
+    var tilted = simpleMap.TiltOnNorth();
+
+    var expected = RocksMap.From([
+      ".O#.",
+      "#.O#",
+    ]);
+    Assert.Equal(tilted, expected);
+  }
+
+  [Fact(Skip = "WIP")]
+  public void TiltOnNorthTheProvidedMapExample()
   {
     var tilted = map.TiltOnNorth();
     var expected = RocksMap.From(PROVIDED_EXAMPLE_NORTH_TILTED_INPUT_LINES);
-
-    Assert.Equal(tilted.At(0, 0), expected.At(0, 0));
-    Assert.Equal(tilted.At(1, 0), expected.At(1, 0));
-    //Assert.Equal(tilted.At(2, 0), expected.At(2, 0));
-    //Assert.Equal(tilted.At(3, 0), expected.At(3, 0));
-    //Assert.Equal(tilted.At(4, 0), expected.At(4, 0));
-    //Assert.Equal(tilted.At(5, 0), expected.At(5, 0));
-    //Assert.Equal(tilted.At(6, 0), expected.At(6, 0));
-    //Assert.Equal(tilted.At(7, 0), expected.At(7, 0));
-    //Assert.Equal(tilted.At(8, 0), expected.At(8, 0));
-    //Assert.Equal(tilted.At(9, 0), expected.At(9, 0));
-
-    //Assert.Equal(tilted, expected);
+    Assert.Equal(tilted, expected);
   }
 
 }

@@ -59,7 +59,23 @@ class RocksMap
     public RocksMap TiltOnNorth()
     {
         MapObject[][] objectsClone = CloneObjects();
-        objectsClone[0][1] = MapObject.ROUND_ROCK;
+
+        var y = 1;
+        var currentRow = objectsClone[y];
+        for (int x = 0; x < currentRow.Length; x++)
+        {
+            var currentObject = currentRow[x];
+            if(currentObject != MapObject.ROUND_ROCK)
+                continue;
+            
+            var aboveRow = objectsClone[y-1];
+            var aboveObject = aboveRow[x];
+            if(aboveObject != MapObject.EMPTY_SPACE)
+                continue;
+
+            aboveRow[x] = currentObject;
+            currentRow[x] = MapObject.EMPTY_SPACE;
+        }
 
         return new RocksMap(objectsClone);
     }
