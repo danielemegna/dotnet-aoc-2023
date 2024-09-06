@@ -60,21 +60,23 @@ class RocksMap
     {
         MapObject[][] objectsClone = CloneObjects();
 
-        var y = 1;
-        var currentRow = objectsClone[y];
-        for (int x = 0; x < currentRow.Length; x++)
+        for (int y = 1; y < objectsClone.Length; y++)
         {
-            var currentObject = currentRow[x];
-            if(currentObject != MapObject.ROUND_ROCK)
-                continue;
-            
-            var aboveRow = objectsClone[y-1];
-            var aboveObject = aboveRow[x];
-            if(aboveObject != MapObject.EMPTY_SPACE)
-                continue;
+            var currentRow = objectsClone[y];
+            for (int x = 0; x < currentRow.Length; x++)
+            {
+                var currentObject = currentRow[x];
+                if (currentObject != MapObject.ROUND_ROCK)
+                    continue;
 
-            aboveRow[x] = currentObject;
-            currentRow[x] = MapObject.EMPTY_SPACE;
+                var aboveRow = objectsClone[y - 1];
+                var aboveObject = aboveRow[x];
+                if (aboveObject != MapObject.EMPTY_SPACE)
+                    continue;
+
+                aboveRow[x] = MapObject.ROUND_ROCK;
+                currentRow[x] = MapObject.EMPTY_SPACE;
+            }
         }
 
         return new RocksMap(objectsClone);
