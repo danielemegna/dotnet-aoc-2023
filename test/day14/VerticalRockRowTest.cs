@@ -6,6 +6,15 @@ public class VerticalRockRowTest
 {
 
   [Fact]
+  public void DoNotSortRowOfSpaces() {
+    var row = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.EMPTY_SPACE]);
+    row.Sort();
+
+    var expected = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.EMPTY_SPACE]);
+    Assert.Equal(expected, row);
+  }
+
+  [Fact]
   public void Equality()
   {
     var row = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.CUBE_ROCK, MapObject.ROUND_ROCK, MapObject.EMPTY_SPACE]);

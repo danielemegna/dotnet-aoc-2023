@@ -11,6 +11,11 @@ class VerticalRockRow
         this.rowObjects = rowObjects;
     }
 
+    public void Sort()
+    {
+
+    }
+
     public override bool Equals(object? other)
     {
         if (this == other) return true;
