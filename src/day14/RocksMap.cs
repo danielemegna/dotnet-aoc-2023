@@ -23,6 +23,26 @@ class RocksMap
         return new RocksMap(mapOfObjects);
     }
 
+    public static RocksMap WIPVerticalRockRowFrom(string[] inputLines)
+    {
+        List<MapObject>[] accumulator = inputLines[0].ToCharArray().Select(c =>
+        {
+            return new List<MapObject> { ToMapObject(c) };
+        }).ToArray();
+
+        var verticalRockRows = inputLines.Skip(1).Aggregate(accumulator, (acc, line) =>
+        {
+            var charArray = line.ToCharArray();
+            for (int i = 0; i < charArray.Length; i++)
+            {
+                acc.ElementAt(i).Add(ToMapObject(charArray[i]));
+            }
+            return acc;
+        }).Select(mapObjects => new VerticalRockRow(mapObjects.ToArray())).ToArray();
+
+        return new RocksMap([] /* verticalRockRows */);
+    }
+
     private static MapObject ToMapObject(char mapObjectChar)
     {
         return mapObjectChar switch
