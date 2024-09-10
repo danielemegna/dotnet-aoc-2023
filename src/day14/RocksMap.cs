@@ -15,18 +15,23 @@ class RocksMap
     {
         var mapOfObjects = inputLines.Select((line) =>
         {
-            return line.ToCharArray().Select((mapObjectChar) =>
-            {
-                return mapObjectChar switch
-                {
-                    '.' => MapObject.EMPTY_SPACE,
-                    'O' => MapObject.ROUND_ROCK,
-                    '#' => MapObject.CUBE_ROCK,
-                    _ => throw new FormatException($"Cannot parse map object [{mapObjectChar}]"),
-                };
-            }).ToArray();
+            return line
+                .ToCharArray()
+                .Select((mapObjectChar) => ToMapObject(mapObjectChar))
+                .ToArray();
         }).ToArray();
         return new RocksMap(mapOfObjects);
+    }
+
+    private static MapObject ToMapObject(char mapObjectChar)
+    {
+        return mapObjectChar switch
+        {
+            '.' => MapObject.EMPTY_SPACE,
+            'O' => MapObject.ROUND_ROCK,
+            '#' => MapObject.CUBE_ROCK,
+            _ => throw new FormatException($"Cannot parse map object [{mapObjectChar}]"),
+        };
     }
 
     public int TotalLoadOnNorth()
