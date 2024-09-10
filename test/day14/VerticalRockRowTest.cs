@@ -1,25 +1,27 @@
 namespace aoc2023.day14;
 
 using Xunit;
+using static MapObject;
 
 public class VerticalRockRowTest
 {
 
   [Fact]
-  public void DoNotSortRowOfSpaces() {
-    var row = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.EMPTY_SPACE]);
+  public void DoNotSortRowOfSpaces()
+  {
+    var row = new VerticalRockRow([EMPTY_SPACE, EMPTY_SPACE]);
     row.Sort();
 
-    var expected = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.EMPTY_SPACE]);
+    var expected = new VerticalRockRow([EMPTY_SPACE, EMPTY_SPACE]);
     Assert.Equal(expected, row);
   }
 
   [Fact]
   public void Equality()
   {
-    var row = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.CUBE_ROCK, MapObject.ROUND_ROCK, MapObject.EMPTY_SPACE]);
-    var anotherRow = new VerticalRockRow([MapObject.ROUND_ROCK, MapObject.CUBE_ROCK, MapObject.EMPTY_SPACE, MapObject.ROUND_ROCK]);
-    var anotherCopyOfRow = new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.CUBE_ROCK, MapObject.ROUND_ROCK, MapObject.EMPTY_SPACE]);
+    var row = new VerticalRockRow([EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, EMPTY_SPACE]);
+    var anotherRow = new VerticalRockRow([ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE, ROUND_ROCK]);
+    var anotherCopyOfRow = new VerticalRockRow([EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, EMPTY_SPACE]);
 
     Assert.Equal(row, row);
     Assert.Same(row, row);
