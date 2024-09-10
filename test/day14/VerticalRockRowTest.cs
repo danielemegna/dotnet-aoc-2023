@@ -7,10 +7,10 @@ public class VerticalRockRowTest
 {
 
   [Fact]
-  public void DoNotSortRowOfSpaces()
+  public void TiltRowOfSpaces()
   {
     var row = new VerticalRockRow([EMPTY_SPACE, EMPTY_SPACE]);
-    row.Sort();
+    row.Tilt();
 
     var expected = new VerticalRockRow([EMPTY_SPACE, EMPTY_SPACE]);
     Assert.Equal(expected, row);

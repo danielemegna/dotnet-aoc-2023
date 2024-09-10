@@ -11,7 +11,7 @@ class VerticalRockRow
         this.rowObjects = rowObjects;
     }
 
-    public void Sort()
+    public void Tilt()
     {
 
     }
