@@ -41,4 +41,16 @@ class VerticalRockRow
 
     public override int GetHashCode() =>
       StructuralComparisons.StructuralEqualityComparer.GetHashCode(rowObjects);
+
+    public override string ToString()
+    {
+        return "[" + string.Join("", rowObjects.Select(o => o switch
+        {
+            MapObject.EMPTY_SPACE => ".",
+            MapObject.ROUND_ROCK => "O",
+            MapObject.CUBE_ROCK => "#",
+            _ => throw new ArgumentException($"Strange MapObject value [{o}] ...")
+        }
+        )) + "]";
+    }
 }

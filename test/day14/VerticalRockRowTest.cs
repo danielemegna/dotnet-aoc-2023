@@ -50,13 +50,13 @@ public class VerticalRockRowTest
   public void TiltMoreComplexRow()
   {
     var row = new VerticalRockRow([
-      EMPTY_SPACE, EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE,EMPTY_SPACE, ROUND_ROCK,
+      EMPTY_SPACE, EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE, EMPTY_SPACE, ROUND_ROCK,
       ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK
     ]);
     row.Tilt();
 
     var expected = new VerticalRockRow([
-      ROUND_ROCK, EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK,ROUND_ROCK, EMPTY_SPACE,
+      ROUND_ROCK, EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE,
       EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK
     ]);
     Assert.Equal(expected, row);
@@ -81,5 +81,25 @@ public class VerticalRockRowTest
     Assert.NotEqual(row, anotherRow);
     Assert.NotEqual(anotherRow, anotherCopyOfRow);
     Assert.NotEqual(row.GetHashCode(), anotherRow.GetHashCode());
+  }
+
+  [Fact]
+  public void CustomToString()
+  {
+    var row = new VerticalRockRow([EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE]);
+    Assert.Equal("[.O#.]", row.ToString());
+
+    row = new VerticalRockRow([
+      EMPTY_SPACE, EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE, EMPTY_SPACE, ROUND_ROCK,
+      ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK
+    ]);
+    Assert.Equal("[..O#..OO.#O.O#]", row.ToString());
+
+    row = new VerticalRockRow([
+      ROUND_ROCK, EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE,
+      EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK
+    ]);
+    Assert.Equal("[O..#OO...#OO.#]", row.ToString());
+
   }
 }
