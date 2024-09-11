@@ -29,6 +29,17 @@ class VerticalRockRow
         }
     }
 
+    public int GetLoad()
+    {
+        return rowObjects.Select((mapObject, index) =>
+        {
+            if (mapObject != MapObject.ROUND_ROCK)
+                return 0;
+
+            return rowObjects.Length - index;
+        }).Sum();
+    }
+
     public override bool Equals(object? other)
     {
         if (this == other) return true;

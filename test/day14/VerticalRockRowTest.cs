@@ -63,6 +63,46 @@ public class VerticalRockRowTest
   }
 
   [Fact]
+  public void LoadZeroForEmptySpacesAndCubeRocks()
+  {
+    Assert.Equal(0, new VerticalRockRow([EMPTY_SPACE]).GetLoad());
+    Assert.Equal(0, new VerticalRockRow([CUBE_ROCK]).GetLoad());
+    Assert.Equal(0, new VerticalRockRow([EMPTY_SPACE, CUBE_ROCK]).GetLoad());
+    Assert.Equal(0, new VerticalRockRow([CUBE_ROCK, EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK]).GetLoad());
+  }
+
+  [Fact]
+  public void LoadOneForSingleRoundRock()
+  {
+    Assert.Equal(1, new VerticalRockRow([ROUND_ROCK]).GetLoad());
+  }
+
+  [Fact]
+  public void LoadMoreThanOneWhenRowIsLonger()
+  {
+    Assert.Equal(2, new VerticalRockRow([ROUND_ROCK, EMPTY_SPACE]).GetLoad());
+    Assert.Equal(2, new VerticalRockRow([ROUND_ROCK, CUBE_ROCK]).GetLoad());
+    Assert.Equal(3, new VerticalRockRow([ROUND_ROCK, EMPTY_SPACE, EMPTY_SPACE]).GetLoad());
+    Assert.Equal(4, new VerticalRockRow([ROUND_ROCK, CUBE_ROCK, CUBE_ROCK, CUBE_ROCK]).GetLoad());
+    Assert.Equal(5, new VerticalRockRow([ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE, CUBE_ROCK, EMPTY_SPACE]).GetLoad());
+  }
+
+  [Fact]
+  public void LoadAsSumOfRoundRockLoads()
+  {
+    Assert.Equal(2 + 1, new VerticalRockRow([ROUND_ROCK, ROUND_ROCK]).GetLoad());
+    Assert.Equal(3 + 1, new VerticalRockRow([ROUND_ROCK, CUBE_ROCK, ROUND_ROCK]).GetLoad());
+    Assert.Equal(6 + 5 + 2, new VerticalRockRow([
+      ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, EMPTY_SPACE
+    ]).GetLoad());
+    Assert.Equal(14 + 10 + 9 + 4 + 3, new VerticalRockRow([
+      ROUND_ROCK, EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE,
+      EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK
+    ]).GetLoad());
+  }
+
+
+  [Fact]
   public void Equality()
   {
     var row = new VerticalRockRow([EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, EMPTY_SPACE]);
