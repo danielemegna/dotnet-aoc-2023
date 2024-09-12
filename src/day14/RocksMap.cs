@@ -13,20 +13,24 @@ class RocksMap
 
     public static RocksMap From(string[] inputLines)
     {
-        List<MapObject>[] accumulator = inputLines[0].ToCharArray().Select(c =>
-        {
-            return new List<MapObject> { ToMapObject(c) };
-        }).ToArray();
+        var accumulator = inputLines[0]
+            .ToCharArray()
+            .Select(c => new List<MapObject>())
+            .ToArray();
 
-        var verticalRockRows = inputLines.Skip(1).Aggregate(accumulator, (acc, line) =>
+        var verticalRockRows = inputLines.Aggregate(accumulator, (acc, line) =>
         {
             var charArray = line.ToCharArray();
             for (int i = 0; i < charArray.Length; i++)
             {
-                acc.ElementAt(i).Add(ToMapObject(charArray[i]));
+                MapObject currrentMapObject = ToMapObject(charArray[i]);
+                List<MapObject> verticalRockRowObjectAccumulator = acc.ElementAt(i);
+                verticalRockRowObjectAccumulator.Add(currrentMapObject);
             }
             return acc;
-        }).Select(mapObjects => new VerticalRockRow(mapObjects.ToArray())).ToArray();
+        })
+        .Select(mapObjects => new VerticalRockRow(mapObjects.ToArray()))
+        .ToArray();
 
         return new RocksMap(verticalRockRows);
     }
