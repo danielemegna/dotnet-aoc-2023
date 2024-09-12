@@ -70,5 +70,3 @@ class RocksMap
     public override int GetHashCode() =>
       StructuralComparisons.StructuralEqualityComparer.GetHashCode(mapRows);
 }
-
-public enum MapObject { EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK }

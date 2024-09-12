@@ -1,6 +1,6 @@
-using System.Collections;
-
 namespace aoc2023.day14;
+
+using System.Collections;
 
 class VerticalRockRow
 {
@@ -65,3 +65,5 @@ class VerticalRockRow
         )) + "]";
     }
 }
+
+public enum MapObject { EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK }
