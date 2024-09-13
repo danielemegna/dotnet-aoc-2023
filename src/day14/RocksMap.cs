@@ -55,6 +55,14 @@ class RocksMap
         return new RocksMap(newRows);
     }
 
+    public RocksMap TurnClockwise()
+    {
+        return new RocksMap([
+            new VerticalRockRow([MapObject.ROUND_ROCK, MapObject.EMPTY_SPACE]),
+            new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.ROUND_ROCK])
+        ]);
+    }
+
     public override bool Equals(object? other)
     {
         if (this == other) return true;
@@ -67,4 +75,5 @@ class RocksMap
 
     public override int GetHashCode() =>
       StructuralComparisons.StructuralEqualityComparer.GetHashCode(mapRows);
+
 }

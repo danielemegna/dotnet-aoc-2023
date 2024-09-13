@@ -135,4 +135,20 @@ public class RocksMapTest
     Assert.Equal(tilted, expected);
   }
 
+  [Fact]
+  public void TurnClockwiseSimpleMap() {
+    var simpleMap = RocksMap.From([
+      ".O",
+      "O.",
+    ]);
+
+    var turned = simpleMap.TurnClockwise();
+
+    var expected = RocksMap.From([
+      "O.",
+      ".O",
+    ]);
+    Assert.Equal(expected, turned);
+  }
+
 }
