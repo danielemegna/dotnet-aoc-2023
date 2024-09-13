@@ -6,31 +6,25 @@ class RocksMap
 {
     private readonly VerticalRockRow[] mapRows;
 
-    private RocksMap(VerticalRockRow[] mapRows)
-    {
-        this.mapRows = mapRows;
-    }
+    private RocksMap(IEnumerable<VerticalRockRow> mapRows) : this(mapRows.ToArray()) { }
+    private RocksMap(VerticalRockRow[] mapRows) { this.mapRows = mapRows; }
 
     public static RocksMap From(string[] inputLines)
     {
-        var accumulator = inputLines[0]
-            .ToCharArray()
-            .Select(c => new List<MapObject>())
+        MapObject[][] matrixOfObjects = inputLines
+            .Select(line => line.ToCharArray())
+            .Select(chars => chars.Select(ToMapObject).ToArray())
             .ToArray();
 
-        var verticalRockRows = inputLines.Aggregate(accumulator, (acc, line) =>
+        List<VerticalRockRow> verticalRockRows = [];
+        for (int x = 0; x < inputLines[0].Length; x++)
         {
-            var charArray = line.ToCharArray();
-            for (int i = 0; i < charArray.Length; i++)
-            {
-                MapObject currrentMapObject = ToMapObject(charArray[i]);
-                List<MapObject> verticalRockRowObjectAccumulator = acc.ElementAt(i);
-                verticalRockRowObjectAccumulator.Add(currrentMapObject);
-            }
-            return acc;
-        })
-        .Select(mapObjects => new VerticalRockRow(mapObjects.ToArray()))
-        .ToArray();
+            List<MapObject> verticalRowObjects = [];
+            for (int y = 0; y < inputLines.Length; y++)
+                verticalRowObjects.Add(matrixOfObjects[y][x]);
+
+            verticalRockRows.Add(new VerticalRockRow(verticalRowObjects));
+        }
 
         return new RocksMap(verticalRockRows);
     }

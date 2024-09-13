@@ -6,10 +6,8 @@ class VerticalRockRow
 {
     private MapObject[] rowObjects;
 
-    public VerticalRockRow(MapObject[] rowObjects)
-    {
-        this.rowObjects = rowObjects;
-    }
+    public VerticalRockRow(IEnumerable<MapObject> rowObjects) : this(rowObjects.ToArray()) { }
+    public VerticalRockRow(MapObject[] rowObjects) { this.rowObjects = rowObjects; }
 
     public void Tilt()
     {
