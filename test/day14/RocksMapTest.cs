@@ -136,17 +136,61 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void TurnClockwiseSimpleMap() {
+  public void TurnClockwiseSimpleMap()
+  {
     var simpleMap = RocksMap.From([
       ".O",
-      "O.",
+      "#.",
     ]);
 
     var turned = simpleMap.TurnClockwise();
 
     var expected = RocksMap.From([
-      "O.",
+      "#.",
       ".O",
+    ]);
+    Assert.Equal(expected, turned);
+  }
+
+  [Fact]
+  public void TurnClockwiseBiggerMap()
+  {
+    var biggerMap = RocksMap.From([
+      "...#",
+      "....",
+      "O.O.",
+      ".O.O",
+    ]);
+
+    var turned = biggerMap.TurnClockwise();
+
+    var expected = RocksMap.From([
+      ".O..",
+      "O...",
+      ".O..",
+      "O..#",
+    ]);
+    Assert.Equal(expected, turned);
+  }
+
+  [Fact]
+  public void TurnClockwiseMoreComplexMap()
+  {
+    var complexMap = RocksMap.From(PROVIDED_EXAMPLE_NORTH_TILTED_INPUT_LINES);
+
+    var turned = complexMap.TurnClockwise();
+
+    var expected = RocksMap.From([
+      "##....OOOO",
+      ".......OOO",
+      "..OO#....O",
+      "......#..O",
+      ".......O#.",
+      "##.#..O#.#",
+      ".#....O#..",
+      ".#.O#....O",
+      ".....#....",
+      "...O#..O#.",
     ]);
     Assert.Equal(expected, turned);
   }

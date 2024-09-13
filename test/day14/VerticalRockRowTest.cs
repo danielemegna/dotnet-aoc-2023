@@ -140,6 +140,16 @@ public class VerticalRockRowTest
       EMPTY_SPACE, EMPTY_SPACE, CUBE_ROCK, ROUND_ROCK, ROUND_ROCK, EMPTY_SPACE, CUBE_ROCK
     ]);
     Assert.Equal("[O..#OO...#OO.#]", row.ToString());
-
   }
+
+  [Fact]
+  public void GetObjectAtIndex()
+  {
+    var row = new VerticalRockRow([EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK, EMPTY_SPACE]);
+    Assert.Equal(EMPTY_SPACE, row.At(0));
+    Assert.Equal(ROUND_ROCK, row.At(1));
+    Assert.Equal(CUBE_ROCK, row.At(2));
+    Assert.Equal(EMPTY_SPACE, row.At(3));
+  }
+
 }

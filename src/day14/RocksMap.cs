@@ -57,10 +57,14 @@ class RocksMap
 
     public RocksMap TurnClockwise()
     {
-        return new RocksMap([
-            new VerticalRockRow([MapObject.ROUND_ROCK, MapObject.EMPTY_SPACE]),
-            new VerticalRockRow([MapObject.EMPTY_SPACE, MapObject.ROUND_ROCK])
-        ]);
+        var mapSizeRange = Enumerable.Range(0, mapRows.Length);
+        var newRows = mapSizeRange.Reverse().Select((y) =>
+        {
+            var newVerticalRowObjects = mapSizeRange.Select((x) => mapRows[x].At(y));
+            return new VerticalRockRow(newVerticalRowObjects);
+        });
+
+        return new RocksMap(newRows);
     }
 
     public override bool Equals(object? other)

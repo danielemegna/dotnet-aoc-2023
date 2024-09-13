@@ -38,6 +38,10 @@ class VerticalRockRow
         }).Sum();
     }
 
+    public MapObject At(int index) {
+        return rowObjects[index];
+    }
+
     public override bool Equals(object? other)
     {
         if (this == other) return true;
