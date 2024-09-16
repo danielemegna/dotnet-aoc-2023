@@ -39,4 +39,24 @@ public class SolverTest
 
   }
 
+  public class SecondPartTest : SolverTest
+  {
+
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.TotalLoadOnNorthAfterOneBilionOfTilting(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(64, actual);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day14/input.txt");
+      var actual = solver.TotalLoadOnNorthAfterOneBilionOfTilting(input);
+      Assert.Equal(-999, actual);
+    }
+
+  }
+
 }
