@@ -12,6 +12,12 @@ class Solver
 
     public int TotalLoadOnNorthAfterOneBilionOfTilting(string[] inputLines)
     {
-        return 64;
+        var map = RocksMap.From(inputLines);
+        for (int i = 0; i < 1000; i++)
+        {
+            map = map.MakeACycleOfTilts();
+        }
+
+        return map.TotalLoadOnNorth();
     }
 }
