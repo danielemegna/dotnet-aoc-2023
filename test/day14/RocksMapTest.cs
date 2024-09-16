@@ -195,4 +195,64 @@ public class RocksMapTest
     Assert.Equal(expected, turned);
   }
 
+  [Fact]
+  public void CycleOfTiltsOnTheProvidedExampleMap() {
+    var actual = map.MakeACycleOfTilts();
+
+    var expected = RocksMap.From([
+      ".....#....",
+      "....#...O#",
+      "...OO##...",
+      ".OO#......",
+      ".....OOO#.",
+      ".O#...O#.#",
+      "....O#....",
+      "......OOOO",
+      "#...O###..",
+      "#..OO#...."
+    ]);
+    Assert.Equal(expected, actual);
+  }
+
+  [Fact]
+  public void TwoCyclesOfTiltsOnTheProvidedExampleMap() {
+    var intermediate = map.MakeACycleOfTilts();
+    var actual = intermediate.MakeACycleOfTilts();
+
+    var expected = RocksMap.From([
+      ".....#....",
+      "....#...O#",
+      ".....##...",
+      "..O#......",
+      ".....OOO#.",
+      ".O#...O#.#",
+      "....O#...O",
+      ".......OOO",
+      "#..OO###..",
+      "#.OOO#...O"
+    ]);
+    Assert.Equal(expected, actual);
+  }
+
+  [Fact]
+  public void ThreeCyclesOfTiltsOnTheProvidedExampleMap() {
+    var intermediate = map.MakeACycleOfTilts();
+    intermediate = intermediate.MakeACycleOfTilts();
+    var actual = intermediate.MakeACycleOfTilts();
+
+    var expected = RocksMap.From([
+      ".....#....",
+      "....#...O#",
+      ".....##...",
+      "..O#......",
+      ".....OOO#.",
+      ".O#...O#.#",
+      "....O#...O",
+      ".......OOO",
+      "#...O###.O",
+      "#.OOO#...O"
+    ]);
+    Assert.Equal(expected, actual);
+  }
+
 }

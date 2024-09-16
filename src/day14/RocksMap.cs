@@ -67,6 +67,17 @@ class RocksMap
         return new RocksMap(newRows);
     }
 
+    public RocksMap MakeACycleOfTilts()
+    {
+        RocksMap result = this;
+        for (int i = 0; i < 4; i++)
+        {
+            result = result.TiltOnNorth();
+            result = result.TurnClockwise();
+        }
+        return result;
+    }
+
     public override bool Equals(object? other)
     {
         if (this == other) return true;
