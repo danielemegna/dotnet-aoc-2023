@@ -38,8 +38,15 @@ class VerticalRockRow
         }).Sum();
     }
 
-    public MapObject At(int index) {
+    public MapObject At(int index)
+    {
         return rowObjects[index];
+    }
+
+    internal VerticalRockRow Clone()
+    {
+        var objects = (MapObject[])rowObjects.Clone();
+        return new VerticalRockRow(objects);
     }
 
     public override bool Equals(object? other)
@@ -66,6 +73,7 @@ class VerticalRockRow
         }
         )) + "]";
     }
+
 }
 
 public enum MapObject { EMPTY_SPACE, ROUND_ROCK, CUBE_ROCK }
