@@ -12,8 +12,19 @@ class Solver
 
     public int TotalLoadOnNorthAfterOneBilionOfTilting(string[] inputLines)
     {
+        var totalCyclesTarget = 1_000_000_000;
+
         var map = RocksMap.From(inputLines);
-        for (int i = 0; i < 1000; i++)
+        var (InitialGap, Frequency) = map.FindCycleOfTiltsRepetitionFrequencyInfo();
+
+        for (int i = 0; i < InitialGap; i++)
+        {
+            map = map.MakeACycleOfTilts();
+        }
+        totalCyclesTarget -= InitialGap;
+
+        var rest = totalCyclesTarget % Frequency;
+        for (int i = 0; i < rest; i++)
         {
             map = map.MakeACycleOfTilts();
         }
