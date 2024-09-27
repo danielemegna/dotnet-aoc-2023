@@ -49,12 +49,12 @@ public class SolverTest
       Assert.Equal(64, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day14/input.txt");
       var actual = solver.TotalLoadOnNorthAfterOneBilionOfTilting(input);
-      Assert.Equal(-999, actual);
+      Assert.Equal(88371, actual);
     }
 
   }

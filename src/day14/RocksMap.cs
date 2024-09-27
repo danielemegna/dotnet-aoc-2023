@@ -82,22 +82,21 @@ class RocksMap
     public RepetitionFrequencyInfo FindCycleOfTiltsRepetitionFrequencyInfo()
     {
         var actualMap = this.Clone();
-        List<int> hashCodes = [actualMap.GetHashCode()];
+        List<RocksMap> encounteredMaps = [actualMap.Clone()];
 
         while (true)
         {
             actualMap = actualMap.MakeACycleOfTilts();
-            int mapHashCode = actualMap.GetHashCode();
-            int hashCodeIndex = hashCodes.FindIndex(v => v == mapHashCode);
-            if (hashCodeIndex < 0)
+            int findResultIndex = encounteredMaps.FindIndex(map => map.Equals(actualMap));
+            if (findResultIndex < 0)
             {
-                hashCodes.Add(mapHashCode);
+                encounteredMaps.Add(actualMap.Clone());
                 continue;
             }
 
             return new RepetitionFrequencyInfo(
-                InitialGap: hashCodeIndex,
-                Frequency: hashCodes.Count - hashCodeIndex
+                InitialGap: findResultIndex,
+                Frequency: encounteredMaps.Count - findResultIndex
             );
         }
     }
