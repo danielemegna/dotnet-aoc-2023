@@ -82,21 +82,22 @@ class RocksMap
     public RepetitionFrequencyInfo FindCycleOfTiltsRepetitionFrequencyInfo()
     {
         var actualMap = this.Clone();
-        List<RocksMap> encounteredMaps = [actualMap.Clone()];
+        List<int> encounteredMapsHashCodes = [actualMap.GetHashCode()];
 
         while (true)
         {
             actualMap = actualMap.MakeACycleOfTilts();
-            int findResultIndex = encounteredMaps.FindIndex(map => map.Equals(actualMap));
+            int actualMapHashCode = actualMap.GetHashCode();
+            int findResultIndex = encounteredMapsHashCodes.FindIndex(v => v == actualMapHashCode);
             if (findResultIndex < 0)
             {
-                encounteredMaps.Add(actualMap.Clone());
+                encounteredMapsHashCodes.Add(actualMapHashCode);
                 continue;
             }
 
             return new RepetitionFrequencyInfo(
                 InitialGap: findResultIndex,
-                Frequency: encounteredMaps.Count - findResultIndex
+                Frequency: encounteredMapsHashCodes.Count - findResultIndex
             );
         }
     }
@@ -117,6 +118,9 @@ class RocksMap
         return StructuralComparisons.StructuralEqualityComparer.Equals(mapRows, otherCasted.mapRows);
     }
 
-    public override int GetHashCode() =>
-      StructuralComparisons.StructuralEqualityComparer.GetHashCode(mapRows);
+    public override int GetHashCode()
+    {
+        return string.Join("", mapRows.Select(verticalRow => verticalRow.ToString())).GetHashCode();
+    }
+
 }
