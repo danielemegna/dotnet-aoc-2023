@@ -255,4 +255,40 @@ public class RocksMapTest
     Assert.Equal(expected, actual);
   }
 
+  [Fact]
+  public void FindCycleOfTiltsRepetitionFrequencyInfoOfSimpleMap() {
+    var simpleMap = RocksMap.From([
+      ".O",
+      "#.",
+    ]);
+
+    var actual = simpleMap.FindCycleOfTiltsRepetitionFrequencyInfo();
+
+    var expected = new RepetitionFrequencyInfo(InitialGap: 0, Frequency: 1);
+    Assert.Equal(expected, actual);
+  }
+
+  [Fact]
+  public void FindCycleOfTiltsRepetitionFrequencyInfoOfBiggerMap() {
+    var biggerMap = RocksMap.From([
+      "...#",
+      "....",
+      "O.O.",
+      ".O.O",
+    ]);
+
+    var actual = biggerMap.FindCycleOfTiltsRepetitionFrequencyInfo();
+
+    var expected = new RepetitionFrequencyInfo(InitialGap: 3, Frequency: 1);
+    Assert.Equal(expected, actual);
+  }
+
+  [Fact]
+  public void FindCycleOfTiltsRepetitionFrequencyInfoOfProvidedExampleMap() {
+    var actual = map.FindCycleOfTiltsRepetitionFrequencyInfo();
+
+    var expected = new RepetitionFrequencyInfo(InitialGap: 3, Frequency: 7);
+    Assert.Equal(expected, actual);
+  }
+
 }
