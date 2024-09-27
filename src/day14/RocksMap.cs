@@ -4,8 +4,6 @@ using System.Collections;
 
 class RocksMap
 {
-    private static Dictionary<int, RocksMap> cycleCache = [];
-
     private readonly VerticalRockRow[] mapRows;
 
     private RocksMap(IEnumerable<VerticalRockRow> mapRows) : this(mapRows.ToArray()) { }
@@ -71,10 +69,6 @@ class RocksMap
 
     public RocksMap MakeACycleOfTilts()
     {
-        int myHashCode = this.GetHashCode();
-        if (cycleCache.ContainsKey(myHashCode))
-            return cycleCache[myHashCode];
-
         RocksMap result = this.Clone();
         for (int i = 0; i < 4; i++)
         {
@@ -82,7 +76,6 @@ class RocksMap
             result = result.TurnClockwise();
         }
 
-        cycleCache[myHashCode] = result;
         return result;
     }
 
