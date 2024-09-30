@@ -20,12 +20,12 @@ public class SolverTest
       Assert.Equal(1320, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day15/input.txt");
       var actual = solver.SumOfHashAlgorithmResultsFor(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(521434, actual);
     }
 
   }

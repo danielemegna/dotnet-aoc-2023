@@ -4,6 +4,8 @@ public class Solver
 {
   public int SumOfHashAlgorithmResultsFor(string[] input)
   {
-    return 1320;
+    var firstSingleRow = input[0];
+    var holidayASCIIStringHelper = new HolidayASCIIStringHelper();
+    return firstSingleRow.Split(",").Select(s => holidayASCIIStringHelper.HashCodeOf(s)).Sum();
   }
 }
