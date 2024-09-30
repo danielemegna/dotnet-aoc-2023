@@ -4,123 +4,123 @@ using System.Collections;
 
 class RocksMap
 {
-    private readonly VerticalRockRow[] mapRows;
+  private readonly VerticalRockRow[] mapRows;
 
-    private RocksMap(IEnumerable<VerticalRockRow> mapRows) : this(mapRows.ToArray()) { }
-    private RocksMap(VerticalRockRow[] mapRows) { this.mapRows = mapRows; }
+  private RocksMap(IEnumerable<VerticalRockRow> mapRows) : this(mapRows.ToArray()) { }
+  private RocksMap(VerticalRockRow[] mapRows) { this.mapRows = mapRows; }
 
-    public static RocksMap From(string[] inputLines)
+  public static RocksMap From(string[] inputLines)
+  {
+    MapObject[][] matrixOfObjects = inputLines
+        .Select(line => line.ToCharArray())
+        .Select(chars => chars.Select(ToMapObject).ToArray())
+        .ToArray();
+
+    List<VerticalRockRow> verticalRockRows = [];
+    for (int x = 0; x < inputLines[0].Length; x++)
     {
-        MapObject[][] matrixOfObjects = inputLines
-            .Select(line => line.ToCharArray())
-            .Select(chars => chars.Select(ToMapObject).ToArray())
-            .ToArray();
+      List<MapObject> verticalRowObjects = [];
+      for (int y = 0; y < inputLines.Length; y++)
+        verticalRowObjects.Add(matrixOfObjects[y][x]);
 
-        List<VerticalRockRow> verticalRockRows = [];
-        for (int x = 0; x < inputLines[0].Length; x++)
-        {
-            List<MapObject> verticalRowObjects = [];
-            for (int y = 0; y < inputLines.Length; y++)
-                verticalRowObjects.Add(matrixOfObjects[y][x]);
-
-            verticalRockRows.Add(new VerticalRockRow(verticalRowObjects));
-        }
-
-        return new RocksMap(verticalRockRows);
+      verticalRockRows.Add(new VerticalRockRow(verticalRowObjects));
     }
 
-    private static MapObject ToMapObject(char mapObjectChar)
+    return new RocksMap(verticalRockRows);
+  }
+
+  private static MapObject ToMapObject(char mapObjectChar)
+  {
+    return mapObjectChar switch
     {
-        return mapObjectChar switch
-        {
-            '.' => MapObject.EMPTY_SPACE,
-            'O' => MapObject.ROUND_ROCK,
-            '#' => MapObject.CUBE_ROCK,
-            _ => throw new FormatException($"Cannot parse map object [{mapObjectChar}]"),
-        };
+      '.' => MapObject.EMPTY_SPACE,
+      'O' => MapObject.ROUND_ROCK,
+      '#' => MapObject.CUBE_ROCK,
+      _ => throw new FormatException($"Cannot parse map object [{mapObjectChar}]"),
+    };
+  }
+
+  public int TotalLoadOnNorth()
+  {
+    return mapRows.Select(r => r.GetLoad()).Sum();
+  }
+
+  public RocksMap TiltOnNorth()
+  {
+    var newRows = (VerticalRockRow[])mapRows.Clone();
+
+    foreach (var row in newRows)
+      row.Tilt();
+
+    return new RocksMap(newRows);
+  }
+
+  public RocksMap TurnClockwise()
+  {
+    var mapSizeRange = Enumerable.Range(0, mapRows.Length);
+    var newRows = mapSizeRange.Reverse().Select((y) =>
+    {
+      var newVerticalRowObjects = mapSizeRange.Select((x) => mapRows[x].At(y));
+      return new VerticalRockRow(newVerticalRowObjects);
+    });
+
+    return new RocksMap(newRows);
+  }
+
+  public RocksMap MakeACycleOfTilts()
+  {
+    RocksMap result = this.Clone();
+    for (int i = 0; i < 4; i++)
+    {
+      result = result.TiltOnNorth();
+      result = result.TurnClockwise();
     }
 
-    public int TotalLoadOnNorth()
+    return result;
+  }
+
+  public RepetitionFrequencyInfo FindCycleOfTiltsRepetitionFrequencyInfo()
+  {
+    var actualMap = this.Clone();
+    List<int> encounteredMapsHashCodes = [actualMap.GetHashCode()];
+
+    while (true)
     {
-        return mapRows.Select(r => r.GetLoad()).Sum();
+      actualMap = actualMap.MakeACycleOfTilts();
+      int actualMapHashCode = actualMap.GetHashCode();
+      int findResultIndex = encounteredMapsHashCodes.FindIndex(v => v == actualMapHashCode);
+      if (findResultIndex < 0)
+      {
+        encounteredMapsHashCodes.Add(actualMapHashCode);
+        continue;
+      }
+
+      return new RepetitionFrequencyInfo(
+          InitialGap: findResultIndex,
+          Frequency: encounteredMapsHashCodes.Count - findResultIndex
+      );
     }
+  }
 
-    public RocksMap TiltOnNorth()
-    {
-        var newRows = (VerticalRockRow[])mapRows.Clone();
+  private RocksMap Clone()
+  {
+    var rows = mapRows.Select(r => r.Clone());
+    return new RocksMap(rows);
+  }
 
-        foreach (var row in newRows)
-            row.Tilt();
+  public override bool Equals(object? other)
+  {
+    if (this == other) return true;
+    if (other is null) return false;
+    if (other.GetType() != typeof(RocksMap)) return false;
+    var otherCasted = (RocksMap)other;
 
-        return new RocksMap(newRows);
-    }
+    return StructuralComparisons.StructuralEqualityComparer.Equals(mapRows, otherCasted.mapRows);
+  }
 
-    public RocksMap TurnClockwise()
-    {
-        var mapSizeRange = Enumerable.Range(0, mapRows.Length);
-        var newRows = mapSizeRange.Reverse().Select((y) =>
-        {
-            var newVerticalRowObjects = mapSizeRange.Select((x) => mapRows[x].At(y));
-            return new VerticalRockRow(newVerticalRowObjects);
-        });
-
-        return new RocksMap(newRows);
-    }
-
-    public RocksMap MakeACycleOfTilts()
-    {
-        RocksMap result = this.Clone();
-        for (int i = 0; i < 4; i++)
-        {
-            result = result.TiltOnNorth();
-            result = result.TurnClockwise();
-        }
-
-        return result;
-    }
-
-    public RepetitionFrequencyInfo FindCycleOfTiltsRepetitionFrequencyInfo()
-    {
-        var actualMap = this.Clone();
-        List<int> encounteredMapsHashCodes = [actualMap.GetHashCode()];
-
-        while (true)
-        {
-            actualMap = actualMap.MakeACycleOfTilts();
-            int actualMapHashCode = actualMap.GetHashCode();
-            int findResultIndex = encounteredMapsHashCodes.FindIndex(v => v == actualMapHashCode);
-            if (findResultIndex < 0)
-            {
-                encounteredMapsHashCodes.Add(actualMapHashCode);
-                continue;
-            }
-
-            return new RepetitionFrequencyInfo(
-                InitialGap: findResultIndex,
-                Frequency: encounteredMapsHashCodes.Count - findResultIndex
-            );
-        }
-    }
-
-    private RocksMap Clone()
-    {
-        var rows = mapRows.Select(r => r.Clone());
-        return new RocksMap(rows);
-    }
-
-    public override bool Equals(object? other)
-    {
-        if (this == other) return true;
-        if (other is null) return false;
-        if (other.GetType() != typeof(RocksMap)) return false;
-        var otherCasted = (RocksMap)other;
-
-        return StructuralComparisons.StructuralEqualityComparer.Equals(mapRows, otherCasted.mapRows);
-    }
-
-    public override int GetHashCode()
-    {
-        return string.Join("", mapRows.Select(verticalRow => verticalRow.ToString())).GetHashCode();
-    }
+  public override int GetHashCode()
+  {
+    return string.Join("", mapRows.Select(verticalRow => verticalRow.ToString())).GetHashCode();
+  }
 
 }

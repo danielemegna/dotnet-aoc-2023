@@ -196,7 +196,8 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void CycleOfTiltsOnTheProvidedExampleMap() {
+  public void CycleOfTiltsOnTheProvidedExampleMap()
+  {
     var actual = map.MakeACycleOfTilts();
 
     var expected = RocksMap.From([
@@ -215,7 +216,8 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void TwoCyclesOfTiltsOnTheProvidedExampleMap() {
+  public void TwoCyclesOfTiltsOnTheProvidedExampleMap()
+  {
     var intermediate = map.MakeACycleOfTilts();
     var actual = intermediate.MakeACycleOfTilts();
 
@@ -235,7 +237,8 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void ThreeCyclesOfTiltsOnTheProvidedExampleMap() {
+  public void ThreeCyclesOfTiltsOnTheProvidedExampleMap()
+  {
     var intermediate = map.MakeACycleOfTilts();
     intermediate = intermediate.MakeACycleOfTilts();
     var actual = intermediate.MakeACycleOfTilts();
@@ -256,7 +259,8 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void FindCycleOfTiltsRepetitionFrequencyInfoOfSimpleMap() {
+  public void FindCycleOfTiltsRepetitionFrequencyInfoOfSimpleMap()
+  {
     var simpleMap = RocksMap.From([
       ".O",
       "#.",
@@ -269,7 +273,8 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void FindCycleOfTiltsRepetitionFrequencyInfoOfBiggerMap() {
+  public void FindCycleOfTiltsRepetitionFrequencyInfoOfBiggerMap()
+  {
     var biggerMap = RocksMap.From([
       "...#",
       "....",
@@ -284,7 +289,8 @@ public class RocksMapTest
   }
 
   [Fact]
-  public void FindCycleOfTiltsRepetitionFrequencyInfoOfProvidedExampleMap() {
+  public void FindCycleOfTiltsRepetitionFrequencyInfoOfProvidedExampleMap()
+  {
     var actual = map.FindCycleOfTiltsRepetitionFrequencyInfo();
 
     var expected = new RepetitionFrequencyInfo(InitialGap: 3, Frequency: 7);
