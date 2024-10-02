@@ -41,4 +41,13 @@ public class LensBoxTest
     Assert.Equal(expected, power);
   }
 
+  //[Fact]
+  //public void RemoveLensFromAnEmptyBox()
+
+  //[Fact]
+  //public void PutAndRemoveSomeLensInABoxAndGetFocusingPower()
+
+  //[Fact]
+  //public void AddLensWithSameLabelShouldReplacePreviousOne()
+
 }
