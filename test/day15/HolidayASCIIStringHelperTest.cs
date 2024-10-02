@@ -28,4 +28,15 @@ public class HolidayASCIIStringHelperTest
     Assert.Equal(214, helper.HashCodeOf("pc=6"));
     Assert.Equal(231, helper.HashCodeOf("ot=7"));
   }
+
+  [Fact]
+  public void HashCodeOfExampleLabelsProduceBoxNumbers()
+  {
+    Assert.Equal(0, helper.HashCodeOf("rn"));
+    Assert.Equal(1, helper.HashCodeOf("qp"));
+    Assert.Equal(0, helper.HashCodeOf("cm"));
+    Assert.Equal(3, helper.HashCodeOf("pc"));
+    Assert.Equal(3, helper.HashCodeOf("ot"));
+    Assert.Equal(3, helper.HashCodeOf("ab"));
+  }
 }
