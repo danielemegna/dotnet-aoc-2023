@@ -30,4 +30,24 @@ public class SolverTest
 
   }
 
+  public class SecondPartTest : SolverTest
+  {
+
+    [Fact]
+    public void SolveTheProvidedExample()
+    {
+      var actual = solver.TotalFocusingPowerWith(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(145, actual);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day15/input.txt");
+      var actual = solver.TotalFocusingPowerWith(input);
+      Assert.Equal(-1, actual);
+    }
+
+  }
+
 }
