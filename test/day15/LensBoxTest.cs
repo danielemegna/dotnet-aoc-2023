@@ -47,7 +47,20 @@ public class LensBoxTest
   //[Fact]
   //public void PutAndRemoveSomeLensInABoxAndGetFocusingPower()
 
-  //[Fact]
-  //public void AddLensWithSameLabelShouldReplacePreviousOne()
+  [Fact]
+  public void AddLensWithSameLabelShouldReplacePreviousOne()
+  {
+    var box = new LensBox();
+    box.AddLens(new Lens(Label: "ot", FocalLength: 9));
+    box.AddLens(new Lens(Label: "ab", FocalLength: 5));
+    box.AddLens(new Lens(Label: "ot", FocalLength: 7));
+
+    int power = box.FocusingPower(boxNumber: 0);
+
+    var expected =
+      ((1 + 0) * 1 * 7) +
+      ((1 + 0) * 2 * 5);
+    Assert.Equal(expected, power);
+  }
 
 }
