@@ -1,17 +1,41 @@
-
 namespace aoc2023.day15;
 
 public class Solver
 {
+  private HolidayASCIIStringHelper holidayASCIIStringHelper = new HolidayASCIIStringHelper();
+
   public int SumOfHashAlgorithmResultsFor(string[] input)
   {
     var firstSingleRow = input[0];
-    var holidayASCIIStringHelper = new HolidayASCIIStringHelper();
     return firstSingleRow.Split(",").Select(s => holidayASCIIStringHelper.HashCodeOf(s)).Sum();
   }
 
   public int TotalFocusingPowerWith(string[] input)
   {
-    return 145;
+    var firstSingleRow = input[0];
+    var operations = firstSingleRow.Split(",").Select(s => LensBoxOperation.BuildFrom(s));
+
+    LensBox[] lensBoxes = Enumerable.Range(0, 256).Select(n => new LensBox()).ToArray();
+    foreach (var operation in operations)
+    {
+      int boxNumber = holidayASCIIStringHelper.HashCodeOf(operation.GetLabel());
+      LensBox box = lensBoxes[boxNumber];
+
+      switch (operation)
+      {
+        case AddLensOperation:
+          int lensFocalLength = (int)operation.GetFocalLength()!;
+          var lensToAdd = new Lens(operation.GetLabel(), lensFocalLength);
+          box.AddLens(lensToAdd);
+          break;
+        case RemoveLensOperation:
+          box.RemoveLensWithLabel(operation.GetLabel());
+          break;
+      }
+    }
+
+    return lensBoxes
+      .Select((box, index) => box.FocusingPower(boxNumber: index))
+      .Sum();
   }
 }

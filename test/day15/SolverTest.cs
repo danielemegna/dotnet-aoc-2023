@@ -40,12 +40,12 @@ public class SolverTest
       Assert.Equal(145, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day15/input.txt");
       var actual = solver.TotalFocusingPowerWith(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(248279, actual);
     }
 
   }
