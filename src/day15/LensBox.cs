@@ -27,6 +27,10 @@ class LensBox
     ).Sum();
   }
 
+  public void RemoveLensWithLabel(string labelOfLensToRemove)
+  {
+    lenses.RemoveAll(l => l.Label == labelOfLensToRemove);
+  }
 }
 
 public record Lens
