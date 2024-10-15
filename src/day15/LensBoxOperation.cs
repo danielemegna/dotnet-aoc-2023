@@ -2,7 +2,7 @@ namespace aoc2023.day15;
 
 public abstract class LensBoxOperation
 {
-  public static LensBoxOperation Build(string stringValue)
+  public static LensBoxOperation BuildFrom(string stringValue)
   {
     if (stringValue.EndsWith('-'))
     {

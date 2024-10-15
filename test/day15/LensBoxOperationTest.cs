@@ -8,13 +8,13 @@ public class LensBoxOperationTest
   [Fact]
   public void BuildAnAddLensOperationFromString()
   {
-    var operation = LensBoxOperation.Build("cm=5");
+    var operation = LensBoxOperation.BuildFrom("cm=5");
 
     Assert.IsType<AddLensOperation>(operation);
     Assert.Equal("cm", operation.GetLabel());
     Assert.Equal(5, operation.GetFocalLength());
 
-    operation = LensBoxOperation.Build("rn=3");
+    operation = LensBoxOperation.BuildFrom("rn=3");
 
     Assert.IsType<AddLensOperation>(operation);
     Assert.Equal("rn", operation.GetLabel());
@@ -24,13 +24,13 @@ public class LensBoxOperationTest
   [Fact]
   public void BuildARemoveLensOperationFromString()
   {
-    var operation = LensBoxOperation.Build("cm-");
+    var operation = LensBoxOperation.BuildFrom("cm-");
 
     Assert.IsType<RemoveLensOperation>(operation);
     Assert.Equal("cm", operation.GetLabel());
     Assert.Null(operation.GetFocalLength());
 
-    operation = LensBoxOperation.Build("rn-");
+    operation = LensBoxOperation.BuildFrom("rn-");
 
     Assert.IsType<RemoveLensOperation>(operation);
     Assert.Equal("rn", operation.GetLabel());
