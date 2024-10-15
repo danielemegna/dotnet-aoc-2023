@@ -21,4 +21,20 @@ public class LensBoxOperationTest
     Assert.Equal(3, operation.GetFocalLength());
   }
 
+  [Fact]
+  public void BuildARemoveLensOperationFromString()
+  {
+    var operation = LensBoxOperation.Build("cm-");
+
+    Assert.IsType<RemoveLensOperation>(operation);
+    Assert.Equal("cm", operation.GetLabel());
+    Assert.Null(operation.GetFocalLength());
+
+    operation = LensBoxOperation.Build("rn-");
+
+    Assert.IsType<RemoveLensOperation>(operation);
+    Assert.Equal("rn", operation.GetLabel());
+    Assert.Null(operation.GetFocalLength());
+  }
+
 }
