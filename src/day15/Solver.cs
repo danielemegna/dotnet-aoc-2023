@@ -24,9 +24,10 @@ public class Solver
       switch (operation)
       {
         case AddLensOperation:
-          int lensFocalLength = (int)operation.GetFocalLength()!;
-          var lensToAdd = new Lens(operation.GetLabel(), lensFocalLength);
-          box.AddLens(lensToAdd);
+          box.AddLens(
+            lensLabel: operation.GetLabel(),
+            lensFocalLength: (int)operation.GetFocalLength()!
+          );
           break;
         case RemoveLensOperation:
           box.RemoveLensWithLabel(operation.GetLabel());

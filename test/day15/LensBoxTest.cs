@@ -17,7 +17,7 @@ public class LensBoxTest
   public void PutALensInABoxAndGetFocusingPower()
   {
     var box = new LensBox();
-    box.AddLens(new Lens(Label: "rn", FocalLength: 3));
+    box.AddLens(lensLabel: "rn", lensFocalLength: 3);
 
     int power = box.FocusingPower(boxNumber: 0);
 
@@ -28,9 +28,9 @@ public class LensBoxTest
   public void PutSomeLensInABoxAndGetFocusingPower()
   {
     var box = new LensBox();
-    box.AddLens(new Lens(Label: "ot", FocalLength: 7));
-    box.AddLens(new Lens(Label: "ab", FocalLength: 5));
-    box.AddLens(new Lens(Label: "pc", FocalLength: 6));
+    box.AddLens(lensLabel: "ot", lensFocalLength: 7);
+    box.AddLens(lensLabel: "ab", lensFocalLength: 5);
+    box.AddLens(lensLabel: "pc", lensFocalLength: 6);
 
     int power = box.FocusingPower(boxNumber: 3);
 
@@ -45,9 +45,9 @@ public class LensBoxTest
   public void AddLensWithSameLabelShouldReplacePreviousOne()
   {
     var box = new LensBox();
-    box.AddLens(new Lens(Label: "ot", FocalLength: 9));
-    box.AddLens(new Lens(Label: "ab", FocalLength: 5));
-    box.AddLens(new Lens(Label: "ot", FocalLength: 7));
+    box.AddLens(lensLabel: "ot", lensFocalLength: 9);
+    box.AddLens(lensLabel: "ab", lensFocalLength: 5);
+    box.AddLens(lensLabel: "ot", lensFocalLength: 7);
 
     int power = box.FocusingPower(boxNumber: 0);
 
@@ -69,16 +69,16 @@ public class LensBoxTest
   public void PerformSeveralOperationsAndGetFocusingPowerOfBox() {
     var box = new LensBox();
 
-    box.AddLens(new Lens(Label: "rn", FocalLength: 1));
-    box.AddLens(new Lens(Label: "qp", FocalLength: 3));
-    box.AddLens(new Lens(Label: "cm", FocalLength: 2));
+    box.AddLens(lensLabel: "rn", lensFocalLength: 1);
+    box.AddLens(lensLabel: "qp", lensFocalLength: 3);
+    box.AddLens(lensLabel: "cm", lensFocalLength: 2);
     box.RemoveLensWithLabel("qp");
-    box.AddLens(new Lens(Label: "pc", FocalLength: 4));
-    box.AddLens(new Lens(Label: "ab", FocalLength: 5));
-    box.AddLens(new Lens(Label: "rn", FocalLength: 3));
+    box.AddLens(lensLabel: "pc", lensFocalLength: 4);
+    box.AddLens(lensLabel: "ab", lensFocalLength: 5);
+    box.AddLens(lensLabel: "rn", lensFocalLength: 3);
     box.RemoveLensWithLabel("pc");
-    box.AddLens(new Lens(Label: "ot", FocalLength: 7));
-    box.AddLens(new Lens(Label: "pc", FocalLength: 6));
+    box.AddLens(lensLabel: "ot", lensFocalLength: 7);
+    box.AddLens(lensLabel: "pc", lensFocalLength: 6);
 
     int power = box.FocusingPower(boxNumber: 9);
 

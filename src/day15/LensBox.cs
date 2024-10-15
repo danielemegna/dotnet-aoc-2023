@@ -4,16 +4,16 @@ class LensBox
 {
   private readonly List<Lens> lenses = [];
 
-  public void AddLens(Lens lensToAdd)
+  public void AddLens(string lensLabel, int lensFocalLength)
   {
-    var found = lenses.Find(l => l.Label == lensToAdd.Label);
+    var found = lenses.Find(l => l.Label == lensLabel);
     if (found != null)
     {
-      found.UpdateFocalLenght(lensToAdd.FocalLength);
+      found.UpdateFocalLenght(lensFocalLength);
       return;
     }
 
-    this.lenses.Add(lensToAdd);
+    this.lenses.Add(new Lens(lensLabel, lensFocalLength));
   }
 
   public int FocusingPower(int boxNumber)
