@@ -1,6 +1,6 @@
 namespace aoc2023.day15;
 
-class LensBox
+public class LensBox
 {
   private readonly List<Lens> lenses = [];
 

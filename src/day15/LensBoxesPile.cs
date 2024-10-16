@@ -18,18 +18,7 @@ public class LensBoxesPile
     }
 
     LensBox lensBox = LensBoxForBoxNumber(boxNumber);
-    switch (operation)
-    {
-      case AddLensOperation:
-        lensBox.AddLens(
-          lensLabel: operation.GetLabel(),
-          lensFocalLength: (int)operation.GetFocalLength()!
-        );
-        break;
-      case RemoveLensOperation:
-        lensBox.RemoveLensWithLabel(operation.GetLabel());
-        break;
-    }
+    operation.ApplyOn(lensBox);
   }
 
   public int TotalFocusingPower()
