@@ -6,18 +6,18 @@ public class LensBoxesPile
 
   public LensBoxesPile(int size)
   {
-    lensBoxes = Enumerable.Range(0, size).Select(n => new LensBox()).ToArray();
+    this.lensBoxes = new LensBox[size];
   }
 
   public void Apply(LensBoxOperation operation, int boxNumber)
   {
-    LensBox? lensBox = lensBoxes.ElementAtOrDefault(boxNumber);
-    if (lensBox == null)
+    if (boxNumber >= this.lensBoxes.Length)
     {
       var errorMessage = $"Cannot apply operation on box [{boxNumber}], LensBoxesPile size [{this.lensBoxes.Length}]";
       throw new IndexOutOfRangeException(errorMessage);
     }
 
+    LensBox lensBox = LensBoxForBoxNumber(boxNumber);
     switch (operation)
     {
       case AddLensOperation:
@@ -26,7 +26,7 @@ public class LensBoxesPile
           lensFocalLength: (int)operation.GetFocalLength()!
         );
         break;
-      case RemoveLensOperation removeOperation:
+      case RemoveLensOperation:
         lensBox.RemoveLensWithLabel(operation.GetLabel());
         break;
     }
@@ -34,9 +34,20 @@ public class LensBoxesPile
 
   public int TotalFocusingPower()
   {
-    return lensBoxes
-      .Select((box, index) => box.FocusingPower(boxNumber: index))
+    return this.lensBoxes
+      .Select((box, index) => box?.FocusingPower(boxNumber: index) ?? 0)
       .Sum();
+  }
+
+  private LensBox LensBoxForBoxNumber(int boxNumber)
+  {
+    LensBox? lensBox = this.lensBoxes.ElementAtOrDefault(boxNumber);
+    if (lensBox != null)
+      return lensBox;
+
+    var newLensBox = new LensBox();
+    this.lensBoxes[boxNumber] = newLensBox;
+    return newLensBox;
   }
 
 }
