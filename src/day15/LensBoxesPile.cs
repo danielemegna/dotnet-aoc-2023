@@ -21,10 +21,20 @@ public class LensBoxesPile
     );
   }
 
+  public void Apply(RemoveLensOperation operation, int boxNumber)
+  {
+    LensBox? lensBox = lensBoxes.ElementAtOrDefault(boxNumber);
+    if (lensBox == null)
+      throw new IndexOutOfRangeException($"Cannot apply operation on box [{boxNumber}], LensBoxesPile size [{this.lensBoxes.Length}]");
+
+    lensBox.RemoveLensWithLabel(operation.GetLabel());
+  }
+
   public int TotalFocusingPower()
   {
     return lensBoxes
       .Select((box, index) => box.FocusingPower(boxNumber: index))
       .Sum();
   }
+
 }
