@@ -13,30 +13,18 @@ public class Solver
   public int TotalFocusingPowerWith(string[] input)
   {
     var firstSingleRow = input[0];
-    var operations = firstSingleRow.Split(",").Select(s => LensBoxOperation.BuildFrom(s));
+    var lensBoxesPile = new LensBoxesPile(size: 256);
 
-    LensBox[] lensBoxes = Enumerable.Range(0, 256).Select(n => new LensBox()).ToArray();
-    foreach (var operation in operations)
-    {
-      int boxNumber = holidayASCIIStringHelper.HashCodeOf(operation.GetLabel());
-      LensBox box = lensBoxes[boxNumber];
-
-      switch (operation)
+    firstSingleRow
+      .Split(",")
+      .Select(operationString => LensBoxOperation.BuildFrom(operationString))
+      .ToList()
+      .ForEach(operation =>
       {
-        case AddLensOperation:
-          box.AddLens(
-            lensLabel: operation.GetLabel(),
-            lensFocalLength: (int)operation.GetFocalLength()!
-          );
-          break;
-        case RemoveLensOperation:
-          box.RemoveLensWithLabel(operation.GetLabel());
-          break;
-      }
-    }
+        int boxNumber = holidayASCIIStringHelper.HashCodeOf(operation.GetLabel());
+        lensBoxesPile.Apply(operation, boxNumber);
+      });
 
-    return lensBoxes
-      .Select((box, index) => box.FocusingPower(boxNumber: index))
-      .Sum();
+    return lensBoxesPile.TotalFocusingPower();
   }
 }
