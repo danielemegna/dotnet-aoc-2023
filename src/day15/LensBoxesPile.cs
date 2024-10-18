@@ -11,12 +11,6 @@ public class LensBoxesPile
 
   public void Apply(LensBoxOperation operation, int boxNumber)
   {
-    if (boxNumber >= this.lensBoxes.Length)
-    {
-      var errorMessage = $"Cannot apply operation on box [{boxNumber}], LensBoxesPile size [{this.lensBoxes.Length}]";
-      throw new IndexOutOfRangeException(errorMessage);
-    }
-
     LensBox lensBox = LensBoxForBoxNumber(boxNumber);
     operation.ApplyOn(lensBox);
   }
@@ -30,6 +24,12 @@ public class LensBoxesPile
 
   private LensBox LensBoxForBoxNumber(int boxNumber)
   {
+    if (boxNumber >= this.lensBoxes.Length)
+    {
+      var errorMessage = $"Cannot apply operation on box [{boxNumber}], LensBoxesPile size [{this.lensBoxes.Length}]";
+      throw new IndexOutOfRangeException(errorMessage);
+    }
+
     LensBox? lensBox = this.lensBoxes.ElementAtOrDefault(boxNumber);
     if (lensBox != null)
       return lensBox;
