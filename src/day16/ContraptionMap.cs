@@ -24,12 +24,12 @@ public class ContraptionMap
 
   public void MoveNextAllBeams()
   {
-    BeamDirection beam = this.existingBeams.First().Value;
+    BeamDirection beamDirection = this.existingBeams.First().Value;
     Coordinate beamCoordinate = this.existingBeams.First().Key;
 
-    var nextCoordinate = new Coordinate(X: 1, Y: 0);
+    var nextCoordinate = beamCoordinate.Next(beamDirection);
     this.existingBeams.Remove(beamCoordinate);
-    this.existingBeams[nextCoordinate] = beam;
+    this.existingBeams[nextCoordinate] = beamDirection;
   }
 
   public enum BeamDirection { RIGHT }
