@@ -22,5 +22,15 @@ public class ContraptionMap
     return this.existingBeams;
   }
 
+  public void MoveNextAllBeams()
+  {
+    BeamDirection beam = this.existingBeams.First().Value;
+    Coordinate beamCoordinate = this.existingBeams.First().Key;
+
+    var nextCoordinate = new Coordinate(X: 1, Y: 0);
+    this.existingBeams.Remove(beamCoordinate);
+    this.existingBeams[nextCoordinate] = beam;
+  }
+
   public enum BeamDirection { RIGHT }
 }
