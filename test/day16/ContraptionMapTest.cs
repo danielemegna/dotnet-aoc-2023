@@ -10,6 +10,12 @@ public class ContraptionMapTest
     "..."
   ]);
 
+  private readonly ContraptionMap simpleSmallMapWithSingleMirror = ContraptionMap.From([
+    @"..\",
+    @"...",
+    @"..."
+  ]);
+
   [Fact]
   public void GetExistingBeamsOnNewSimpleSmallMap()
   {
@@ -58,6 +64,20 @@ public class ContraptionMapTest
     var actualBeams = simpleSmallEmptyMap.GetExistingBeams();
 
     Assert.Equal([], actualBeams);
+  }
+
+  [Fact]
+  public void BeamsShouldStepOverAndChangeDirectionHittingMirror()
+  {
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    var actualBeams = simpleSmallMapWithSingleMirror.GetExistingBeams();
+
+    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
+    {
+      [new Coordinate(X: 2, Y: 1)] = ContraptionMap.BeamDirection.DOWN
+    };
+    Assert.Equal(expectedBeams, actualBeams);
   }
 
 }

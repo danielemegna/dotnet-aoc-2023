@@ -3,16 +3,32 @@ namespace aoc2023.day16;
 public class ContraptionMap
 {
   private readonly int size;
+  private readonly Dictionary<Coordinate, Mirror> mirrors;
   private readonly Dictionary<Coordinate, BeamDirection> existingBeams;
 
   public static ContraptionMap From(string[] inputLines)
   {
-    return new ContraptionMap(size: inputLines.Length);
+    Dictionary<Coordinate, Mirror> mirrors = [];
+    var firstRow = inputLines[0];
+    for (int x = 0; x < firstRow.Length; x++)
+    {
+      var mapCharacter = firstRow[x];
+      if (mapCharacter == '.')
+        continue;
+
+      mirrors.Add(new Coordinate(X: x, Y: 0), Mirror.NORD_WEST__SOUTH_EST);
+    }
+
+    return new ContraptionMap(
+      size: inputLines.Length,
+      mirrors: mirrors
+    );
   }
 
-  public ContraptionMap(int size)
+  public ContraptionMap(int size, Dictionary<Coordinate, Mirror> mirrors)
   {
     this.size = size;
+    this.mirrors = mirrors;
     this.existingBeams = new()
     {
       [new Coordinate(X: 0, Y: 0)] = BeamDirection.RIGHT
@@ -32,9 +48,17 @@ public class ContraptionMap
     this.existingBeams.Remove(beamCoordinate);
 
     var nextCoordinate = beamCoordinate.Next(beamDirection);
-    if (nextCoordinate.X < this.size)
-      this.existingBeams[nextCoordinate] = beamDirection;
+    if (nextCoordinate.X >= this.size)
+      return;
+
+    if (mirrors.ContainsKey(nextCoordinate)) {
+      nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
+      beamDirection = BeamDirection.DOWN;
+    }
+
+    this.existingBeams[nextCoordinate] = beamDirection;
   }
 
-  public enum BeamDirection { RIGHT }
+  public enum BeamDirection { RIGHT, DOWN }
+  public enum Mirror { NORD_WEST__SOUTH_EST }
 }
