@@ -49,7 +49,7 @@ public class ContraptionMapTest
     Assert.Equal(expectedBeams, actualBeams);
   }
 
-  [Fact(Skip = "WIP")]
+  [Fact]
   public void BeamsDisappearMovingOutsideTheMapBoundaries()
   {
     simpleSmallEmptyMap.MoveNextAllBeams();
