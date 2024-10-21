@@ -25,15 +25,14 @@ public class ContraptionMapTest
   ]);
 
   [Fact]
-  public void GetExistingBeamsOnNewSimpleSmallMap()
+  public void NewMapShouldHaveSingleBeamAtZeroZeroWithDirectionRight()
   {
     var actualBeams = simpleSmallEmptyMap.GetExistingBeams();
 
-    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
-    {
-      [new Coordinate(X: 0, Y: 0)] = ContraptionMap.BeamDirection.RIGHT
-    };
-    Assert.Equal(expectedBeams, actualBeams);
+    Assert.Single(actualBeams);
+    var beam = actualBeams.First();
+    Assert.Equal(new Coordinate(X: 0, Y: 0), beam.Key);
+    Assert.Equal(ContraptionMap.BeamDirection.RIGHT, beam.Value);
   }
 
   [Fact]
