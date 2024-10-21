@@ -93,4 +93,19 @@ public class ContraptionMapTest
     Assert.Equal(expectedBeams, actualBeams);
   }
 
+  [Fact]
+  public void MoveBeamInDownDirection()
+  {
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    var actualBeams = simpleSmallMapWithSingleMirror.GetExistingBeams();
+
+    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
+    {
+      [new Coordinate(X: 2, Y: 2)] = ContraptionMap.BeamDirection.DOWN
+    };
+    Assert.Equal(expectedBeams, actualBeams);
+  }
+
 }
