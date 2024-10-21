@@ -67,6 +67,19 @@ public class ContraptionMapTest
   }
 
   [Fact]
+  public void MoveNextAllBeamsDoesNothingAfterAllBeamsDisappeared()
+  {
+    simpleSmallEmptyMap.MoveNextAllBeams();
+    simpleSmallEmptyMap.MoveNextAllBeams();
+    simpleSmallEmptyMap.MoveNextAllBeams();
+    simpleSmallEmptyMap.MoveNextAllBeams();
+    simpleSmallEmptyMap.MoveNextAllBeams();
+    var actualBeams = simpleSmallEmptyMap.GetExistingBeams();
+
+    Assert.Equal([], actualBeams);
+  }
+
+  [Fact]
   public void BeamsShouldStepOverAndChangeDirectionHittingMirror()
   {
     simpleSmallMapWithSingleMirror.MoveNextAllBeams();

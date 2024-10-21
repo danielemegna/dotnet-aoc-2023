@@ -42,6 +42,9 @@ public class ContraptionMap
 
   public void MoveNextAllBeams()
   {
+    if (this.existingBeams.Count == 0)
+      return;
+
     Coordinate beamCoordinate = this.existingBeams.First().Key;
     BeamDirection beamDirection = this.existingBeams.First().Value;
 
