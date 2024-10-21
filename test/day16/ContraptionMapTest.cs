@@ -40,7 +40,11 @@ public class ContraptionMapTest
   public void GetExistingBeamsAfterMoveNextAllBeamsOnNewSimpleSmallMap()
   {
     simpleSmallEmptyMap.MoveNextAllBeams();
-    AssertSingleBeam(new Coordinate(X: 1, Y: 0), ContraptionMap.BeamDirection.RIGHT, simpleSmallEmptyMap);
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 1, Y: 0),
+      expectedDirection: ContraptionMap.BeamDirection.RIGHT,
+      map: simpleSmallEmptyMap
+    );
   }
 
   [Fact]
@@ -48,7 +52,11 @@ public class ContraptionMapTest
   {
     simpleSmallEmptyMap.MoveNextAllBeams();
     simpleSmallEmptyMap.MoveNextAllBeams();
-    AssertSingleBeam(new Coordinate(X: 2, Y: 0), ContraptionMap.BeamDirection.RIGHT, simpleSmallEmptyMap);
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 0),
+      expectedDirection: ContraptionMap.BeamDirection.RIGHT,
+      map: simpleSmallEmptyMap
+    );
   }
 
   [Fact]
@@ -80,13 +88,11 @@ public class ContraptionMapTest
   {
     simpleSmallMapWithSingleMirror.MoveNextAllBeams();
     simpleSmallMapWithSingleMirror.MoveNextAllBeams();
-    var actualBeams = simpleSmallMapWithSingleMirror.GetExistingBeams();
-
-    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
-    {
-      [new Coordinate(X: 2, Y: 1)] = ContraptionMap.BeamDirection.DOWN
-    };
-    Assert.Equal(expectedBeams, actualBeams);
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 1),
+      expectedDirection: ContraptionMap.BeamDirection.DOWN,
+      map: simpleSmallMapWithSingleMirror
+    );
   }
 
   [Fact]
@@ -95,13 +101,11 @@ public class ContraptionMapTest
     simpleSmallMapWithSingleMirror.MoveNextAllBeams();
     simpleSmallMapWithSingleMirror.MoveNextAllBeams();
     simpleSmallMapWithSingleMirror.MoveNextAllBeams();
-    var actualBeams = simpleSmallMapWithSingleMirror.GetExistingBeams();
-
-    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
-    {
-      [new Coordinate(X: 2, Y: 2)] = ContraptionMap.BeamDirection.DOWN
-    };
-    Assert.Equal(expectedBeams, actualBeams);
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 2),
+      expectedDirection: ContraptionMap.BeamDirection.DOWN,
+      map: simpleSmallMapWithSingleMirror
+    );
   }
 
   [Fact]
@@ -121,12 +125,11 @@ public class ContraptionMapTest
   {
     mapWithSomeMirrors.MoveNextAllBeams();
     mapWithSomeMirrors.MoveNextAllBeams();
-    var actualBeams = mapWithSomeMirrors.GetExistingBeams();
-    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
-    {
-      [new Coordinate(X: 2, Y: 2)] = ContraptionMap.BeamDirection.RIGHT
-    };
-    Assert.Equal(expectedBeams, actualBeams);
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 2),
+      expectedDirection: ContraptionMap.BeamDirection.RIGHT,
+      map: mapWithSomeMirrors
+    );
   }
 
   private static void AssertSingleBeam(
@@ -136,10 +139,9 @@ public class ContraptionMapTest
   )
   {
     var actualBeams = map.GetExistingBeams();
-    var expectedBeams = new Dictionary<Coordinate, ContraptionMap.BeamDirection>()
-    {
-      [expectedCoordinate] = expectedDirection
-    };
-    Assert.Equal(expectedBeams, actualBeams);
+    Assert.Single(actualBeams);
+    var beam = actualBeams.First();
+    Assert.Equal(expectedCoordinate, beam.Key);
+    Assert.Equal(expectedDirection, beam.Value);
   }
 }
