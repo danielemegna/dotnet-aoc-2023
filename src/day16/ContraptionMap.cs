@@ -18,7 +18,7 @@ public class ContraptionMap
         if (mapCharacter == '.')
           continue;
 
-        mirrors.Add(new Coordinate(X: x, Y: y), Mirror.NORD_WEST__SOUTH_EST);
+        mirrors.Add(new Coordinate(X: x, Y: y), Mirror.NORD_WEST__SOUTH_EAST);
       }
     }
 
@@ -75,5 +75,5 @@ public class ContraptionMap
   }
 
   public enum BeamDirection { RIGHT, DOWN }
-  public enum Mirror { NORD_WEST__SOUTH_EST }
+  public enum Mirror { NORD_WEST__SOUTH_EAST }
 }
