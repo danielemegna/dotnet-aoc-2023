@@ -51,7 +51,7 @@ public class ContraptionMap
     this.existingBeams.Remove(beamCoordinate);
 
     var nextCoordinate = beamCoordinate.Next(beamDirection);
-    if (nextCoordinate.X >= this.size)
+    if (nextCoordinate.X == this.size || nextCoordinate.Y == this.size)
       return;
 
     if (mirrors.ContainsKey(nextCoordinate)) {

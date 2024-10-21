@@ -56,7 +56,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void BeamsDisappearMovingOutsideTheMapBoundaries()
+  public void BeamsDisappearMovingOutsideTheMapBoundariesOnEast()
   {
     simpleSmallEmptyMap.MoveNextAllBeams();
     simpleSmallEmptyMap.MoveNextAllBeams();
@@ -106,6 +106,18 @@ public class ContraptionMapTest
       [new Coordinate(X: 2, Y: 2)] = ContraptionMap.BeamDirection.DOWN
     };
     Assert.Equal(expectedBeams, actualBeams);
+  }
+
+  [Fact]
+  public void BeamsDisappearMovingOutsideTheMapBoundariesOnSouth()
+  {
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    simpleSmallMapWithSingleMirror.MoveNextAllBeams();
+    var actualBeams = simpleSmallMapWithSingleMirror.GetExistingBeams();
+
+    Assert.Equal([], actualBeams);
   }
 
 }
