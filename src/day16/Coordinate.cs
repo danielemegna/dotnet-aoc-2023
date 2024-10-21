@@ -8,7 +8,7 @@ public record Coordinate(int X, int Y)
     if (beamDirection == ContraptionMap.BeamDirection.RIGHT)
       return new(X: this.X + 1, Y: 0);
 
-    return new(X: 2, Y: this.Y + 1);
+    return new(X: this.X, Y: this.Y + 1);
   }
 }
 

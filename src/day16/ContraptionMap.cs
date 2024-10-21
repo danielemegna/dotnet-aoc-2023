@@ -6,21 +6,24 @@ public class ContraptionMap
   private readonly Dictionary<Coordinate, Mirror> mirrors;
   private readonly Dictionary<Coordinate, BeamDirection> existingBeams;
 
-  public static ContraptionMap From(string[] inputLines)
+  public static ContraptionMap From(string[] mapRows)
   {
     Dictionary<Coordinate, Mirror> mirrors = [];
-    var firstRow = inputLines[0];
-    for (int x = 0; x < firstRow.Length; x++)
+    for (int y = 0; y < mapRows.Length; y++)
     {
-      var mapCharacter = firstRow[x];
-      if (mapCharacter == '.')
-        continue;
+      var row = mapRows[y];
+      for (int x = 0; x < row.Length; x++)
+      {
+        var mapCharacter = row[x];
+        if (mapCharacter == '.')
+          continue;
 
-      mirrors.Add(new Coordinate(X: x, Y: 0), Mirror.NORD_WEST__SOUTH_EST);
+        mirrors.Add(new Coordinate(X: x, Y: y), Mirror.NORD_WEST__SOUTH_EST);
+      }
     }
 
     return new ContraptionMap(
-      size: inputLines.Length,
+      size: mapRows.Length,
       mirrors: mirrors
     );
   }
@@ -54,9 +57,18 @@ public class ContraptionMap
     if (nextCoordinate.X == this.size || nextCoordinate.Y == this.size)
       return;
 
-    if (mirrors.ContainsKey(nextCoordinate)) {
-      nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
-      beamDirection = BeamDirection.DOWN;
+    if (mirrors.ContainsKey(nextCoordinate))
+    {
+      if (beamDirection == BeamDirection.RIGHT)
+      {
+        nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
+        beamDirection = BeamDirection.DOWN;
+      }
+      else
+      {
+        nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+        beamDirection = BeamDirection.RIGHT;
+      }
     }
 
     this.existingBeams[nextCoordinate] = beamDirection;
