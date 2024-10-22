@@ -17,11 +17,12 @@ public class ContraptionMapTest
   ]);
 
   private readonly ContraptionMap mapWithSomeMirrors = ContraptionMap.From([
-    @".\./\",
-    @".....",
-    @".\./.",
-    @".....",
-    @"./../"
+    @".\./.\",
+    @"......",
+    @".\./..",
+    @"../\..",
+    @"......",
+    @"/./\./"
   ]);
 
   [Fact]
@@ -140,6 +141,20 @@ public class ContraptionMapTest
     AssertSingleBeam(
       expectedCoordinate: new Coordinate(X: 3, Y: 1),
       expectedDirection: ContraptionMap.BeamDirection.UP,
+      map: mapWithSomeMirrors
+    );
+  }
+
+  [Fact]
+  public void Hit_SouthWestNorthEst_MirrorFromSouthShouldMoveBeamToRight()
+  {
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 4, Y: 0),
+      expectedDirection: ContraptionMap.BeamDirection.RIGHT,
       map: mapWithSomeMirrors
     );
   }

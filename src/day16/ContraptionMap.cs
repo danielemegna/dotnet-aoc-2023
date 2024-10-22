@@ -90,8 +90,17 @@ public class ContraptionMap
         }
         break;
       case Mirror.SOUTH_WEST__NORTH_EAST:
-        nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
-        newBeamDirection = BeamDirection.UP;
+        switch (beamDirection)
+        {
+          case BeamDirection.RIGHT:
+            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
+            newBeamDirection = BeamDirection.UP;
+            break;
+          default:
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+            newBeamDirection = BeamDirection.RIGHT;
+            break;
+        }
         break;
     }
 
