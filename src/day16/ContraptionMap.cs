@@ -8,6 +8,19 @@ public class ContraptionMap
 
   public static ContraptionMap From(string[] mapRows)
   {
+    return ContraptionMap.From(
+      mapRows: mapRows,
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
+      initialBeamDirection: BeamDirection.RIGHT
+    );
+  }
+
+  internal static ContraptionMap From(
+    string[] mapRows,
+    Coordinate initialBeamCoordinate,
+    BeamDirection initialBeamDirection
+  )
+  {
     Dictionary<Coordinate, Mirror> mirrors = [];
     for (int y = 0; y < mapRows.Length; y++)
     {
@@ -33,17 +46,24 @@ public class ContraptionMap
 
     return new ContraptionMap(
       size: mapRows.Length,
-      mirrors: mirrors
+      mirrors: mirrors,
+      initialBeamCoordinate: initialBeamCoordinate,
+      initialBeamDirection: initialBeamDirection
     );
   }
 
-  public ContraptionMap(int size, Dictionary<Coordinate, Mirror> mirrors)
+  private ContraptionMap(
+      int size,
+      Dictionary<Coordinate, Mirror> mirrors,
+      Coordinate initialBeamCoordinate,
+      BeamDirection initialBeamDirection
+  )
   {
     this.size = size;
     this.mirrors = mirrors;
     this.existingBeams = new()
     {
-      [new Coordinate(X: 0, Y: 0)] = BeamDirection.RIGHT
+      [initialBeamCoordinate] = initialBeamDirection
     };
   }
 
