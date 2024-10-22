@@ -77,15 +77,16 @@ public class ContraptionMap
     switch (hittingMirror)
     {
       case Mirror.NORD_WEST__SOUTH_EAST:
-        if (beamDirection == BeamDirection.RIGHT)
+        switch (beamDirection)
         {
-          nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
-          newBeamDirection = BeamDirection.DOWN;
-        }
-        else
-        {
-          nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
-          newBeamDirection = BeamDirection.RIGHT;
+          case BeamDirection.RIGHT:
+            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
+            newBeamDirection = BeamDirection.DOWN;
+            break;
+          default:
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+            newBeamDirection = BeamDirection.RIGHT;
+            break;
         }
         break;
       case Mirror.SOUTH_WEST__NORTH_EAST:
@@ -93,7 +94,6 @@ public class ContraptionMap
         newBeamDirection = BeamDirection.UP;
         break;
     }
-
 
     this.existingBeams[nextCoordinate] = newBeamDirection;
 
