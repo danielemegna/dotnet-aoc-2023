@@ -131,6 +131,19 @@ public class ContraptionMapTest
     );
   }
 
+  [Fact]
+  public void Hit_SouthWestNorthEst_MirrorFromWestShouldMoveBeamToUp()
+  {
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 3, Y: 1),
+      expectedDirection: ContraptionMap.BeamDirection.UP,
+      map: mapWithSomeMirrors
+    );
+  }
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,

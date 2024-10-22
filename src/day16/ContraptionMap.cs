@@ -18,7 +18,16 @@ public class ContraptionMap
         if (mapCharacter == '.')
           continue;
 
-        mirrors.Add(new Coordinate(X: x, Y: y), Mirror.NORD_WEST__SOUTH_EAST);
+        var currentCoordinate = new Coordinate(X: x, Y: y);
+        switch (mapCharacter)
+        {
+          case '\\':
+            mirrors.Add(currentCoordinate, Mirror.NORD_WEST__SOUTH_EAST);
+            continue;
+          case '/':
+            mirrors.Add(currentCoordinate, Mirror.SOUTH_WEST__NORTH_EAST);
+            continue;
+        }
       }
     }
 
@@ -57,23 +66,39 @@ public class ContraptionMap
     if (nextCoordinate.X == this.size || nextCoordinate.Y == this.size)
       return;
 
-    if (mirrors.ContainsKey(nextCoordinate))
+    if (!mirrors.ContainsKey(nextCoordinate))
     {
-      if (beamDirection == BeamDirection.RIGHT)
-      {
-        nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
-        beamDirection = BeamDirection.DOWN;
-      }
-      else
-      {
-        nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
-        beamDirection = BeamDirection.RIGHT;
-      }
+      this.existingBeams[nextCoordinate] = beamDirection;
+      return;
     }
 
-    this.existingBeams[nextCoordinate] = beamDirection;
+    var hittingMirror = mirrors[nextCoordinate];
+    BeamDirection newBeamDirection = default;
+    switch (hittingMirror)
+    {
+      case Mirror.NORD_WEST__SOUTH_EAST:
+        if (beamDirection == BeamDirection.RIGHT)
+        {
+          nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
+          newBeamDirection = BeamDirection.DOWN;
+        }
+        else
+        {
+          nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+          newBeamDirection = BeamDirection.RIGHT;
+        }
+        break;
+      case Mirror.SOUTH_WEST__NORTH_EAST:
+        nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
+        newBeamDirection = BeamDirection.UP;
+        break;
+    }
+
+
+    this.existingBeams[nextCoordinate] = newBeamDirection;
+
   }
 
-  public enum BeamDirection { RIGHT, DOWN }
-  public enum Mirror { NORD_WEST__SOUTH_EAST }
+  public enum BeamDirection { RIGHT, DOWN, UP }
+  public enum Mirror { NORD_WEST__SOUTH_EAST, SOUTH_WEST__NORTH_EAST }
 }
