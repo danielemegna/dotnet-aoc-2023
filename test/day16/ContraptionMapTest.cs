@@ -174,6 +174,27 @@ public class ContraptionMapTest
     );
   }
 
+  [Fact]
+  public void Hit_SouthWestNorthEst_MirrorFromNorthShouldMoveBeamToLeft()
+  {
+    // this should become an easy test setup
+    // without move next operations needed
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 4, Y: 5),
+      expectedDirection: ContraptionMap.BeamDirection.LEFT,
+      map: mapWithSomeMirrors
+    );
+  }
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,

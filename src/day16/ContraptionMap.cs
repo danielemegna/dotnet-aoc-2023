@@ -96,6 +96,10 @@ public class ContraptionMap
             nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             newBeamDirection = BeamDirection.UP;
             break;
+          case BeamDirection.DOWN:
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X - 1 };
+            newBeamDirection = BeamDirection.LEFT;
+            break;
           default:
             nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
             newBeamDirection = BeamDirection.RIGHT;
@@ -108,6 +112,6 @@ public class ContraptionMap
 
   }
 
-  public enum BeamDirection { RIGHT, DOWN, UP }
+  public enum BeamDirection { RIGHT, DOWN, UP, LEFT }
   public enum Mirror { NORD_WEST__SOUTH_EAST, SOUTH_WEST__NORTH_EAST }
 }
