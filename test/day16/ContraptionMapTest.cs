@@ -159,6 +159,21 @@ public class ContraptionMapTest
     );
   }
 
+  [Fact]
+  public void Hit_NorthWestSouthEst_MirrorFromWestShouldMoveBeamToDown()
+  {
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    mapWithSomeMirrors.MoveNextAllBeams();
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 5, Y: 1),
+      expectedDirection: ContraptionMap.BeamDirection.DOWN,
+      map: mapWithSomeMirrors
+    );
+  }
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,
