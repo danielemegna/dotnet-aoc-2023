@@ -113,7 +113,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void Hit_NorthWestSouthEst_MirrorFromNorthShouldMoveBeamToRight()
+  public void Hit_NorthWestSouthEast_MirrorFromNorthShouldMoveBeamToRight()
   {
     var map = MapWithSomeMirrorsAnd(
       initialBeamCoordinate: new(X: 1, Y: 1),
@@ -130,7 +130,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void Hit_SouthWestNorthEst_MirrorFromWestShouldMoveBeamToUp()
+  public void Hit_SouthWestNorthEast_MirrorFromWestShouldMoveBeamToUp()
   {
     var map = MapWithSomeMirrorsAnd(
       initialBeamCoordinate: new(X: 2, Y: 2),
@@ -147,7 +147,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void Hit_SouthWestNorthEst_MirrorFromSouthShouldMoveBeamToRight()
+  public void Hit_SouthWestNorthEast_MirrorFromSouthShouldMoveBeamToRight()
   {
     var map = MapWithSomeMirrorsAnd(
       initialBeamCoordinate: new(X: 3, Y: 1),
@@ -164,7 +164,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void Hit_NorthWestSouthEst_MirrorFromWestShouldMoveBeamToDown()
+  public void Hit_NorthWestSouthEast_MirrorFromWestShouldMoveBeamToDown()
   {
     var map = MapWithSomeMirrorsAnd(
       initialBeamCoordinate: new(X: 4, Y: 0),
@@ -181,7 +181,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void Hit_SouthWestNorthEst_MirrorFromNorthShouldMoveBeamToLeft()
+  public void Hit_SouthWestNorthEast_MirrorFromNorthShouldMoveBeamToLeft()
   {
     var map = MapWithSomeMirrorsAnd(
       initialBeamCoordinate: new(X: 5, Y: 4),
