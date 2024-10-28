@@ -10,6 +10,8 @@ public record Coordinate(int X, int Y)
         return new(X: this.X + 1, Y: this.Y);
       case ContraptionMap.BeamDirection.DOWN:
         return new(X: this.X, Y: this.Y + 1);
+      case ContraptionMap.BeamDirection.LEFT:
+        return new(X: this.X - 1, Y: this.Y);
       case ContraptionMap.BeamDirection.UP:
       default:
         return new(X: this.X, Y: this.Y - 1);
