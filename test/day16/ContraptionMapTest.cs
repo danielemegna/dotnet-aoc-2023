@@ -261,6 +261,9 @@ public class ContraptionMapTest
     Assert.Equal(expectedDirection, beam.Value);
   }
 
+  // TODO next: hit a mirror and hit another mirror moving
+  // TODO next: hit a mirror and go out of map bounds
+
   private ContraptionMap MapWithSomeMirrorsAnd(
     Coordinate initialBeamCoordinate,
     ContraptionMap.BeamDirection initialBeamDirection
