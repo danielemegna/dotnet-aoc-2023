@@ -100,16 +100,19 @@ public class ContraptionMap
         switch (beamDirection)
         {
           case BeamDirection.RIGHT:
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
             newBeamDirection = BeamDirection.DOWN;
+            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
             break;
           case BeamDirection.LEFT:
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             newBeamDirection = BeamDirection.UP;
+            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             break;
-          default:
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+          case BeamDirection.DOWN:
             newBeamDirection = BeamDirection.RIGHT;
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+            break;
+          case BeamDirection.UP:
+          default:
             break;
         }
         break;
@@ -117,16 +120,19 @@ public class ContraptionMap
         switch (beamDirection)
         {
           case BeamDirection.RIGHT:
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             newBeamDirection = BeamDirection.UP;
+            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             break;
           case BeamDirection.DOWN:
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X - 1 };
             newBeamDirection = BeamDirection.LEFT;
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X - 1 };
             break;
-          default:
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+          case BeamDirection.UP:
             newBeamDirection = BeamDirection.RIGHT;
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
+            break;
+          case BeamDirection.LEFT:
+          default:
             break;
         }
         break;
