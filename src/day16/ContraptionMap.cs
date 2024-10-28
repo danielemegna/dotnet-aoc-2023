@@ -101,19 +101,15 @@ public class ContraptionMap
         {
           case BeamDirection.RIGHT:
             newBeamDirection = BeamDirection.DOWN;
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
             break;
           case BeamDirection.LEFT:
             newBeamDirection = BeamDirection.UP;
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             break;
           case BeamDirection.DOWN:
             newBeamDirection = BeamDirection.RIGHT;
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
             break;
           case BeamDirection.UP:
             newBeamDirection = BeamDirection.LEFT;
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X - 1 };
             break;
         }
         break;
@@ -122,26 +118,22 @@ public class ContraptionMap
         {
           case BeamDirection.RIGHT:
             newBeamDirection = BeamDirection.UP;
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y - 1 };
             break;
           case BeamDirection.DOWN:
             newBeamDirection = BeamDirection.LEFT;
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X - 1 };
             break;
           case BeamDirection.UP:
             newBeamDirection = BeamDirection.RIGHT;
-            nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
             break;
           case BeamDirection.LEFT:
             newBeamDirection = BeamDirection.DOWN;
-            nextCoordinate = nextCoordinate with { Y = nextCoordinate.Y + 1 };
             break;
         }
         break;
     }
 
+    nextCoordinate = nextCoordinate.Next(newBeamDirection);
     this.existingBeams[nextCoordinate] = newBeamDirection;
-
   }
 
   public enum BeamDirection { RIGHT, DOWN, UP, LEFT }
