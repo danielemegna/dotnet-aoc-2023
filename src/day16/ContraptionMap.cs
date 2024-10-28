@@ -77,63 +77,55 @@ public class ContraptionMap
     if (this.existingBeams.Count == 0)
       return;
 
-    Coordinate beamCoordinate = this.existingBeams.First().Key;
-    BeamDirection beamDirection = this.existingBeams.First().Value;
+    Coordinate currentBeamCoordinate = this.existingBeams.First().Key;
+    BeamDirection currentBeamDirection = this.existingBeams.First().Value;
 
-    this.existingBeams.Remove(beamCoordinate);
+    this.existingBeams.Remove(currentBeamCoordinate);
+    var nextCoordinate = currentBeamCoordinate.Next(currentBeamDirection);
 
-    var nextCoordinate = beamCoordinate.Next(beamDirection);
-    if (nextCoordinate.X == this.size || nextCoordinate.Y == this.size)
+    if (IsOutOfMapBounds(nextCoordinate))
       return;
 
-    if (!mirrors.ContainsKey(nextCoordinate))
+    if (!IsHittingAMirror(nextCoordinate))
     {
-      this.existingBeams[nextCoordinate] = beamDirection;
+      this.existingBeams[nextCoordinate] = currentBeamDirection;
       return;
     }
 
     var hittingMirror = mirrors[nextCoordinate];
-    BeamDirection newBeamDirection = default;
+    var newBeamDirection = NewBeamDirectionFor(currentBeamDirection, hittingMirror);
+    nextCoordinate = nextCoordinate.Next(newBeamDirection);
+    this.existingBeams[nextCoordinate] = newBeamDirection;
+  }
+
+  private bool IsOutOfMapBounds(Coordinate c) => c.X >= this.size || c.Y >= this.size;
+  private bool IsHittingAMirror(Coordinate c) => mirrors.ContainsKey(c);
+
+  private BeamDirection NewBeamDirectionFor(BeamDirection beamDirection, Mirror hittingMirror)
+  {
     switch (hittingMirror)
     {
       case Mirror.NORD_WEST__SOUTH_EAST:
         switch (beamDirection)
         {
-          case BeamDirection.RIGHT:
-            newBeamDirection = BeamDirection.DOWN;
-            break;
-          case BeamDirection.LEFT:
-            newBeamDirection = BeamDirection.UP;
-            break;
-          case BeamDirection.DOWN:
-            newBeamDirection = BeamDirection.RIGHT;
-            break;
-          case BeamDirection.UP:
-            newBeamDirection = BeamDirection.LEFT;
-            break;
+          case BeamDirection.RIGHT: return BeamDirection.DOWN;
+          case BeamDirection.DOWN: return BeamDirection.RIGHT;
+          case BeamDirection.LEFT: return BeamDirection.UP;
+          case BeamDirection.UP: return BeamDirection.LEFT;
         }
         break;
       case Mirror.SOUTH_WEST__NORTH_EAST:
         switch (beamDirection)
         {
-          case BeamDirection.RIGHT:
-            newBeamDirection = BeamDirection.UP;
-            break;
-          case BeamDirection.DOWN:
-            newBeamDirection = BeamDirection.LEFT;
-            break;
-          case BeamDirection.UP:
-            newBeamDirection = BeamDirection.RIGHT;
-            break;
-          case BeamDirection.LEFT:
-            newBeamDirection = BeamDirection.DOWN;
-            break;
+          case BeamDirection.RIGHT: return BeamDirection.UP;
+          case BeamDirection.DOWN: return BeamDirection.LEFT;
+          case BeamDirection.LEFT: return BeamDirection.DOWN;
+          case BeamDirection.UP: return BeamDirection.RIGHT;
         }
         break;
     }
 
-    nextCoordinate = nextCoordinate.Next(newBeamDirection);
-    this.existingBeams[nextCoordinate] = newBeamDirection;
+    throw new ArgumentException($"Cannot get NewBeamDirection for [${beamDirection}], [${hittingMirror}]");
   }
 
   public enum BeamDirection { RIGHT, DOWN, UP, LEFT }
