@@ -112,7 +112,8 @@ public class ContraptionMap
             nextCoordinate = nextCoordinate with { X = nextCoordinate.X + 1 };
             break;
           case BeamDirection.UP:
-          default:
+            newBeamDirection = BeamDirection.LEFT;
+            nextCoordinate = nextCoordinate with { X = nextCoordinate.X - 1 };
             break;
         }
         break;

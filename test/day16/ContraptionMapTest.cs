@@ -214,6 +214,23 @@ public class ContraptionMapTest
     );
   }
 
+  [Fact]
+  public void Hit_NorthWestSouthEast_MirrorFromSouthShouldMoveBeamToLeft()
+  {
+    var map = MapWithSomeMirrorsAnd(
+      initialBeamCoordinate: new(X: 1, Y: 1),
+      initialBeamDirection: ContraptionMap.BeamDirection.UP
+    );
+
+    map.MoveNextAllBeams();
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 0, Y: 0),
+      expectedDirection: ContraptionMap.BeamDirection.LEFT,
+      map: map
+    );
+  }
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,
