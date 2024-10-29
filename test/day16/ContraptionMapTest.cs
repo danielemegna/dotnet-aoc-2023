@@ -279,8 +279,50 @@ public class ContraptionMapTest
     );
   }
 
-  // TODO next: hit more than two adjacent mirrors in a move
-  // TODO next: hit multiple adjacent mirrors and go outside the map boundaries
+  [Fact]
+  public void HitSeveralAdjacentMirrorsShouldMoveTheBeamThroughAll()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @".\/\",
+        @".\//",
+        @"..\.",
+        @"....",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
+      initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+    );
+
+    map.MoveNextAllBeams();
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 3, Y: 2),
+      expectedDirection: ContraptionMap.BeamDirection.RIGHT,
+      map: map
+    );
+  }
+
+  [Fact]
+  public void HitSeveralAdjacentMirrorsAndDisappearMovingOutsideTheMapBoundaries()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @".\/\",
+        @".\/\",
+        @"....",
+        @"....",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
+      initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+    );
+
+    map.MoveNextAllBeams();
+
+    var actualBeams = map.GetExistingBeams();
+    Assert.Equal([], actualBeams);
+  }
+
+  // TODO next: handle infinite loop of mirrors
 
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,

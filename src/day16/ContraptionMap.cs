@@ -82,32 +82,23 @@ public class ContraptionMap
 
     this.existingBeams.Remove(currentBeamCoordinate);
     var nextCoordinate = currentBeamCoordinate.Next(currentBeamDirection);
+    ReinsertBeamInMap(nextCoordinate, currentBeamDirection);
+  }
 
-    if (IsOutOfMapBounds(nextCoordinate))
+  private void ReinsertBeamInMap(Coordinate beamCoordinate, BeamDirection beamDirection) {
+    if (IsOutOfMapBounds(beamCoordinate))
       return;
 
-    if (!IsHittingAMirror(nextCoordinate))
+    if (!IsHittingAMirror(beamCoordinate))
     {
-      this.existingBeams[nextCoordinate] = currentBeamDirection;
+      this.existingBeams[beamCoordinate] = beamDirection;
       return;
     }
 
-    var hittingMirror = mirrors[nextCoordinate];
-    var newBeamDirection = NewBeamDirectionFor(currentBeamDirection, hittingMirror);
-    nextCoordinate = nextCoordinate.Next(newBeamDirection);
-    if (IsOutOfMapBounds(nextCoordinate))
-      return;
-
-    if (!IsHittingAMirror(nextCoordinate))
-    {
-      this.existingBeams[nextCoordinate] = newBeamDirection;
-      return;
-    }
-
-    hittingMirror = mirrors[nextCoordinate];
-    newBeamDirection = NewBeamDirectionFor(newBeamDirection, hittingMirror);
-    nextCoordinate = nextCoordinate.Next(newBeamDirection);
-    this.existingBeams[nextCoordinate] = newBeamDirection;
+    var hittingMirror = mirrors[beamCoordinate];
+    var newBeamDirection = NewBeamDirectionFor(beamDirection, hittingMirror);
+    var newBeamCoordinate = beamCoordinate.Next(newBeamDirection);
+    ReinsertBeamInMap(newBeamCoordinate, newBeamDirection);
   }
 
   private bool IsOutOfMapBounds(Coordinate c) => c.X >= this.size || c.Y >= this.size;
