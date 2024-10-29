@@ -248,6 +248,22 @@ public class ContraptionMapTest
     );
   }
 
+  [Fact]
+  public void HitAMirrorAndDisappearMovingOutsideTheMapBoundaries()
+  {
+    var map = MapWithSomeMirrorsAnd(
+      initialBeamCoordinate: new(X: 1, Y: 5),
+      initialBeamDirection: ContraptionMap.BeamDirection.LEFT
+    );
+
+    map.MoveNextAllBeams();
+
+    var actualBeams = map.GetExistingBeams();
+    Assert.Equal([], actualBeams);
+  }
+
+  // TODO next: hit a mirror and hit another mirror moving
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,
@@ -260,9 +276,6 @@ public class ContraptionMapTest
     Assert.Equal(expectedCoordinate, beam.Key);
     Assert.Equal(expectedDirection, beam.Value);
   }
-
-  // TODO next: hit a mirror and hit another mirror moving
-  // TODO next: hit a mirror and go out of map bounds
 
   private ContraptionMap MapWithSomeMirrorsAnd(
     Coordinate initialBeamCoordinate,

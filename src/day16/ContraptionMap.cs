@@ -95,6 +95,9 @@ public class ContraptionMap
     var hittingMirror = mirrors[nextCoordinate];
     var newBeamDirection = NewBeamDirectionFor(currentBeamDirection, hittingMirror);
     nextCoordinate = nextCoordinate.Next(newBeamDirection);
+    if (IsOutOfMapBounds(nextCoordinate))
+      return;
+
     this.existingBeams[nextCoordinate] = newBeamDirection;
   }
 
