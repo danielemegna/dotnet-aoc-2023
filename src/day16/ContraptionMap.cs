@@ -98,6 +98,15 @@ public class ContraptionMap
     if (IsOutOfMapBounds(nextCoordinate))
       return;
 
+    if (!IsHittingAMirror(nextCoordinate))
+    {
+      this.existingBeams[nextCoordinate] = newBeamDirection;
+      return;
+    }
+
+    hittingMirror = mirrors[nextCoordinate];
+    newBeamDirection = NewBeamDirectionFor(newBeamDirection, hittingMirror);
+    nextCoordinate = nextCoordinate.Next(newBeamDirection);
     this.existingBeams[nextCoordinate] = newBeamDirection;
   }
 

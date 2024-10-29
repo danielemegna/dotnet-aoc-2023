@@ -262,7 +262,25 @@ public class ContraptionMapTest
     Assert.Equal([], actualBeams);
   }
 
-  // TODO next: hit a mirror and hit another mirror moving
+  [Fact]
+  public void HitTwoAdjacentMirrorsInAMoveShouldMoveTheBeamTwice()
+  {
+    var map = MapWithSomeMirrorsAnd(
+      initialBeamCoordinate: new(X: 3, Y: 4),
+      initialBeamDirection: ContraptionMap.BeamDirection.UP
+    );
+
+    map.MoveNextAllBeams();
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 4),
+      expectedDirection: ContraptionMap.BeamDirection.DOWN,
+      map: map
+    );
+  }
+
+  // TODO next: hit more than two adjacent mirrors in a move
+  // TODO next: hit multiple adjacent mirrors and go outside the map boundaries
 
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
