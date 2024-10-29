@@ -322,7 +322,26 @@ public class ContraptionMapTest
     Assert.Equal([], actualBeams);
   }
 
-  // TODO next: handle infinite loop of mirrors
+  [Fact]
+  public void MapWithAMirrorInStartingBeamCoordinateShouldMoveTheBeamOnInit()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"\..",
+        @"...",
+        @"...",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
+      initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+    );
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 0, Y: 1),
+      expectedDirection: ContraptionMap.BeamDirection.DOWN,
+      map: map
+    );
+  }
+
 
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,

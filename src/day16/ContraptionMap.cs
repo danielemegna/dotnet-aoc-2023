@@ -61,10 +61,8 @@ public class ContraptionMap
   {
     this.size = size;
     this.mirrors = mirrors;
-    this.existingBeams = new()
-    {
-      [initialBeamCoordinate] = initialBeamDirection
-    };
+    this.existingBeams = [];
+    InsertBeamInMap(initialBeamCoordinate, initialBeamDirection);
   }
 
   public Dictionary<Coordinate, BeamDirection> GetExistingBeams()
@@ -82,10 +80,11 @@ public class ContraptionMap
 
     this.existingBeams.Remove(currentBeamCoordinate);
     var nextCoordinate = currentBeamCoordinate.Next(currentBeamDirection);
-    ReinsertBeamInMap(nextCoordinate, currentBeamDirection);
+    InsertBeamInMap(nextCoordinate, currentBeamDirection);
   }
 
-  private void ReinsertBeamInMap(Coordinate beamCoordinate, BeamDirection beamDirection) {
+  private void InsertBeamInMap(Coordinate beamCoordinate, BeamDirection beamDirection)
+  {
     if (IsOutOfMapBounds(beamCoordinate))
       return;
 
@@ -98,7 +97,9 @@ public class ContraptionMap
     var hittingMirror = mirrors[beamCoordinate];
     var newBeamDirection = NewBeamDirectionFor(beamDirection, hittingMirror);
     var newBeamCoordinate = beamCoordinate.Next(newBeamDirection);
-    ReinsertBeamInMap(newBeamCoordinate, newBeamDirection);
+
+    // deliberately not handling infite loop on adjacent mirrors (is it possibile?)
+    InsertBeamInMap(newBeamCoordinate, newBeamDirection);
   }
 
   private bool IsOutOfMapBounds(Coordinate c) => c.X >= this.size || c.Y >= this.size;
