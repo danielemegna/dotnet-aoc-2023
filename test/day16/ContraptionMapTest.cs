@@ -342,6 +342,49 @@ public class ContraptionMapTest
     );
   }
 
+  [Fact]
+  public void BeamsShouldStepOverSplittersHittingItsPointyEnd()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"...",
+        @".-.",
+        @"...",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
+      initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+    );
+
+    map.MoveNextAllBeams();
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 1),
+      expectedDirection: ContraptionMap.BeamDirection.RIGHT,
+      map: map
+    );
+  }
+
+  [Fact]
+  public void HitASplitterPointyEndWithAdjacentMirrorShouldMoveTheBeamTwice()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"...",
+        @".-/",
+        @"...",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
+      initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+    );
+
+    map.MoveNextAllBeams();
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 2, Y: 0),
+      expectedDirection: ContraptionMap.BeamDirection.UP,
+      map: map
+    );
+  }
 
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
