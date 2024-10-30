@@ -343,7 +343,7 @@ public class ContraptionMapTest
   }
 
   [Fact]
-  public void BeamsShouldStepOverSplittersHittingItsPointyEnd()
+  public void BeamsShouldStepOverSplittersHittingItsPointyEndFromWest()
   {
     var map = ContraptionMap.From(
       mapRows: [
@@ -360,6 +360,28 @@ public class ContraptionMapTest
     AssertSingleBeam(
       expectedCoordinate: new Coordinate(X: 2, Y: 1),
       expectedDirection: ContraptionMap.BeamDirection.RIGHT,
+      map: map
+    );
+  }
+
+  [Fact]
+  public void BeamsShouldStepOverSplittersHittingItsPointyEndFromNorth()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"...",
+        @".|.",
+        @"...",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 1, Y: 0),
+      initialBeamDirection: ContraptionMap.BeamDirection.DOWN
+    );
+
+    map.MoveNextAllBeams();
+
+    AssertSingleBeam(
+      expectedCoordinate: new Coordinate(X: 1, Y: 2),
+      expectedDirection: ContraptionMap.BeamDirection.DOWN,
       map: map
     );
   }

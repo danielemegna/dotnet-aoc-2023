@@ -45,6 +45,9 @@ public class ContraptionMap
           case '-':
             splitters.Add(currentCoordinate, Splitter.WEST_EAST);
             continue;
+          case '|':
+            splitters.Add(currentCoordinate, Splitter.NORTH_SOUTH);
+            continue;
         }
       }
     }
@@ -150,5 +153,5 @@ public class ContraptionMap
 
   public enum BeamDirection { RIGHT, DOWN, UP, LEFT }
   public enum Mirror { NORD_WEST__SOUTH_EAST, SOUTH_WEST__NORTH_EAST }
-  public enum Splitter { WEST_EAST }
+  public enum Splitter { WEST_EAST, NORTH_SOUTH }
 }
