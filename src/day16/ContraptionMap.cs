@@ -107,6 +107,16 @@ public class ContraptionMap
 
     if (IsHittingASplitter(beamCoordinate))
     {
+      var hittingSplitter = splitters[beamCoordinate];
+      if (
+        hittingSplitter == Splitter.NORTH_SOUTH &&
+        (beamDirection == BeamDirection.RIGHT || beamDirection == BeamDirection.LEFT)
+      )
+      {
+        InsertBeamInMap(beamCoordinate with { Y = beamCoordinate.Y - 1 }, BeamDirection.UP);
+        InsertBeamInMap(beamCoordinate with { Y = beamCoordinate.Y + 1 }, BeamDirection.DOWN);
+        return;
+      }
       var nextBeamCoordinate = beamCoordinate.Next(beamDirection);
       InsertBeamInMap(nextBeamCoordinate, beamDirection);
       return;
