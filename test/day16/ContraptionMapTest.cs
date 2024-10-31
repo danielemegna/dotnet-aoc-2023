@@ -189,6 +189,8 @@ public class ContraptionMapTest
 
   }
 
+  // TODO START: public class MapWithSomeMirrorsTest()
+
   [Fact]
   public void Hit_NorthWestSouthEast_MirrorFromNorthShouldMoveBeamToRight()
   {
@@ -356,6 +358,8 @@ public class ContraptionMapTest
     );
   }
 
+  // TODO END: public class MapWithSomeMirrorsTest()
+
   [Fact]
   public void HitSeveralAdjacentMirrorsShouldMoveTheBeamThroughAll()
   {
@@ -418,6 +422,9 @@ public class ContraptionMapTest
       map: map
     );
   }
+
+
+  // TODO START: public class MapWithSplittersTest()
 
   [Fact]
   public void BeamsShouldStepOverSplittersHittingItsPointyEndFromWest()
@@ -580,6 +587,8 @@ public class ContraptionMapTest
       [new Coordinate(X: 2, Y: 1)] = ContraptionMap.BeamDirection.RIGHT
     }, actualBeams);
   }
+
+  // TODO END: public class MapWithSplittersTest()
 
   [Fact]
   public void HandleAdjacentSplittersAndMirrorsAfterASingleMove()
