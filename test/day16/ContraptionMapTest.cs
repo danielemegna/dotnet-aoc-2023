@@ -454,6 +454,52 @@ public class ContraptionMapTest
     }, actualBeams);
   }
 
+  [Fact]
+  public void BeamShouldBeDuplicatedHittingTheFlatSideOfASplitterFromNorth()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"...",
+        @".-.",
+        @"...",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 1, Y: 0),
+      initialBeamDirection: ContraptionMap.BeamDirection.DOWN
+    );
+
+    map.MoveNextAllBeams();
+
+    var actualBeams = map.GetExistingBeams();
+    Assert.Equal(2, actualBeams.Count);
+    Assert.Equal(new() {
+      [new Coordinate(X:0, Y:1)] = ContraptionMap.BeamDirection.LEFT,
+      [new Coordinate(X:2, Y:1)] = ContraptionMap.BeamDirection.RIGHT
+    }, actualBeams);
+  }
+
+  [Fact]
+  public void BeamShouldBeDuplicatedHittingTheFlatSideOfASplitterFromSouth()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"...",
+        @".-.",
+        @"...",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 1, Y: 2),
+      initialBeamDirection: ContraptionMap.BeamDirection.UP
+    );
+
+    map.MoveNextAllBeams();
+
+    var actualBeams = map.GetExistingBeams();
+    Assert.Equal(2, actualBeams.Count);
+    Assert.Equal(new() {
+      [new Coordinate(X:0, Y:1)] = ContraptionMap.BeamDirection.LEFT,
+      [new Coordinate(X:2, Y:1)] = ContraptionMap.BeamDirection.RIGHT
+    }, actualBeams);
+  }
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,
