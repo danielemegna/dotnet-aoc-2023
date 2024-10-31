@@ -106,6 +106,20 @@ public class ContraptionMapTest
     }
 
     [Fact]
+    public void BeamsDisappearMovingOutsideTheMapBoundariesOnSouth()
+    {
+      var map = SimpleSmallEmptyMapAnd(
+        initialBeamCoordinate: new Coordinate(X: 0, Y: 2),
+        initialBeamDirection: ContraptionMap.BeamDirection.DOWN
+      );
+
+      map.MoveNextAllBeams();
+
+      var actualBeams = map.GetExistingBeams();
+      Assert.Equal([], actualBeams);
+    }
+
+    [Fact]
     public void MoveNextAllBeamsDoesNothingAfterAllBeamsDisappeared()
     {
       var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
