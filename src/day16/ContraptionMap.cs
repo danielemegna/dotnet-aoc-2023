@@ -141,7 +141,9 @@ public class ContraptionMap
     InsertBeamInMap(newBeamCoordinate, newBeamDirection);
   }
 
-  private bool IsOutOfMapBounds(Coordinate c) => c.X >= this.size || c.Y >= this.size;
+  private bool IsOutOfMapBounds(Coordinate c) =>
+    c.X < 0 || c.Y < 0 || c.X >= this.size || c.Y >= this.size;
+
   private bool IsHittingAMirror(Coordinate c) => mirrors.ContainsKey(c);
   private bool IsHittingASplitter(Coordinate c) => splitters.ContainsKey(c);
 
