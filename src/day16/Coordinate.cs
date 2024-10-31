@@ -7,13 +7,13 @@ public record Coordinate(int X, int Y)
     switch (beamDirection)
     {
       case ContraptionMap.BeamDirection.RIGHT:
-        return new(X: this.X + 1, Y: this.Y);
+        return this with { X = X + 1 };
       case ContraptionMap.BeamDirection.DOWN:
-        return new(X: this.X, Y: this.Y + 1);
+        return this with { Y = Y + 1 };
       case ContraptionMap.BeamDirection.LEFT:
-        return new(X: this.X - 1, Y: this.Y);
+        return this with { X = X - 1 };
       case ContraptionMap.BeamDirection.UP:
-        return new(X: this.X, Y: this.Y - 1);
+        return this with { Y = Y - 1 };
     }
 
     throw new ArgumentException($"Cannot get Next coordinate for [${beamDirection}]");
