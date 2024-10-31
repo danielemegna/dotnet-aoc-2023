@@ -500,6 +500,30 @@ public class ContraptionMapTest
     }, actualBeams);
   }
 
+  [Fact]
+  public void HandleAdjacentSplittersAndMirrorsAfterASingleMove()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @".-.",
+        @".|.",
+        @".\.",
+      ],
+      initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
+      initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+    );
+
+    map.MoveNextAllBeams();
+
+    var actualBeams = map.GetExistingBeams();
+    Assert.Equal(3, actualBeams.Count);
+    Assert.Equal(new() {
+      [new Coordinate(X:0, Y:0)] = ContraptionMap.BeamDirection.LEFT,
+      [new Coordinate(X:2, Y:0)] = ContraptionMap.BeamDirection.RIGHT,
+      [new Coordinate(X:2, Y:2)] = ContraptionMap.BeamDirection.RIGHT
+    }, actualBeams);
+  }
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,
