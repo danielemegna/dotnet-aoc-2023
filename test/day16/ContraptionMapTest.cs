@@ -663,6 +663,14 @@ public class ContraptionMapTest
 
   }
 
+  // TODO testcase: move multiple beams simultaneously
+
+  // TODO testcase: let disappear beam on a coordinate
+  // already visited in the same direction
+
+  // TODO testcase: handle multiple beam simultaneously
+  // in the same coordinate (with different directions)
+
   private static void AssertSingleBeam(
     Coordinate expectedCoordinate,
     ContraptionMap.BeamDirection expectedDirection,
