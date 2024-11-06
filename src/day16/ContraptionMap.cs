@@ -86,12 +86,16 @@ public class ContraptionMap
     if (this.existingBeams.Count == 0)
       return;
 
-    Coordinate currentBeamCoordinate = this.existingBeams.First().Key;
-    BeamDirection currentBeamDirection = this.existingBeams.First().Value;
+    Dictionary<Coordinate, BeamDirection> existingBeamsClone = new(this.existingBeams);
+    foreach (var beam in existingBeamsClone)
+    {
+      Coordinate currentBeamCoordinate = beam.Key;
+      BeamDirection currentBeamDirection = beam.Value;
 
-    this.existingBeams.Remove(currentBeamCoordinate);
-    var nextCoordinate = currentBeamCoordinate.Next(currentBeamDirection);
-    InsertBeamInMap(nextCoordinate, currentBeamDirection);
+      this.existingBeams.Remove(currentBeamCoordinate);
+      var nextCoordinate = currentBeamCoordinate.Next(currentBeamDirection);
+      InsertBeamInMap(nextCoordinate, currentBeamDirection);
+    }
   }
 
   private void InsertBeamInMap(Coordinate beamCoordinate, BeamDirection beamDirection)

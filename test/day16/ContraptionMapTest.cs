@@ -588,6 +588,38 @@ public class ContraptionMapTest
       );
     }
 
+    [Fact]
+    public void MoveMultipleBeamsSimultaneously()
+    {
+      var map = ContraptionMap.From(
+        mapRows: [
+          @".....",
+          @".....",
+          @"..|..",
+          @".....",
+          @".....",
+        ],
+        initialBeamCoordinate: new Coordinate(X: 1, Y: 2),
+        initialBeamDirection: ContraptionMap.BeamDirection.RIGHT
+      );
+
+      // hit the splitter: two beams generated
+      map.MoveNextAllBeams();
+      Assert.Equal(new()
+      {
+        [new Coordinate(X: 2, Y: 1)] = ContraptionMap.BeamDirection.UP,
+        [new Coordinate(X: 2, Y: 3)] = ContraptionMap.BeamDirection.DOWN
+      }, map.GetExistingBeams());
+
+      // move on both after split
+      map.MoveNextAllBeams();
+      Assert.Equal(new()
+      {
+        [new Coordinate(X: 2, Y: 0)] = ContraptionMap.BeamDirection.UP,
+        [new Coordinate(X: 2, Y: 4)] = ContraptionMap.BeamDirection.DOWN
+      }, map.GetExistingBeams());
+    }
+
   }
 
   public class AdjacentElementsTest()
@@ -663,7 +695,6 @@ public class ContraptionMapTest
 
   }
 
-  // TODO testcase: move multiple beams simultaneously
 
   // TODO testcase: let disappear beam on a coordinate
   // already visited in the same direction
