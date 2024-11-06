@@ -99,40 +99,29 @@ public class ContraptionMap
     if (IsOutOfMapBounds(beamCoordinate))
       return;
 
-    if (!IsHittingAMirror(beamCoordinate) && !IsHittingASplitter(beamCoordinate))
+    if (IsHittingAMirror(beamCoordinate))
     {
-      this.existingBeams[beamCoordinate] = beamDirection;
+      HandleMirrorHit(beamCoordinate, beamDirection);
       return;
     }
 
     if (IsHittingASplitter(beamCoordinate))
     {
-      var hittingSplitter = splitters[beamCoordinate];
-      if (
-        hittingSplitter == Splitter.NORTH_SOUTH &&
-        (beamDirection == BeamDirection.RIGHT || beamDirection == BeamDirection.LEFT)
-      )
-      {
-        InsertBeamInMap(beamCoordinate with { Y = beamCoordinate.Y - 1 }, BeamDirection.UP);
-        InsertBeamInMap(beamCoordinate with { Y = beamCoordinate.Y + 1 }, BeamDirection.DOWN);
-        return;
-      }
-
-      if (
-        hittingSplitter == Splitter.WEST_EAST &&
-        (beamDirection == BeamDirection.DOWN || beamDirection == BeamDirection.UP)
-      )
-      {
-        InsertBeamInMap(beamCoordinate with { X = beamCoordinate.X - 1 }, BeamDirection.LEFT);
-        InsertBeamInMap(beamCoordinate with { X = beamCoordinate.X + 1 }, BeamDirection.RIGHT);
-        return;
-      }
-
-      var nextBeamCoordinate = beamCoordinate.Next(beamDirection);
-      InsertBeamInMap(nextBeamCoordinate, beamDirection);
+      HandleSplitterHit(beamCoordinate, beamDirection);
       return;
     }
 
+    this.existingBeams[beamCoordinate] = beamDirection;
+  }
+
+  private bool IsOutOfMapBounds(Coordinate c) =>
+    c.X < 0 || c.Y < 0 || c.X >= this.size || c.Y >= this.size;
+
+  private bool IsHittingAMirror(Coordinate c) => mirrors.ContainsKey(c);
+  private bool IsHittingASplitter(Coordinate c) => splitters.ContainsKey(c);
+
+  private void HandleMirrorHit(Coordinate beamCoordinate, BeamDirection beamDirection)
+  {
     var hittingMirror = mirrors[beamCoordinate];
     var newBeamDirection = NewBeamDirectionFor(beamDirection, hittingMirror);
     var newBeamCoordinate = beamCoordinate.Next(newBeamDirection);
@@ -141,11 +130,32 @@ public class ContraptionMap
     InsertBeamInMap(newBeamCoordinate, newBeamDirection);
   }
 
-  private bool IsOutOfMapBounds(Coordinate c) =>
-    c.X < 0 || c.Y < 0 || c.X >= this.size || c.Y >= this.size;
+  private void HandleSplitterHit(Coordinate beamCoordinate, BeamDirection beamDirection)
+  {
+    var hittingSplitter = splitters[beamCoordinate];
+    if (
+      hittingSplitter == Splitter.NORTH_SOUTH &&
+      (beamDirection == BeamDirection.RIGHT || beamDirection == BeamDirection.LEFT)
+    )
+    {
+      InsertBeamInMap(beamCoordinate with { Y = beamCoordinate.Y - 1 }, BeamDirection.UP);
+      InsertBeamInMap(beamCoordinate with { Y = beamCoordinate.Y + 1 }, BeamDirection.DOWN);
+      return;
+    }
 
-  private bool IsHittingAMirror(Coordinate c) => mirrors.ContainsKey(c);
-  private bool IsHittingASplitter(Coordinate c) => splitters.ContainsKey(c);
+    if (
+      hittingSplitter == Splitter.WEST_EAST &&
+      (beamDirection == BeamDirection.DOWN || beamDirection == BeamDirection.UP)
+    )
+    {
+      InsertBeamInMap(beamCoordinate with { X = beamCoordinate.X - 1 }, BeamDirection.LEFT);
+      InsertBeamInMap(beamCoordinate with { X = beamCoordinate.X + 1 }, BeamDirection.RIGHT);
+      return;
+    }
+
+    var nextBeamCoordinate = beamCoordinate.Next(beamDirection);
+    InsertBeamInMap(nextBeamCoordinate, beamDirection);
+  }
 
   private BeamDirection NewBeamDirectionFor(BeamDirection beamDirection, Mirror hittingMirror)
   {
