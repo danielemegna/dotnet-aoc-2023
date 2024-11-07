@@ -132,11 +132,8 @@ public class ContraptionMapTest
       BeamDirection initialBeamDirection
     )
     {
-      return ContraptionMap.From(
-        mapRows: SIMPLE_SMALL_EMPTY_MAP_ROWS,
-        initialBeamCoordinate: initialBeamCoordinate,
-        initialBeamDirection: initialBeamDirection
-      );
+      Beam initialBeam = new Beam(initialBeamCoordinate, initialBeamDirection);
+      return ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS, initialBeam);
     }
   }
 
@@ -195,8 +192,7 @@ public class ContraptionMapTest
           @"...",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 0), BeamDirection.RIGHT)
       );
 
       AssertSingleBeam(
@@ -393,11 +389,8 @@ public class ContraptionMapTest
       BeamDirection initialBeamDirection
     )
     {
-      return ContraptionMap.From(
-        mapRows: MAP_WITH_SOME_MIRRORS_ROWS,
-        initialBeamCoordinate: initialBeamCoordinate,
-        initialBeamDirection: initialBeamDirection
-      );
+      Beam initialBeam = new Beam(initialBeamCoordinate, initialBeamDirection);
+      return ContraptionMap.From(MAP_WITH_SOME_MIRRORS_ROWS, initialBeam);
     }
   }
 
@@ -413,8 +406,7 @@ public class ContraptionMapTest
           @".-.",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -435,8 +427,7 @@ public class ContraptionMapTest
           @".|.",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 1, Y: 0),
-        initialBeamDirection: BeamDirection.DOWN
+        initialBeam: new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.DOWN)
       );
 
       map.MoveNextAllBeams();
@@ -457,8 +448,7 @@ public class ContraptionMapTest
           @".-/",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -479,8 +469,7 @@ public class ContraptionMapTest
           @".|.",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -503,8 +492,7 @@ public class ContraptionMapTest
           @".|.",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 2, Y: 1),
-        initialBeamDirection: BeamDirection.LEFT
+        initialBeam: new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.LEFT)
       );
 
       map.MoveNextAllBeams();
@@ -527,8 +515,7 @@ public class ContraptionMapTest
           @".-.",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 1, Y: 0),
-        initialBeamDirection: BeamDirection.DOWN
+        initialBeam: new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.DOWN)
       );
 
       map.MoveNextAllBeams();
@@ -551,8 +538,7 @@ public class ContraptionMapTest
           @".-.",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 1, Y: 2),
-        initialBeamDirection: BeamDirection.UP
+        initialBeam: new Beam(new Coordinate(X: 1, Y: 2), BeamDirection.UP)
       );
 
       map.MoveNextAllBeams();
@@ -575,8 +561,7 @@ public class ContraptionMapTest
           @"...",
           @"...",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 0), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -599,8 +584,7 @@ public class ContraptionMapTest
           @".....",
           @".....",
         ],
-        initialBeamCoordinate: new Coordinate(X: 1, Y: 2),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 1, Y: 2), BeamDirection.RIGHT)
       );
 
       // hit the splitter: two beams generated
@@ -635,8 +619,7 @@ public class ContraptionMapTest
           @"..\.",
           @"....",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 0), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -658,8 +641,7 @@ public class ContraptionMapTest
           @"....",
           @"....",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 0), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -677,8 +659,7 @@ public class ContraptionMapTest
           @".|.",
           @".\.",
         ],
-        initialBeamCoordinate: new Coordinate(X: 0, Y: 1),
-        initialBeamDirection: BeamDirection.RIGHT
+        initialBeam: new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.RIGHT)
       );
 
       map.MoveNextAllBeams();
@@ -711,8 +692,7 @@ public class ContraptionMapTest
         @"\../",
         @"....",
       ],
-      initialBeamCoordinate: new Coordinate(X: 2, Y: 1),
-      initialBeamDirection: BeamDirection.RIGHT
+      initialBeam: new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.RIGHT)
     );
 
     // hit the splitter and the adjacent mirrors
