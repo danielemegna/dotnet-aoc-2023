@@ -2,17 +2,17 @@ namespace aoc2023.day16;
 
 public record Coordinate(int X, int Y)
 {
-  public Coordinate Next(ContraptionMap.BeamDirection beamDirection)
+  public Coordinate Next(BeamDirection beamDirection)
   {
     switch (beamDirection)
     {
-      case ContraptionMap.BeamDirection.RIGHT:
+      case BeamDirection.RIGHT:
         return this with { X = X + 1 };
-      case ContraptionMap.BeamDirection.DOWN:
+      case BeamDirection.DOWN:
         return this with { Y = Y + 1 };
-      case ContraptionMap.BeamDirection.LEFT:
+      case BeamDirection.LEFT:
         return this with { X = X - 1 };
-      case ContraptionMap.BeamDirection.UP:
+      case BeamDirection.UP:
         return this with { Y = Y - 1 };
     }
 

@@ -188,7 +188,6 @@ public class ContraptionMap
     throw new ArgumentException($"Cannot get NewBeamDirection for [${beamDirection}], [${hittingMirror}]");
   }
 
-  public enum BeamDirection { RIGHT, DOWN, UP, LEFT }
   public enum Mirror { NORD_WEST__SOUTH_EAST, SOUTH_WEST__NORTH_EAST }
   public enum Splitter { WEST_EAST, NORTH_SOUTH }
 }
