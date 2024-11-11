@@ -21,10 +21,11 @@ public class ContraptionMapTest
 
       var actualBeams = map.GetExistingBeams();
 
-      Assert.Single(actualBeams);
-      var beam = actualBeams.First();
-      Assert.Equal(new Coordinate(X: 0, Y: 0), beam.Key);
-      Assert.Equal(BeamDirection.RIGHT, beam.Value);
+      var expectedBeam = new Beam(
+        Coordinate: new Coordinate(X: 0, Y: 0),
+        Direction: BeamDirection.RIGHT
+      );
+      Assert.Equal([expectedBeam], actualBeams);
     }
 
     [Fact]
@@ -474,13 +475,10 @@ public class ContraptionMapTest
 
       map.MoveNextAllBeams();
 
-      var actualBeams = map.GetExistingBeams();
-      Assert.Equal(2, actualBeams.Count);
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 1, Y: 0)] = BeamDirection.UP,
-        [new Coordinate(X: 1, Y: 2)] = BeamDirection.DOWN
-      }, actualBeams);
+      Assert.Equal([
+        new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.UP),
+        new Beam(new Coordinate(X: 1, Y: 2), BeamDirection.DOWN)
+      ], map.GetExistingBeams());
     }
 
     [Fact]
@@ -497,13 +495,10 @@ public class ContraptionMapTest
 
       map.MoveNextAllBeams();
 
-      var actualBeams = map.GetExistingBeams();
-      Assert.Equal(2, actualBeams.Count);
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 1, Y: 0)] = BeamDirection.UP,
-        [new Coordinate(X: 1, Y: 2)] = BeamDirection.DOWN
-      }, actualBeams);
+      Assert.Equal([
+        new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.UP),
+        new Beam(new Coordinate(X: 1, Y: 2), BeamDirection.DOWN)
+      ], map.GetExistingBeams());
     }
 
     [Fact]
@@ -520,13 +515,10 @@ public class ContraptionMapTest
 
       map.MoveNextAllBeams();
 
-      var actualBeams = map.GetExistingBeams();
-      Assert.Equal(2, actualBeams.Count);
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 0, Y: 1)] = BeamDirection.LEFT,
-        [new Coordinate(X: 2, Y: 1)] = BeamDirection.RIGHT
-      }, actualBeams);
+      Assert.Equal([
+        new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.LEFT),
+        new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.RIGHT)
+      ], map.GetExistingBeams());
     }
 
     [Fact]
@@ -543,13 +535,10 @@ public class ContraptionMapTest
 
       map.MoveNextAllBeams();
 
-      var actualBeams = map.GetExistingBeams();
-      Assert.Equal(2, actualBeams.Count);
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 0, Y: 1)] = BeamDirection.LEFT,
-        [new Coordinate(X: 2, Y: 1)] = BeamDirection.RIGHT
-      }, actualBeams);
+      Assert.Equal([
+        new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.LEFT),
+        new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.RIGHT)
+      ], map.GetExistingBeams());
     }
 
     [Fact]
@@ -589,19 +578,17 @@ public class ContraptionMapTest
 
       // hit the splitter: two beams generated
       map.MoveNextAllBeams();
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 2, Y: 1)] = BeamDirection.UP,
-        [new Coordinate(X: 2, Y: 3)] = BeamDirection.DOWN
-      }, map.GetExistingBeams());
+      Assert.Equal([
+        new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.UP),
+        new Beam(new Coordinate(X: 2, Y: 3), BeamDirection.DOWN)
+      ], map.GetExistingBeams());
 
       // move on both after split
       map.MoveNextAllBeams();
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 2, Y: 0)] = BeamDirection.UP,
-        [new Coordinate(X: 2, Y: 4)] = BeamDirection.DOWN
-      }, map.GetExistingBeams());
+      Assert.Equal([
+        new Beam(new Coordinate(X: 2, Y: 0), BeamDirection.UP),
+        new Beam(new Coordinate(X: 2, Y: 4), BeamDirection.DOWN)
+      ], map.GetExistingBeams());
     }
 
   }
@@ -664,14 +651,11 @@ public class ContraptionMapTest
 
       map.MoveNextAllBeams();
 
-      var actualBeams = map.GetExistingBeams();
-      Assert.Equal(3, actualBeams.Count);
-      Assert.Equal(new()
-      {
-        [new Coordinate(X: 0, Y: 0)] = BeamDirection.LEFT,
-        [new Coordinate(X: 2, Y: 0)] = BeamDirection.RIGHT,
-        [new Coordinate(X: 2, Y: 2)] = BeamDirection.RIGHT
-      }, actualBeams);
+      Assert.Equal([
+        new Beam(new Coordinate(X: 0, Y: 0), BeamDirection.LEFT),
+        new Beam(new Coordinate(X: 2, Y: 0), BeamDirection.RIGHT),
+        new Beam(new Coordinate(X: 2, Y: 2), BeamDirection.RIGHT)
+      ], map.GetExistingBeams());
     }
 
   }
@@ -697,21 +681,19 @@ public class ContraptionMapTest
 
     // hit the splitter and the adjacent mirrors
     map.MoveNextAllBeams();
-    Assert.Equal(new()
-    {
-      [new Coordinate(X: 2, Y: 0)] = BeamDirection.LEFT,
-      [new Coordinate(X: 2, Y: 2)] = BeamDirection.LEFT
-    }, map.GetExistingBeams());
+    Assert.Equal([
+      new Beam(new Coordinate(X: 2, Y: 0), BeamDirection.LEFT),
+      new Beam(new Coordinate(X: 2, Y: 2), BeamDirection.LEFT)
+    ], map.GetExistingBeams());
 
     // hit the mirror ending in the same coordinate
     map.MoveNextAllBeams();
     map.MoveNextAllBeams();
-    Assert.Equal(new()
-    {
+    Assert.Equal([
       // ??
-      //[new Coordinate(X: 0, Y: 1)] = BeamDirection.DOWN,
-      //[new Coordinate(X: 0, Y: 1)] = BeamDirection.UP
-    }, map.GetExistingBeams());
+      //new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.DOWN),
+      //new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.UP)
+    ], map.GetExistingBeams());
   }
 
   private static void AssertSingleBeam(
@@ -720,11 +702,8 @@ public class ContraptionMapTest
     ContraptionMap map
   )
   {
-    var actualBeams = map.GetExistingBeams();
-    Assert.Single(actualBeams);
-    var beam = actualBeams.First();
-    Assert.Equal(expectedCoordinate, beam.Key);
-    Assert.Equal(expectedDirection, beam.Value);
+    var expectedBeam = new Beam(expectedCoordinate, expectedDirection);
+    Assert.Equal([expectedBeam], map.GetExistingBeams());
   }
 
 }

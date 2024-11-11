@@ -5,7 +5,7 @@ public class ContraptionMap
   private readonly int size;
   private readonly Dictionary<Coordinate, Mirror> mirrors;
   private readonly Dictionary<Coordinate, Splitter> splitters;
-  private readonly Dictionary<Coordinate, BeamDirection> existingBeams;
+  private readonly List<Beam> existingBeams;
 
   public static ContraptionMap From(string[] mapRows)
   {
@@ -71,7 +71,7 @@ public class ContraptionMap
     InsertBeamInMap(initialBeam);
   }
 
-  public Dictionary<Coordinate, BeamDirection> GetExistingBeams()
+  public List<Beam> GetExistingBeams()
   {
     return this.existingBeams;
   }
@@ -81,15 +81,12 @@ public class ContraptionMap
     if (this.existingBeams.Count == 0)
       return;
 
-    Dictionary<Coordinate, BeamDirection> existingBeamsClone = new(this.existingBeams);
+    List<Beam> existingBeamsClone = new(this.existingBeams);
     foreach (var beam in existingBeamsClone)
     {
-      Coordinate currentBeamCoordinate = beam.Key;
-      BeamDirection currentBeamDirection = beam.Value;
-
-      this.existingBeams.Remove(currentBeamCoordinate);
-      var nextCoordinate = currentBeamCoordinate.Next(currentBeamDirection);
-      InsertBeamInMap(nextCoordinate, currentBeamDirection);
+      this.existingBeams.Remove(beam);
+      var nextBeamCoordinate = beam.Coordinate.Next(beam.Direction);
+      InsertBeamInMap(nextBeamCoordinate, beam.Direction);
     }
   }
 
@@ -113,7 +110,7 @@ public class ContraptionMap
       return;
     }
 
-    this.existingBeams[beamToInsert.Coordinate] = beamToInsert.Direction;
+    this.existingBeams.Add(beamToInsert);
   }
 
   private bool IsOutOfMapBounds(Coordinate c) =>
