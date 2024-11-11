@@ -85,8 +85,8 @@ public class ContraptionMap
     foreach (var beam in existingBeamsClone)
     {
       this.existingBeams.Remove(beam);
-      var nextBeamCoordinate = beam.Coordinate.Next(beam.Direction);
-      InsertBeamInMap(nextBeamCoordinate, beam.Direction);
+      var beamToInsert = beam.StepForward();
+      InsertBeamInMap(beamToInsert);
     }
   }
 
@@ -123,10 +123,11 @@ public class ContraptionMap
   {
     var hittingMirror = mirrors[beam.Coordinate];
     var newBeamDirection = NewBeamDirectionFor(beam.Direction, hittingMirror);
-    var newBeamCoordinate = beam.Coordinate.Next(newBeamDirection);
+    var beamWithNewDirection = beam with { Direction = newBeamDirection };
+    var beamToInsert = beamWithNewDirection.StepForward();
 
     // deliberately not handling infite loop on adjacent mirrors (is it possibile?)
-    InsertBeamInMap(newBeamCoordinate, newBeamDirection);
+    InsertBeamInMap(beamToInsert);
   }
 
   private void HandleSplitterHit(Beam beam)
@@ -152,8 +153,8 @@ public class ContraptionMap
       return;
     }
 
-    var nextBeamCoordinate = beam.Coordinate.Next(beam.Direction);
-    InsertBeamInMap(nextBeamCoordinate, beam.Direction);
+    var beamToInsert = beam.StepForward();
+    InsertBeamInMap(beamToInsert);
   }
 
   private BeamDirection NewBeamDirectionFor(BeamDirection beamDirection, Mirror hittingMirror)
