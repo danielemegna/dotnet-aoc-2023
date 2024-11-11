@@ -2,21 +2,16 @@ namespace aoc2023.day16;
 
 public record Coordinate(int X, int Y)
 {
-  public Coordinate Next(BeamDirection beamDirection)
+  public Coordinate NextFor(BeamDirection beamDirection)
   {
-    switch (beamDirection)
+    return beamDirection switch
     {
-      case BeamDirection.RIGHT:
-        return this with { X = X + 1 };
-      case BeamDirection.DOWN:
-        return this with { Y = Y + 1 };
-      case BeamDirection.LEFT:
-        return this with { X = X - 1 };
-      case BeamDirection.UP:
-        return this with { Y = Y - 1 };
-    }
-
-    throw new ArgumentException($"Cannot get Next coordinate for [${beamDirection}]");
+      BeamDirection.RIGHT => this with { X = X + 1 },
+      BeamDirection.DOWN => this with { Y = Y + 1 },
+      BeamDirection.LEFT => this with { X = X - 1 },
+      BeamDirection.UP => this with { Y = Y - 1 },
+      _ => throw new ArgumentException($"Cannot get next coordinate for [${beamDirection}]"),
+    };
   }
 }
 

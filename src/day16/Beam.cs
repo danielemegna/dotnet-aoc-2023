@@ -6,7 +6,7 @@ public record Beam(Coordinate Coordinate, BeamDirection Direction)
   {
     return this with
     {
-      Coordinate = this.Coordinate.Next(this.Direction)
+      Coordinate = this.Coordinate.NextFor(this.Direction)
     };
   }
 }
