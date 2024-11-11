@@ -664,10 +664,8 @@ public class ContraptionMapTest
   // TODO testcase: let disappear beam on a coordinate
   // already visited in the same direction
 
-  // TODO testcase: handle multiple beam simultaneously
-  // in the same coordinate (with different directions)
-  [Fact(Skip = "next")]
-  public void MultipleBeamCanBeInTheSameCoordinateWithDifferentDirections()
+  [Fact]
+  public void MultipleBeamsCanBeInTheSameCoordinateWithDifferentDirections()
   {
     var map = ContraptionMap.From(
       mapRows: [
@@ -690,9 +688,8 @@ public class ContraptionMapTest
     map.MoveNextAllBeams();
     map.MoveNextAllBeams();
     Assert.Equal([
-      // ??
-      //new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.DOWN),
-      //new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.UP)
+      new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.DOWN),
+      new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.UP)
     ], map.GetExistingBeams());
   }
 
