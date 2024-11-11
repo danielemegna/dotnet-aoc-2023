@@ -5,7 +5,7 @@ public class ContraptionMap
   private readonly int size;
   private readonly Dictionary<Coordinate, Mirror> mirrors;
   private readonly Dictionary<Coordinate, Splitter> splitters;
-  private readonly List<Beam> existingBeams;
+  private readonly HashSet<Beam> existingBeams;
 
   public static ContraptionMap From(string[] mapRows)
   {
@@ -71,7 +71,7 @@ public class ContraptionMap
     InsertBeamInMap(initialBeam);
   }
 
-  public List<Beam> GetExistingBeams()
+  public HashSet<Beam> GetExistingBeams()
   {
     return this.existingBeams;
   }
