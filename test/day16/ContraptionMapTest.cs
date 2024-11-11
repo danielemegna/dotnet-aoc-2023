@@ -660,9 +660,31 @@ public class ContraptionMapTest
 
   }
 
-
   // TODO testcase: let disappear beam on a coordinate
   // already visited in the same direction
+  [Fact(Skip = "WIP")]
+  public void BeamsDisappearVisitingCoordinateAlreadyVisitedInTheSameDirection()
+  {
+    var map = ContraptionMap.From(
+      mapRows: [
+        @"/.\",
+        @"...",
+        @"\./",
+      ],
+      initialBeam: new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.RIGHT)
+    );
+
+    map.MoveNextAllBeams();
+    map.MoveNextAllBeams();
+    map.MoveNextAllBeams();
+    Assert.Equal([new Beam(new(X: 0, Y: 1), BeamDirection.UP)], map.GetExistingBeams());
+
+    map.MoveNextAllBeams();
+    Assert.Empty(map.GetExistingBeams());
+  }
+
+  // TODO testcase: let disappear beam on a coordinate
+  // already visited in the same direction by another beam
 
   [Fact]
   public void MultipleBeamsCanBeInTheSameCoordinateWithDifferentDirections()
