@@ -660,57 +660,65 @@ public class ContraptionMapTest
 
   }
 
-  [Fact]
-  public void BeamsDisappearVisitingCoordinateAlreadyVisitedInTheSameDirection()
+  public class MultipleBeamsInSameCoordinate()
   {
-    var map = ContraptionMap.From(
-      mapRows: [
-        @"/.\",
-        @"...",
-        @"\./",
-      ],
-      initialBeam: new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.RIGHT)
-    );
 
-    map.MoveNextAllBeams();
-    map.MoveNextAllBeams();
-    map.MoveNextAllBeams();
-    Assert.Equal([new Beam(new(X: 0, Y: 1), BeamDirection.UP)], map.GetExistingBeams());
+    [Fact]
+    public void BeamsDisappearVisitingCoordinateAlreadyVisitedInTheSameDirection()
+    {
+      var map = ContraptionMap.From(
+        mapRows: [
+          @"/.\",
+          @"...",
+          @"\./",
+        ],
+        initialBeam: new Beam(new Coordinate(X: 1, Y: 0), BeamDirection.RIGHT)
+      );
 
-    map.MoveNextAllBeams();
-    Assert.Empty(map.GetExistingBeams());
-  }
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      Assert.Equal([new Beam(new(X: 0, Y: 1), BeamDirection.UP)], map.GetExistingBeams());
 
-  // TODO testcase: let disappear beam on a coordinate
-  // already visited in the same direction by another beam
+      map.MoveNextAllBeams();
+      Assert.Empty(map.GetExistingBeams());
+    }
 
-  [Fact]
-  public void MultipleBeamsCanBeInTheSameCoordinateWithDifferentDirections()
-  {
-    var map = ContraptionMap.From(
-      mapRows: [
-        @"/..\",
-        @"...|",
-        @"\../",
-        @"....",
-      ],
-      initialBeam: new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.RIGHT)
-    );
+    // TODO testcase: let disappear beam on a coordinate
+    // already visited in the same direction by another beam
+    //[Fact]
+    //public void BeamsDisappearVisitingCoordinateAlreadyVisitedInTheSameDirectionByAnotherBeam()
+    //{ }
 
-    // hit the splitter and the adjacent mirrors
-    map.MoveNextAllBeams();
-    Assert.Equal([
-      new Beam(new Coordinate(X: 2, Y: 0), BeamDirection.LEFT),
+    [Fact]
+    public void MultipleBeamsCanBeInTheSameCoordinateWithDifferentDirections()
+    {
+      var map = ContraptionMap.From(
+        mapRows: [
+          @"/..\",
+          @"...|",
+          @"\../",
+          @"....",
+        ],
+        initialBeam: new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.RIGHT)
+      );
+
+      // hit the splitter and the adjacent mirrors
+      map.MoveNextAllBeams();
+      Assert.Equal([
+        new Beam(new Coordinate(X: 2, Y: 0), BeamDirection.LEFT),
       new Beam(new Coordinate(X: 2, Y: 2), BeamDirection.LEFT)
-    ], map.GetExistingBeams());
+      ], map.GetExistingBeams());
 
-    // hit the mirror ending in the same coordinate
-    map.MoveNextAllBeams();
-    map.MoveNextAllBeams();
-    Assert.Equal([
-      new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.DOWN),
+      // hit the mirror ending in the same coordinate
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      Assert.Equal([
+        new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.DOWN),
       new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.UP)
-    ], map.GetExistingBeams());
+      ], map.GetExistingBeams());
+    }
+
   }
 
   private static void AssertSingleBeam(
