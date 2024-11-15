@@ -78,6 +78,11 @@ public class ContraptionMap
     return this.existingBeams;
   }
 
+  public int EnergizedTilesCount()
+  {
+    return this.beamsHistoryRepository.DistinctBy(b => b.Coordinate).Count();
+  }
+
   public void MoveNextAllBeams()
   {
     if (this.existingBeams.Count == 0)
@@ -100,7 +105,7 @@ public class ContraptionMap
     if (IsOutOfMapBounds(beamToInsert.Coordinate))
       return;
 
-    if(this.beamsHistoryRepository.Contains(beamToInsert))
+    if (this.beamsHistoryRepository.Contains(beamToInsert))
       return;
 
     this.beamsHistoryRepository.Add(beamToInsert);

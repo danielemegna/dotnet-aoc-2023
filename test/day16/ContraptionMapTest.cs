@@ -128,6 +128,17 @@ public class ContraptionMapTest
       Assert.Equal([], actualBeams);
     }
 
+    [Fact]
+    public void CountEnergizedTiles()
+    {
+      var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
+
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+
+      Assert.Equal(3, map.EnergizedTilesCount());
+    }
+
     private ContraptionMap SimpleSmallEmptyMapAnd(
       Coordinate initialBeamCoordinate,
       BeamDirection initialBeamDirection
@@ -203,6 +214,15 @@ public class ContraptionMapTest
       );
     }
 
+    [Fact]
+    public void CountEnergizedTiles()
+    {
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+
+      Assert.Equal(5, map.EnergizedTilesCount());
+    }
   }
 
   public class MapWithSomeMirrorsTest
@@ -383,6 +403,22 @@ public class ContraptionMapTest
         expectedDirection: BeamDirection.DOWN,
         map: map
       );
+    }
+
+    [Fact]
+    public void CountEnergizedTiles()
+    {
+      var map = MapWithSomeMirrorsAnd(
+        initialBeamCoordinate: new(X: 0, Y: 0),
+        initialBeamDirection: BeamDirection.RIGHT
+      );
+
+      foreach (var _ in Enumerable.Range(0, 13))
+      {
+        map.MoveNextAllBeams();
+      }
+
+      Assert.Equal(24, map.EnergizedTilesCount());
     }
 
     private ContraptionMap MapWithSomeMirrorsAnd(
@@ -717,6 +753,38 @@ public class ContraptionMapTest
         new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.DOWN),
       new Beam(new Coordinate(X: 0, Y: 1), BeamDirection.UP)
       ], map.GetExistingBeams());
+    }
+
+    [Fact]
+    public void AlreadyEnergizedTileShouldNotBeCountedTwice()
+    {
+      var map = ContraptionMap.From(
+        mapRows: [
+          @"/..\",
+          @"...|",
+          @"\../",
+          @"....",
+        ],
+        initialBeam: new Beam(new Coordinate(X: 2, Y: 1), BeamDirection.RIGHT)
+      );
+
+      // reach both x:0 y:0
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      Assert.Equal(11, map.EnergizedTilesCount());
+      Assert.Equal(2, map.GetExistingBeams().Count);
+
+      // beams are re-visiting already visited tiles in opposite direction
+      map.MoveNextAllBeams();
+      map.MoveNextAllBeams();
+      Assert.Equal(11, map.EnergizedTilesCount());
+      Assert.Equal(2, map.GetExistingBeams().Count);
+
+      // beams disappears in the splitter coordinate (x:3 y:1)
+      map.MoveNextAllBeams();
+      Assert.Equal(11, map.EnergizedTilesCount());
+      Assert.Empty(map.GetExistingBeams());
     }
 
   }
