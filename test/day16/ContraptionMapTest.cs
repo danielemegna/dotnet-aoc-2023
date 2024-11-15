@@ -660,9 +660,7 @@ public class ContraptionMapTest
 
   }
 
-  // TODO testcase: let disappear beam on a coordinate
-  // already visited in the same direction
-  [Fact(Skip = "WIP")]
+  [Fact]
   public void BeamsDisappearVisitingCoordinateAlreadyVisitedInTheSameDirection()
   {
     var map = ContraptionMap.From(

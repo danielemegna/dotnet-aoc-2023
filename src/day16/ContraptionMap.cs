@@ -6,6 +6,7 @@ public class ContraptionMap
   private readonly Dictionary<Coordinate, Mirror> mirrors;
   private readonly Dictionary<Coordinate, Splitter> splitters;
   private readonly HashSet<Beam> existingBeams;
+  private readonly HashSet<Beam> beamsHistoryRepository;
 
   public static ContraptionMap From(string[] mapRows)
   {
@@ -68,6 +69,7 @@ public class ContraptionMap
     this.mirrors = mirrors;
     this.splitters = splitters;
     this.existingBeams = [];
+    this.beamsHistoryRepository = [];
     InsertBeamInMap(initialBeam);
   }
 
@@ -97,6 +99,11 @@ public class ContraptionMap
   {
     if (IsOutOfMapBounds(beamToInsert.Coordinate))
       return;
+
+    if(this.beamsHistoryRepository.Contains(beamToInsert))
+      return;
+
+    this.beamsHistoryRepository.Add(beamToInsert);
 
     if (IsHittingAMirror(beamToInsert.Coordinate))
     {
