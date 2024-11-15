@@ -4,6 +4,12 @@ public class Solver
 {
   public int EnergizedTilesTotalCountFor(string[] inputLines)
   {
-    throw new NotImplementedException();
+    var contraptionMap = ContraptionMap.From(inputLines);
+
+    while(contraptionMap.GetExistingBeams().Count > 0) {
+      contraptionMap.MoveNextAllBeams();
+    }
+
+    return contraptionMap.EnergizedTilesCount();
   }
 }
