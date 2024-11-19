@@ -8,16 +8,10 @@ public class ContraptionMapTest
   public class SimpleEmptyMapTest
   {
 
-    private readonly static string[] SIMPLE_SMALL_EMPTY_MAP_ROWS = [
-      "...",
-      "...",
-      "..."
-    ];
-
     [Fact]
     public void NewMapShouldHaveSingleBeamAtZeroZeroWithDirectionRight()
     {
-      var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
+      var map = SimpleSmallEmptyMap();
 
       var actualBeams = map.GetExistingBeams();
 
@@ -31,7 +25,7 @@ public class ContraptionMapTest
     [Fact]
     public void GetExistingBeamsAfterMoveNextAllBeams()
     {
-      var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
+      var map = SimpleSmallEmptyMap();
 
       map.MoveNextAllBeams();
 
@@ -45,7 +39,7 @@ public class ContraptionMapTest
     [Fact]
     public void GetExistingBeamsAfterMoveNextAllBeamsTwice()
     {
-      var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
+      var map = SimpleSmallEmptyMap();
 
       map.MoveNextAllBeams();
       map.MoveNextAllBeams();
@@ -116,7 +110,7 @@ public class ContraptionMapTest
     [Fact]
     public void MoveNextAllBeamsDoesNothingAfterAllBeamsDisappeared()
     {
-      var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
+      var map = SimpleSmallEmptyMap();
 
       map.MoveNextAllBeams();
       map.MoveNextAllBeams();
@@ -131,7 +125,7 @@ public class ContraptionMapTest
     [Fact]
     public void CountEnergizedTiles()
     {
-      var map = ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS);
+      var map = SimpleSmallEmptyMap();
 
       map.MoveNextAllBeams();
       map.MoveNextAllBeams();
@@ -139,24 +133,41 @@ public class ContraptionMapTest
       Assert.Equal(3, map.EnergizedTilesCount());
     }
 
+    private ContraptionMap SimpleSmallEmptyMap()
+    {
+      return SimpleSmallEmptyMapAnd(
+        initialBeamCoordinate: new Coordinate(X: 0, Y: 0),
+        initialBeamDirection: BeamDirection.RIGHT
+      );
+    }
+
     private ContraptionMap SimpleSmallEmptyMapAnd(
       Coordinate initialBeamCoordinate,
       BeamDirection initialBeamDirection
     )
     {
-      Beam initialBeam = new Beam(initialBeamCoordinate, initialBeamDirection);
-      return ContraptionMap.From(SIMPLE_SMALL_EMPTY_MAP_ROWS, initialBeam);
+      return ContraptionMap.From(
+        mapRows: [
+          @"...",
+          @"...",
+          @"...",
+        ],
+        initialBeam: new Beam(initialBeamCoordinate, initialBeamDirection)
+      );
     }
   }
 
   public class SimpleMapWithSingleMirror()
   {
 
-    private readonly ContraptionMap map = ContraptionMap.From([
-      @"..\",
-      @"...",
-      @"..."
-    ]);
+    private readonly ContraptionMap map = ContraptionMap.From(
+      mapRows: [
+        @"..\",
+        @"...",
+        @"...",
+      ],
+      initialBeam: new Beam(new Coordinate(X: 0, Y: 0), BeamDirection.RIGHT)
+    );
 
     [Fact]
     public void BeamsShouldStepOverAndChangeDirectionHittingMirror()

@@ -8,17 +8,7 @@ public class ContraptionMap
   private readonly HashSet<Beam> existingBeams;
   private readonly HashSet<Beam> beamsHistoryRepository;
 
-  public static ContraptionMap From(string[] mapRows)
-  {
-    Beam defaultInitialBeam = new Beam(
-      Coordinate: new Coordinate(X: 0, Y: 0),
-      Direction: BeamDirection.RIGHT
-    );
-
-    return ContraptionMap.From(mapRows, defaultInitialBeam);
-  }
-
-  internal static ContraptionMap From(string[] mapRows, Beam initialBeam)
+  public static ContraptionMap From(string[] mapRows, Beam initialBeam)
   {
     Dictionary<Coordinate, Mirror> mirrors = [];
     Dictionary<Coordinate, Splitter> splitters = [];
