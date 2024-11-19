@@ -42,19 +42,19 @@ public class SolverTest
   public class SecondPartTest : SolverTest
   {
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithTheProvidedExample()
     {
       var actual = solver.MaximumPossibileEnergizedTilesFor(PROVIDED_EXAMPLE_INPUT_LINES);
       Assert.Equal(51, actual);
     }
 
-    [Fact(Skip = "WIP")]
+    [Fact]
     public void SolveWithFile()
     {
       var input = File.ReadAllLines("day16/input.txt");
       var actual = solver.MaximumPossibileEnergizedTilesFor(input);
-      Assert.Equal(-1, actual);
+      Assert.Equal(8491, actual);
     }
 
   }
