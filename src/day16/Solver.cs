@@ -12,4 +12,10 @@ public class Solver
 
     return contraptionMap.EnergizedTilesCount();
   }
+
+  public int MaximumPossibileEnergizedTilesFor(string[] inputLines)
+  {
+    throw new NotImplementedException();
+  }
+
 }

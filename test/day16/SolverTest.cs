@@ -19,19 +19,44 @@ public class SolverTest
 
   private readonly Solver solver = new();
 
-  [Fact]
-  public void SolveTheProvidedExample()
+  public class FirstPartTest : SolverTest
   {
-    var actual = solver.EnergizedTilesTotalCountFor(PROVIDED_EXAMPLE_INPUT_LINES);
-    Assert.Equal(46, actual);
+
+    [Fact]
+    public void SolveWithTheProvidedExample()
+    {
+      var actual = solver.EnergizedTilesTotalCountFor(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(46, actual);
+    }
+
+    [Fact]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day16/input.txt");
+      var actual = solver.EnergizedTilesTotalCountFor(input);
+      Assert.Equal(8323, actual);
+    }
+
   }
 
-  [Fact]
-  public void SolveWithFile()
+  public class SecondPartTest : SolverTest
   {
-    var input = File.ReadAllLines("day16/input.txt");
-    var actual = solver.EnergizedTilesTotalCountFor(input);
-    Assert.Equal(8323, actual);
+
+    [Fact(Skip = "WIP")]
+    public void SolveWithTheProvidedExample()
+    {
+      var actual = solver.MaximumPossibileEnergizedTilesFor(PROVIDED_EXAMPLE_INPUT_LINES);
+      Assert.Equal(51, actual);
+    }
+
+    [Fact(Skip = "WIP")]
+    public void SolveWithFile()
+    {
+      var input = File.ReadAllLines("day16/input.txt");
+      var actual = solver.MaximumPossibileEnergizedTilesFor(input);
+      Assert.Equal(-1, actual);
+    }
+
   }
 
 }
