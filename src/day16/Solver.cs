@@ -13,56 +13,33 @@ public class Solver
 
   public int MaximumPossibileEnergizedTilesFor(string[] inputLines)
   {
-    var maxEnergizedTilesForTopRow = Enumerable.Range(0, inputLines.Length)
+    return Enumerable
+      .Range(0, inputLines.Length)
       .AsParallel()
       .Select(index =>
       {
-        Beam initialBeam = new Beam(
+        var topRowBeam = new Beam(
           Coordinate: new Coordinate(X: index, Y: 0),
           Direction: BeamDirection.DOWN
         );
-        return EnergizedTilesTotalCountFor(inputLines, initialBeam);
-      }).Max();
-
-    var maxEnergizedTilesForBottomRow = Enumerable.Range(0, inputLines.Length)
-      .AsParallel()
-      .Select(index =>
-      {
-        Beam initialBeam = new Beam(
-          Coordinate: new Coordinate(X: index, Y: inputLines.Length - 1),
-          Direction: BeamDirection.UP
-        );
-        return EnergizedTilesTotalCountFor(inputLines, initialBeam);
-      }).Max();
-
-    var maxEnergizedTilesForLeftBorder = Enumerable.Range(0, inputLines.Length)
-      .AsParallel()
-      .Select(index =>
-      {
-        Beam initialBeam = new Beam(
-          Coordinate: new Coordinate(X: 0, Y: index),
-          Direction: BeamDirection.RIGHT
-        );
-        return EnergizedTilesTotalCountFor(inputLines, initialBeam);
-      }).Max();
-
-    var maxEnergizedTilesForRightBorder = Enumerable.Range(0, inputLines.Length)
-      .AsParallel()
-      .Select(index =>
-      {
-        Beam initialBeam = new Beam(
+        var rightBorderBeam = new Beam(
           Coordinate: new Coordinate(X: inputLines.Length - 1, Y: index),
           Direction: BeamDirection.LEFT
         );
-        return EnergizedTilesTotalCountFor(inputLines, initialBeam);
-      }).Max();
+        var bottomRowBeam = new Beam(
+          Coordinate: new Coordinate(X: index, Y: inputLines.Length - 1),
+          Direction: BeamDirection.UP
+        );
+        var leftBorderBeam = new Beam(
+          Coordinate: new Coordinate(X: 0, Y: index),
+          Direction: BeamDirection.RIGHT
+        );
 
-    return ((int[])[
-      maxEnergizedTilesForTopRow,
-      maxEnergizedTilesForBottomRow,
-      maxEnergizedTilesForLeftBorder,
-      maxEnergizedTilesForRightBorder
-    ]).Max();
+        Beam[] beams = [topRowBeam, rightBorderBeam, bottomRowBeam, leftBorderBeam];
+        return beams.Select(initialBeam =>
+          EnergizedTilesTotalCountFor(inputLines, initialBeam)
+        ).Max();
+      }).Max();
   }
 
   private int EnergizedTilesTotalCountFor(string[] mapInputLines, Beam initialBeam)
