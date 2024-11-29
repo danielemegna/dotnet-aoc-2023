@@ -22,6 +22,8 @@ public record DigPlanInstruction(InstructionDirection Direction, int StepSize)
       _ => throw new ArgumentException($"Not existing instruction direction [{character}]"),
     };
   }
+
+  public override string ToString() => $"{this.Direction} {this.StepSize}";
 }
 
 public enum InstructionDirection { RIGHT, DOWN, LEFT, UP }
